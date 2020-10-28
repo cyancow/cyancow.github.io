@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pod-antiaffinity
+  labels:
+    app: pod-antiaffinity-test
+spec:
+  replicas: 8
+  selector:
+    matchLabels:
+      app: pod-antiaffinity
+  template:
+    metadata:
+      labels:
+        app: pod-antiaffinity
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - topologyKey: kubernetes.io/hostname
+            labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values: 
+                - test-node-selector
+        

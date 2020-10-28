@@ -1,0 +1,1207 @@
+
+
+
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+        <link rel="canonical" href="https://docs.prometheus.cool/monitor/promql/">
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="复制">
+      
+        <meta name="lang:clipboard.copied" content="已复制">
+      
+        <meta name="lang:search.language" content="jp">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="没有找到符合条件的结果">
+      
+        <meta name="lang:search.result.one" content="找到 1 个符合条件的结果">
+      
+        <meta name="lang:search.result.other" content="# 个符合条件的结果">
+      
+        <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
+      
+      <link rel="shortcut icon" href="../../assets/img/prometheus_logo.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.2">
+    
+    
+      
+        <title>PromQL - 云原生监控神器Prometheus</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.982221ab.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.224b79ff.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ef5350">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.1f0bcf2b.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i,700|Ubuntu+Mono">
+        <style>body,input{font-family:"Ubuntu","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../assets/styles/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/styles/prism.css">
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="red" data-md-color-accent="red">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#promql" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://docs.prometheus.cool" title="云原生监控神器Prometheus" class="md-header-nav__button md-logo">
+          
+            <img src="../../assets/img/prometheus_logo.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              云原生监控神器Prometheus
+            </span>
+            <span class="md-header-nav__topic">
+              PromQL
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            键入以开始搜索
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/k8stech/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://docs.prometheus.cool" title="云原生监控神器Prometheus" class="md-nav__button md-logo">
+      
+        <img src="../../assets/img/prometheus_logo.png" width="48" height="48">
+      
+    </a>
+    云原生监控神器Prometheus
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/k8stech/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="介绍" class="md-nav__link">
+      介绍
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      监控基础与概述
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        监控基础与概述
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/whymonitor/" title="为什么要监控" class="md-nav__link">
+      为什么要监控
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/monitorterms/" title="监控术语" class="md-nav__link">
+      监控术语
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/metricstory/" title="指标物语" class="md-nav__link">
+      指标物语
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/monitorcontrast/" title="开源监控对比" class="md-nav__link">
+      开源监控对比
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Prometheus 基础
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Prometheus 基础
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-introduction/" title="Prometheus介绍" class="md-nav__link">
+      Prometheus介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/tsdb-contrast/" title="时序数据库对比" class="md-nav__link">
+      时序数据库对比
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-datamodel/" title="数据模型" class="md-nav__link">
+      数据模型
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/node-exporter/" title="Node_Exporter" class="md-nav__link">
+      Node_Exporter
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-config/" title="Prometheus安装与配置" class="md-nav__link">
+      Prometheus安装与配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Prometheus 进阶
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Prometheus 进阶
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/auto-ops-exporter-1/" title="自动化维护Exporter（一）" class="md-nav__link">
+      自动化维护Exporter（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/auto-ops-exporter-2/" title="自动化维护Exporter（二）" class="md-nav__link">
+      自动化维护Exporter（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/docker-swarm-monitor-1/" title="Docker-Swarm集群监控（一）" class="md-nav__link">
+      Docker-Swarm集群监控（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/docker-swarm-monitor-2/" title="Docker-Swarm集群监控（二）" class="md-nav__link">
+      Docker-Swarm集群监控（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/commonly-exporter/" title="常用Exporter介绍与配置" class="md-nav__link">
+      常用Exporter介绍与配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Prometheus(警报)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Prometheus(警报)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-basic/" title="PromQL详解（一）" class="md-nav__link">
+      PromQL详解（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-operator/" title="PromQL详解（二）" class="md-nav__link">
+      PromQL详解（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-operator2/" title="PromQL详解（三）" class="md-nav__link">
+      PromQL详解（三）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-function/" title="PromQL函数" class="md-nav__link">
+      PromQL函数
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-overview/" title="AlertManager" class="md-nav__link">
+      AlertManager
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-rules-1/" title="Rules详解（一）" class="md-nav__link">
+      Rules详解（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-rules-2/" title="Rules详解（二）" class="md-nav__link">
+      Rules详解（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-receiver/" title="Receiver配置" class="md-nav__link">
+      Receiver配置
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-silences/" title="Silences配置" class="md-nav__link">
+      Silences配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Prometheus(联邦集群)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Prometheus(联邦集群)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/federation-overview/" title="Prometheus 联邦集群" class="md-nav__link">
+      Prometheus 联邦集群
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/pushgateway/" title="Pushgateway 代理" class="md-nav__link">
+      Pushgateway 代理
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/alertmanager-ha/" title="Alertmanager 高可用" class="md-nav__link">
+      Alertmanager 高可用
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Prometheus(服务发现)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Prometheus(服务发现)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-overview/" title="服务发现（文件、DNS）" class="md-nav__link">
+      服务发现（文件、DNS）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-relabeling/" title="服务发现（Relabelling）" class="md-nav__link">
+      服务发现（Relabelling）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-consul/" title="服务发现（Consul）" class="md-nav__link">
+      服务发现（Consul）
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      Prometheus(Operator)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        Prometheus(Operator)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Operator/" title="Operator概述" class="md-nav__link">
+      Operator概述
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-1/" title="手动部署（1）" class="md-nav__link">
+      手动部署（1）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-2/" title="手动部署（2）" class="md-nav__link">
+      手动部署（2）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-3/" title="手动部署（联邦）" class="md-nav__link">
+      手动部署（联邦）
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="时间序列" class="md-nav__link">
+    时间序列
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="指标类型" class="md-nav__link">
+    指标类型
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#counter" title="Counter" class="md-nav__link">
+    Counter
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gauge" title="Gauge" class="md-nav__link">
+    Gauge
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#histogram-summary" title="Histogram 和 Summary" class="md-nav__link">
+    Histogram 和 Summary
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" title="查询" class="md-nav__link">
+    查询
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" title="查询结构" class="md-nav__link">
+    查询结构
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" title="范围选择器" class="md-nav__link">
+    范围选择器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" title="关联查询" class="md-nav__link">
+    关联查询
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" title="瞬时向量和标量结合" class="md-nav__link">
+    瞬时向量和标量结合
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/k8stech/edit/master/docs/monitor/promql.md" title="编辑此页" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="promql">PromQL<a class="headerlink" href="#promql" title="Permanent link">&para;</a></h1>
+<p>Prometheus 通过指标名称（metrics name）以及对应的一组标签（label）唯一定义一条时间序列。指标名称反映了监控样本的基本标识，而 label 则在这个基本特征上为采集到的数据提供了多种特征维度。用户可以基于这些特征维度过滤、聚合、统计从而产生新的计算后的一条时间序列。</p>
+<p><code>PromQL</code> 是 Prometheus 内置的数据查询语言，其提供对时间序列数据丰富的查询，聚合以及逻辑运算能力的支持。并且被广泛应用在 Prometheus 的日常应用当中，包括对数据查询、可视化、告警处理。可以这么说，<code>PromQL</code> 是 Prometheus 所有应用场景的基础，理解和掌握 <code>PromQL</code> 是我们使用 Prometheus 必备的技能。</p>
+<h2 id="_1">时间序列<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>前面我们通过 node-exporter 暴露的 metrics 服务，Prometheus 可以采集到当前主机所有监控指标的样本数据。例如：
+<pre class="highlight"><code># HELP node_cpu_seconds_total Seconds the cpus spent in each mode.
+# TYPE node_cpu_seconds_total counter
+node_cpu_seconds_total{cpu="0",mode="idle"} 6.62885731e+06
+# HELP node_load1 1m load average.
+# TYPE node_load1 gauge
+node_load1 2.29</code></pre></p>
+<p>其中非 <code>#</code> 开头的每一行表示当前 node-exporter 采集到的一个监控样本：<code>node_cpu_seconds_total</code> 和 <code>node_load1</code> 表明了当前指标的名称、大括号中的标签则反映了当前样本的一些特征和维度、浮点数则是该监控样本的具体值。</p>
+<p>Prometheus 会将所有采集到的样本数据以时间序列的方式保存在<strong>内存数据库</strong>中，并且定时保存到硬盘上。时间序列是按照时间戳和值的序列顺序存放的，我们称之为向量(vector)，每条时间序列通过指标名称(metrics name)和一组标签集(labelset)命名。如下所示，可以将时间序列理解为一个以时间为 X 轴的数字矩阵：
+<pre class="highlight"><code>  ^
+  │   . . . . . . . . . . . . . . . . .   . .   node_cpu_seconds_total{cpu="cpu0",mode="idle"}
+  │     . . . . . . . . . . . . . . . . . . .   node_cpu_seconds_total{cpu="cpu0",mode="system"}
+  │     . . . . . . . . . .   . . . . . . . .   node_load1{}
+  │     . . . . . . . . . . . . . . . .   . .  
+  v
+    &lt;------------------ 时间 ----------------&gt;</code></pre></p>
+<p>在时间序列中的每一个点称为一个样本（sample），样本由以下三部分组成：</p>
+<ul>
+<li>指标(metric)：metric name 和描述当前样本特征的 labelsets</li>
+<li>时间戳(timestamp)：一个精确到毫秒的时间戳</li>
+<li>样本值(value)： 一个 float64 的浮点型数据表示当前样本的值</li>
+</ul>
+<p>如下所示：</p>
+<pre class="highlight"><code>&lt;--------------- metric ---------------------&gt;&lt;-timestamp -&gt;&lt;-value-&gt;
+http_request_total{status="200", method="GET"}@1434417560938 =&gt; 94355
+http_request_total{status="200", method="GET"}@1434417561287 =&gt; 94334
+
+http_request_total{status="404", method="GET"}@1434417560938 =&gt; 38473
+http_request_total{status="404", method="GET"}@1434417561287 =&gt; 38544
+
+http_request_total{status="200", method="POST"}@1434417560938 =&gt; 4748
+http_request_total{status="200", method="POST"}@1434417561287 =&gt; 4785</code></pre>
+
+<p>在形式上，所有的指标(Metric)都通过如下格式表示：
+<pre class="highlight"><code>&lt;metric name&gt;{&lt;label name&gt; = &lt;label value&gt;, ...}</code></pre></p>
+<ul>
+<li>
+<p>指标的名称(metric name)可以反映被监控样本的含义（比如，http_request_total - 表示当前系统接收到的 HTTP 请求总量）。指标名称只能由 ASCII 字符、数字、下划线以及冒号组成并必须符合正则表达式<code>[a-zA-Z_:][a-zA-Z0-9_:]*</code>。</p>
+</li>
+<li>
+<p>标签(label)反映了当前样本的特征维度，通过这些维度 Prometheus 可以对样本数据进行过滤，聚合等。标签的名称只能由 ASCII 字符、数字以及下划线组成并满足正则表达式 <code>[a-zA-Z_][a-zA-Z0-9_]*</code>。</p>
+</li>
+</ul>
+<p>每个不同的 <code>metric_name</code>和 <code>label</code> 组合都称为<strong>时间序列</strong>，在 Prometheus 的表达式语言中，表达式或子表达式包括以下四种类型之一：</p>
+<ul>
+<li>瞬时向量（Instant vector）：一组时间序列，每个时间序列包含单个样本，它们共享相同的时间戳。也就是说，表达式的返回值中只会包含该时间序列中的最新的一个样本值。而相应的这样的表达式称之为瞬时向量表达式。</li>
+<li>区间向量（Range vector）：一组时间序列，每个时间序列包含一段时间范围内的样本数据，这些是通过将时间选择器附加到方括号中的瞬时向量（例如[5m]5分钟）而生成的。</li>
+<li>标量（Scalar）：一个简单的数字浮点值。</li>
+<li>字符串（String）：一个简单的字符串值。</li>
+</ul>
+<p>所有这些指标都是 Prometheus 定期从 metrics 接口那里采集过来的。采集的间隔时间的设置由 <code>prometheus.yaml</code> 配置中的 <code>scrape_interval</code> 指定。最多抓取间隔为30秒，这意味着至少每30秒就会有一个带有新时间戳记录的新数据点，这个值可能会更改，也可能不会更改，但是每隔 <code>scrape_interval</code> 都会产生一个新的数据点。</p>
+<h2 id="_2">指标类型<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>从存储上来讲所有的监控指标 metric 都是相同的，但是在不同的场景下这些 metric 又有一些细微的差异。 例如，在 Node Exporter 返回的样本中指标 <code>node_load1</code> 反应的是当前系统的负载状态，随着时间的变化这个指标返回的样本数据是在不断变化的。而指标 <code>node_cpu_seconds_total</code> 所获取到的样本数据却不同，它是一个持续增大的值，因为其反应的是 CPU 的累计使用时间，从理论上讲只要系统不关机，这个值是会一直变大。</p>
+<p>为了能够帮助用户理解和区分这些不同监控指标之间的差异，Prometheus 定义了4种不同的指标类型：Counter（计数器）、Gauge（仪表盘）、Histogram（直方图）、Summary（摘要）。</p>
+<p>在 node-exporter 返回的样本数据中，其注释中也包含了该样本的类型。例如：
+<pre class="highlight"><code># HELP node_cpu_seconds_total Seconds the cpus spent in each mode.
+# TYPE node_cpu_seconds_total counter
+node_cpu_seconds_total{cpu="cpu0",mode="idle"} 362812.7890625</code></pre></p>
+<h3 id="counter">Counter<a class="headerlink" href="#counter" title="Permanent link">&para;</a></h3>
+<p><code>Counter</code> (只增不减的计数器) 类型的指标其工作方式和计数器一样，只增不减。常见的监控指标，如 <code>http_requests_total</code>、<code>node_cpu_seconds_total</code> 都是 <code>Counter</code> 类型的监控指标。</p>
+<p><code>Counter</code> 是一个简单但又强大的工具，例如我们可以在应用程序中记录某些事件发生的次数，通过以时间序列的形式存储这些数据，我们可以轻松的了解该事件产生的速率变化。<code>PromQL</code> 内置的聚合操作和函数可以让用户对这些数据进行进一步的分析，例如，通过 <code>rate()</code> 函数获取 HTTP 请求量的增长率：
+<pre class="highlight"><code>rate(http_requests_total[5m])</code></pre></p>
+<p>查询当前系统中，访问量前 10 的 HTTP 请求：
+<pre class="highlight"><code>topk(10, http_requests_total)</code></pre></p>
+<h3 id="gauge">Gauge<a class="headerlink" href="#gauge" title="Permanent link">&para;</a></h3>
+<p>与 <code>Counter</code> 不同，<code>Gauge</code>（可增可减的仪表盘）类型的指标侧重于反应系统的当前状态。因此这类指标的样本数据可增可减。常见指标如：<code>node_memory_MemFree_bytes</code>（主机当前空闲的内存大小）、<code>node_memory_MemAvailable_bytes</code>（可用内存大小）都是 <code>Gauge</code> 类型的监控指标。通过 <code>Gauge</code> 指标，用户可以直接查看系统的当前状态：
+<pre class="highlight"><code>node_memory_MemFree_bytes</code></pre></p>
+<p>对于 <code>Gauge</code> 类型的监控指标，通过 <code>PromQL</code> 内置函数 <code>delta()</code> 可以获取样本在一段时间范围内的变化情况。例如，计算 CPU 温度在两个小时内的差异：
+<pre class="highlight"><code>delta(cpu_temp_celsius{host="zeus"}[2h])</code></pre></p>
+<p>还可以直接使用 <code>predict_linear()</code> 对数据的变化趋势进行预测。例如，预测系统磁盘空间在4个小时之后的剩余情况：
+<pre class="highlight"><code>predict_linear(node_filesystem_free_bytes[1h], 4 * 3600)</code></pre></p>
+<h3 id="histogram-summary">Histogram 和 Summary<a class="headerlink" href="#histogram-summary" title="Permanent link">&para;</a></h3>
+<p>除了 <code>Counter</code> 和 <code>Gauge</code> 类型的监控指标以外，Prometheus 还定义了 <code>Histogram</code> 和 <code>Summary</code> 的指标类型。<code>Histogram</code> 和 <code>Summary</code> 主用用于统计和分析样本的分布情况。</p>
+<p>在大多数情况下人们都倾向于使用某些量化指标的平均值，例如 CPU 的平均使用率、页面的平均响应时间，这种方式也有很明显的问题，以系统 API 调用的平均响应时间为例：如果大多数 API 请求都维持在 100ms 的响应时间范围内，而个别请求的响应时间需要 5s，那么就会导致某些 WEB 页面的响应时间落到<strong>中位数</strong>上，而这种现象被称为<strong>长尾问题</strong>。</p>
+<p>为了区分是平均的慢还是长尾的慢，最简单的方式就是按照请求延迟的范围进行分组。例如，统计延迟在 0~10ms 之间的请求数有多少而 10~20ms 之间的请求数又有多少。通过这种方式可以快速分析系统慢的原因。<code>Histogram</code> 和 <code>Summary</code> 都是为了能够解决这样的问题存在的，通过 <code>Histogram</code> 和<code>Summary</code> 类型的监控指标，我们可以快速了解监控样本的分布情况。</p>
+<p>例如，指标 <code>prometheus_tsdb_wal_fsync_duration_seconds</code> 的指标类型为 Summary。它记录了 Prometheus Server 中 <code>wal_fsync</code> 的处理时间，通过访问 Prometheus Server 的 <code>/metrics</code> 地址，可以获取到以下监控样本数据：
+<pre class="highlight"><code># HELP prometheus_tsdb_wal_fsync_duration_seconds Duration of WAL fsync.
+# TYPE prometheus_tsdb_wal_fsync_duration_seconds summary
+prometheus_tsdb_wal_fsync_duration_seconds{quantile="0.5"} 0.012352463
+prometheus_tsdb_wal_fsync_duration_seconds{quantile="0.9"} 0.014458005
+prometheus_tsdb_wal_fsync_duration_seconds{quantile="0.99"} 0.017316173
+prometheus_tsdb_wal_fsync_duration_seconds_sum 2.888716127000002
+prometheus_tsdb_wal_fsync_duration_seconds_count 216</code></pre></p>
+<p>从上面的样本中可以得知当前 Prometheus Server 进行 <code>wal_fsync</code> 操作的总次数为216次，耗时2.888716127000002s。其中中位数（quantile=0.5）的耗时为0.012352463，9分位数（quantile=0.9）的耗时为0.014458005s。</p>
+<p>在 Prometheus Server 自身返回的样本数据中，我们还能找到类型为 Histogram 的监控指标<code>prometheus_tsdb_compaction_chunk_range_seconds_bucket</code>：
+<pre class="highlight"><code># HELP prometheus_tsdb_compaction_chunk_range_seconds Final time range of chunks on their first compaction
+# TYPE prometheus_tsdb_compaction_chunk_range_seconds histogram
+prometheus_tsdb_compaction_chunk_range_seconds_bucket{le="100"} 71
+prometheus_tsdb_compaction_chunk_range_seconds_bucket{le="400"} 71
+prometheus_tsdb_compaction_chunk_range_seconds_bucket{le="1600"} 71
+prometheus_tsdb_compaction_chunk_range_seconds_bucket{le="6400"} 71
+prometheus_tsdb_compaction_chunk_range_seconds_bucket{le="25600"} 405
+prometheus_tsdb_compaction_chunk_range_seconds_bucket{le="102400"} 25690
+prometheus_tsdb_compaction_chunk_range_seconds_bucket{le="409600"} 71863
+prometheus_tsdb_compaction_chunk_range_seconds_bucket{le="1.6384e+06"} 115928
+prometheus_tsdb_compaction_chunk_range_seconds_bucket{le="6.5536e+06"} 2.5687892e+07
+prometheus_tsdb_compaction_chunk_range_seconds_bucket{le="2.62144e+07"} 2.5687896e+07
+prometheus_tsdb_compaction_chunk_range_seconds_bucket{le="+Inf"} 2.5687896e+07
+prometheus_tsdb_compaction_chunk_range_seconds_sum 4.7728699529576e+13
+prometheus_tsdb_compaction_chunk_range_seconds_count 2.5687896e+07</code></pre></p>
+<p>与 <code>Summary</code> 类型的指标相似之处在于 <code>Histogram</code> 类型的样本同样会反应当前指标的记录的总数(以 <code>_count</code> 作为后缀)以及其值的总量（以 <code>_sum</code> 作为后缀）。不同在于 <code>Histogram</code> 指标直接反应了在不同区间内样本的个数，区间通过标签 le 进行定义。</p>
+<h2 id="_3">查询<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>当 Prometheus 采集到监控指标样本数据后，我们就可以通过 PromQL 对监控样本数据进行查询。基本的 Prometheus 查询的结构非常类似于一个 metric 指标，以指标名称开始。</p>
+<h3 id="_4">查询结构<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>比如只查询 <code>node_cpu_seconds_total</code> 则会返回所有采集节点的所有类型的 CPU 时长数据，当然如果数据量特别特别大的时候，直接在 Grafana 执行该查询操作的时候，则可能导致浏览器崩溃，因为它同时需要渲染的数据点太多。</p>
+<p>接下来，可以使用标签进行过滤查询，标签过滤器支持4种运算符：</p>
+<ul>
+<li><code>=</code> 等于</li>
+<li><code>!=</code> 不等于</li>
+<li><code>=~</code> 匹配正则表达式</li>
+<li><code>!~</code> 与正则表达式不匹配</li>
+</ul>
+<p>标签过滤器都位于指标名称后面的<code>{}</code>内，比如过滤 master 节点的 CPU 使用数据可用如下查询语句：
+<pre class="highlight"><code>node_cpu_seconds_total{instance="ydzs-master"}</code></pre></p>
+<div class="admonition info">
+<p class="admonition-title">正则匹配</p>
+<p>PromQL 查询语句中的正则表达式匹配使用 <a href="https://github.com/google/re2/wiki/Syntax">RE2语法</a>。</p>
+</div>
+<p>此外我们还可以使用多个标签过滤器，以逗号分隔。多个标签过滤器之间是 <code>AND</code> 的关系，所以使用多个标签进行过滤，返回的指标数据必须和所有标签过滤器匹配。</p>
+<p>例如如下查询语句将返回所有以 <code>ydzs-</code>为前缀的节点的并且是 <code>idle</code> 模式下面的节点 CPU 使用时长指标：
+<pre class="highlight"><code>node_cpu_seconds_total{instance=~"ydzs-.*", mode="idle"}</code></pre></p>
+<h3 id="_5">范围选择器<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>我们可以通过将<a href="https://prometheus.io/docs/prometheus/latest/querying/basics/#range-vector-selectors">时间范围选择器（[]）</a>附加到查询语句中，指定为每个返回的区间向量样本值中提取多长的时间范围。每个时间戳的值都是按时间倒序记录在时间序列中的，该值是从时间范围内的时间戳获取的对应的值。</p>
+<p>时间范围通过数字来表示，单位可以使用以下其中之一的时间单位：</p>
+<ul>
+<li>s - 秒</li>
+<li>m - 分钟</li>
+<li>h - 小时</li>
+<li>d - 天</li>
+<li>w - 周</li>
+<li>y - 年</li>
+</ul>
+<p>比如 <code>node_cpu_seconds_total{instance="ydzs-master", mode="idle"}</code> 这个查询语句，如果添加上 <code>[1m]</code> 这个时间范围选择器，则我们可以得到如下所示的信息：</p>
+<p><img alt="node cpu range vector" src="https://bxdc-static.oss-cn-beijing.aliyuncs.com/images/20200323153107.png" /></p>
+<p>可以看到上面的两个时间序列都有4个值，这是因为我们 Prometheus 中配置的抓取间隔是15秒，所以，我们从图中的 <code>@</code> 符号后面的时间戳可以看出，它们之间的间隔基本上就是15秒。</p>
+<p>但是现在如果我们在 Prometheus 的页面中查询上面的语句，然后切换到 <code>Graph</code> 选项卡的时候，则会出现如下所示的错误信息：
+<img alt="node cpu range vector graph" src="https://bxdc-static.oss-cn-beijing.aliyuncs.com/images/20200323154950.png" /></p>
+<p>这是因为现在每一个时间序列中都有多个时间戳多个值，所以没办法渲染，必须是标量或者瞬时向量才可以绘制图形。</p>
+<p>不过通常区间向量都会应用一个函数后变成可以绘制的瞬时向量，Prometheus 中对瞬时向量和区间向量有很多操作的<a href="https://prometheus.io/docs/prometheus/latest/querying/functions">函数</a>，不过对于区间向量来说最常用的函数并不多，使用最频繁的有如下几个函数：</p>
+<ul>
+<li><code>rate()</code>: 计算整个时间范围内区间向量中时间序列的每秒平均增长率</li>
+<li><code>irate()</code>: 仅使用时间范围中的<strong>最后两个数据点</strong>来计算区间向量中时间序列的每秒平均增长率，<code>irate</code> 只能用于绘制快速变化的序列，在长期趋势分析或者告警中更推荐使用 <code>rate</code> 函数</li>
+<li><code>increase()</code>: 计算所选时间范围内时间序列的增量，它基本上是速率乘以时间范围选择器中的秒数</li>
+</ul>
+<p>我们选择的时间范围持续时间将确定图表的粒度，比如，持续时间 <code>[1m]</code> 会给出非常尖锐的图表，从而很难直观的显示出趋势来，看起来像这样：</p>
+<p><img alt="1m node cpu rate" src="https://bxdc-static.oss-cn-beijing.aliyuncs.com/images/20200323160520.png" /></p>
+<p>对于一个一小时的图表，<code>[5m]</code> 显示的图表看上去要更加合适一些，更能显示出 CPU 使用的趋势：</p>
+<p><img alt="5m node cpu rate" src="https://bxdc-static.oss-cn-beijing.aliyuncs.com/images/20200323160708.png" /></p>
+<p>对于更长的时间跨度，可能需要设置更长的持续时间，以便消除波峰并获得更多的长期趋势图表。我们可以简单比较持续时间为<code>[5m]</code> 和 <code>[30m]</code> 的一天内的图表：</p>
+<p><img alt="5m node cpu rate of 1d" src="https://bxdc-static.oss-cn-beijing.aliyuncs.com/images/20200323160924.png" /></p>
+<p><img alt="30m node cpu rate of 1d" src="https://bxdc-static.oss-cn-beijing.aliyuncs.com/images/20200323161001.png" /></p>
+<p>有的时候可能想要查看5分钟前或者昨天一天的区间内的样本数据，这个时候我们就需要用到位移操作了，位移操作的关键字是 <code>offset</code>，比如我们可以查询30分钟之前的 master 节点 CPU 的空闲指标数据：
+<pre class="highlight"><code>node_cpu_seconds_total{instance="ydzs-master", mode="idle"} offset 30m</code></pre></p>
+<div class="admonition warning">
+<p class="admonition-title">注意</p>
+<p>需要注意的是 <code>offset</code> 关键字需要紧跟在选择器(<code>{}</code>)后面。</p>
+</div>
+<p>同样位移操作也适用于区间向量，比如我们要查询昨天的前5分钟的 CPU 空闲增长率：</p>
+<p><img alt="5m node cpu rate of 1d offset" src="https://bxdc-static.oss-cn-beijing.aliyuncs.com/images/20200324092731.png" /></p>
+<h3 id="_6">关联查询<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>Prometheus 没有提供类似与 SQL 语句的关联查询的概念，但是我们可以通过在 Prometheus 上使用 <a href="https://prometheus.io/docs/prometheus/latest/querying/operators/">运算符</a> 来组合时间序列，可以应用于多个时间序列或标量值的常规计算、比较和逻辑运算。</p>
+<div class="admonition warning">
+<p class="admonition-title">注意</p>
+<p>如果将运算符应用于两个瞬时向量，则它将仅应用于匹配的时间序列，当且仅当时间序列具有完全相同的标签集的时候，才认为是匹配的。当表达式左侧的每个序列和右侧的一个序列完全匹配的时候，在序列上使用这些运算符才可以实现一对一匹配。</p>
+</div>
+<p>比如如下的两个瞬时向量：
+<pre class="highlight"><code>node_cpu_seconds_total{instance="ydzs-master", cpu="0", mode="idle"}</code></pre></p>
+<p>和 
+<pre class="highlight"><code>node_cpu_seconds_total{instance="ydzs-node1", cpu="0", mode="idle"}</code></pre></p>
+<p>如果我们对这两个序列做加法运算来尝试获取 master 和 node1 节点的总的空闲 CPU 时长，则不会返回任何内容了：</p>
+<p><img alt="add operator" src="https://bxdc-static.oss-cn-beijing.aliyuncs.com/images/20200323165746.png" /></p>
+<p>这是因为这两个时间序列没有完全匹配标签。我们可以使用 <code>on</code> 关键字指定只希望在 <code>mode</code> 标签上进行匹配，就可以计算出结果来：</p>
+<p><img alt="add operator on" src="https://bxdc-static.oss-cn-beijing.aliyuncs.com/images/20200323165823.png" /></p>
+<p>需要注意的是新的瞬时向量包含单个序列，其中仅包含 <code>on</code> 关键字中指定的标签。</p>
+<p>不过在 Prometheus 中还有很多 <a href="https://prometheus.io/docs/prometheus/latest/querying/operators/#aggregation-operators">聚合操作</a>，所以，如果我们真的想要获取节点的 CPU 总时长，我们完全不用这么操作，使用 <code>sum</code> 操作要简单得多：
+<pre class="highlight"><code>sum(node_cpu_seconds_total{mode="idle"}) by (instance)</code></pre></p>
+<p><code>on</code> 关键字只能用于一对一的匹配中，如果是多对一或者一对多的匹配情况下，就不行了，比如我们可以通过 <a href="https://github.com/kubernetes/kube-state-metrics">kube-state-metrics</a> 这个工具来获取 Kubernetes 集群的各种状态指标，包括 Pod 的基本信息，比如我们执行如下所示的查询语句：</p>
+<pre class="highlight"><code>container_cpu_user_seconds_total{namespace="kube-system"} * on (pod) kube_pod_info</code></pre>
+
+<p>就会出现 <code>Error executing query: multiple matches for labels: many-to-one matching must be explicit (group_left/group_right)</code> 这样的错误提示，这是因为左侧的序列数据在同一个 Pod 上面有可能会有多条时间序列，所以不能简单通过 <code>on (pod)</code> 来进行查询。</p>
+<p>要解决这个问题，我们可以使用 <code>group_left</code> 或<code>group_right</code> 关键字。这两个关键字将匹配分别转换为<strong>多对一</strong>或<strong>一对多</strong>匹配。左侧和右侧表示基数较高的一侧。因此，<code>group_left</code> 意味着左侧的多个序列可以与右侧的单个序列匹配。结果是，返回的瞬时向量包含基数较高的一侧的所有标签，即使它们与右侧的任何标签都不匹配。</p>
+<p>例如如下所示的查询语句就可以正常获取到结果，而且获取到的时间序列数据包含所有的标签:
+<pre class="highlight"><code>container_cpu_user_seconds_total{namespace="kube-system"} * on (pod) group_left() kube_pod_info</code></pre></p>
+<h3 id="_7">瞬时向量和标量结合<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<p>此外我们还可以将瞬时向量和标量值相结合，这个很简单，就是简单的数学计算，比如：
+<pre class="highlight"><code>node_cpu_seconds_total{instance="ydzs-master"} * 10</code></pre></p>
+<p>会为瞬时向量中每个序列的每个值都剩以10。这对于计算比率和百分比得时候非常有用。</p>
+<ul>
+<li>除了 <code>*</code> 之外，其他常用的算数运算符当然也支持：<code>+</code>、<code>-</code>、<code>*</code>、<code>/</code>、<code>%</code>、<code>^</code>。</li>
+<li>还有其他的比较运算符：<code>==</code>、<code>!=</code>、<code>&gt;</code>、<code>&lt;</code>、<code>&gt;=</code>、<code>&lt;=</code>。</li>
+<li>逻辑运算符：<code>and</code>、<code>or</code>、<code>unless</code>，不过逻辑运算符只能用于瞬时向量之间。</li>
+</ul>
+<p>除了这些关于 <code>PromQL</code> 最基本的知识点之外，还有很多相关的使用方法，可以参考官网相关介绍：<a href="https://prometheus.io/docs/prometheus/latest/querying/basics/">https://prometheus.io/docs/prometheus/latest/querying/basics/</a>。</p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+
+
+
+<!-- Application footer -->
+<footer class="md-footer">
+
+    <!-- Further information -->
+    <div class="md-footer-meta md-typeset">
+        <div class="md-footer-meta__inner md-grid">
+
+            <!-- Copyright and theme information -->
+            <div class="md-footer-copyright">
+                
+                <div class="md-footer-copyright__highlight">
+                    Copyright &copy; 2020 Kubernetes技术栈
+                </div>
+                
+                powered by
+                <a href="https://www.k8stech.net" title="Kubernetes技术栈">www.k8stech.net</a>
+            </div>
+
+            <!-- Social links -->
+            
+            
+            
+        </div>
+    </div>
+</footer>
+
+
+    </div>
+    
+      <script src="../../assets/javascripts/application.d9aa80ab.js"></script>
+      
+        
+        
+          
+          <script src="../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+              
+                <script src="../../assets/javascripts/lunr/tinyseg.js"></script>
+              
+              
+                <script src="../../assets/javascripts/lunr/lunr.jp.js"></script>
+              
+            
+          
+          
+        
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+        <script src="../../assets/js/hljs/highlight.pack.js"></script>
+      
+        <script src="../../assets/js/prism.js"></script>
+      
+    
+  </body>
+</html>

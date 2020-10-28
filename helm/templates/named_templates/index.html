@@ -1,0 +1,1160 @@
+
+
+
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+        <link rel="canonical" href="https://docs.prometheus.cool/helm/templates/named_templates/">
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="复制">
+      
+        <meta name="lang:clipboard.copied" content="已复制">
+      
+        <meta name="lang:search.language" content="jp">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="没有找到符合条件的结果">
+      
+        <meta name="lang:search.result.one" content="找到 1 个符合条件的结果">
+      
+        <meta name="lang:search.result.other" content="# 个符合条件的结果">
+      
+        <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
+      
+      <link rel="shortcut icon" href="../../../assets/img/prometheus_logo.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.2">
+    
+    
+      
+        <title>命名模板 - 云原生监控神器Prometheus</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/application.982221ab.css">
+      
+        <link rel="stylesheet" href="../../../assets/stylesheets/application-palette.224b79ff.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ef5350">
+      
+    
+    
+      <script src="../../../assets/javascripts/modernizr.1f0bcf2b.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i,700|Ubuntu+Mono">
+        <style>body,input{font-family:"Ubuntu","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../../assets/styles/extra.css">
+    
+      <link rel="stylesheet" href="../../../assets/styles/prism.css">
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="red" data-md-color-accent="red">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#_1" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://docs.prometheus.cool" title="云原生监控神器Prometheus" class="md-header-nav__button md-logo">
+          
+            <img src="../../../assets/img/prometheus_logo.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              云原生监控神器Prometheus
+            </span>
+            <span class="md-header-nav__topic">
+              命名模板
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            键入以开始搜索
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/k8stech/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://docs.prometheus.cool" title="云原生监控神器Prometheus" class="md-nav__button md-logo">
+      
+        <img src="../../../assets/img/prometheus_logo.png" width="48" height="48">
+      
+    </a>
+    云原生监控神器Prometheus
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/k8stech/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../.." title="介绍" class="md-nav__link">
+      介绍
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      监控基础与概述
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        监控基础与概述
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../monitorbasic/whymonitor/" title="为什么要监控" class="md-nav__link">
+      为什么要监控
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../monitorbasic/monitorterms/" title="监控术语" class="md-nav__link">
+      监控术语
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../monitorbasic/metricstory/" title="指标物语" class="md-nav__link">
+      指标物语
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../monitorbasic/monitorcontrast/" title="开源监控对比" class="md-nav__link">
+      开源监控对比
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Prometheus 基础
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Prometheus 基础
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../basic/prom-introduction/" title="Prometheus介绍" class="md-nav__link">
+      Prometheus介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../basic/tsdb-contrast/" title="时序数据库对比" class="md-nav__link">
+      时序数据库对比
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../basic/prom-datamodel/" title="数据模型" class="md-nav__link">
+      数据模型
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../basic/node-exporter/" title="Node_Exporter" class="md-nav__link">
+      Node_Exporter
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../basic/prom-config/" title="Prometheus安装与配置" class="md-nav__link">
+      Prometheus安装与配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Prometheus 进阶
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Prometheus 进阶
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../advanced/auto-ops-exporter-1/" title="自动化维护Exporter（一）" class="md-nav__link">
+      自动化维护Exporter（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../advanced/auto-ops-exporter-2/" title="自动化维护Exporter（二）" class="md-nav__link">
+      自动化维护Exporter（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../advanced/docker-swarm-monitor-1/" title="Docker-Swarm集群监控（一）" class="md-nav__link">
+      Docker-Swarm集群监控（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../advanced/docker-swarm-monitor-2/" title="Docker-Swarm集群监控（二）" class="md-nav__link">
+      Docker-Swarm集群监控（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../advanced/commonly-exporter/" title="常用Exporter介绍与配置" class="md-nav__link">
+      常用Exporter介绍与配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Prometheus(警报)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Prometheus(警报)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Alertmanager/promql-basic/" title="PromQL详解（一）" class="md-nav__link">
+      PromQL详解（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Alertmanager/promql-operator/" title="PromQL详解（二）" class="md-nav__link">
+      PromQL详解（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Alertmanager/promql-operator2/" title="PromQL详解（三）" class="md-nav__link">
+      PromQL详解（三）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Alertmanager/promql-function/" title="PromQL函数" class="md-nav__link">
+      PromQL函数
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Alertmanager/alertmanager-overview/" title="AlertManager" class="md-nav__link">
+      AlertManager
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Alertmanager/alertmanager-rules-1/" title="Rules详解（一）" class="md-nav__link">
+      Rules详解（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Alertmanager/alertmanager-rules-2/" title="Rules详解（二）" class="md-nav__link">
+      Rules详解（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Alertmanager/alertmanager-receiver/" title="Receiver配置" class="md-nav__link">
+      Receiver配置
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Alertmanager/alertmanager-silences/" title="Silences配置" class="md-nav__link">
+      Silences配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Prometheus(联邦集群)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Prometheus(联邦集群)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../federation/federation-overview/" title="Prometheus 联邦集群" class="md-nav__link">
+      Prometheus 联邦集群
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../federation/pushgateway/" title="Pushgateway 代理" class="md-nav__link">
+      Pushgateway 代理
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../federation/alertmanager-ha/" title="Alertmanager 高可用" class="md-nav__link">
+      Alertmanager 高可用
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Prometheus(服务发现)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Prometheus(服务发现)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../discover-service/discovery-overview/" title="服务发现（文件、DNS）" class="md-nav__link">
+      服务发现（文件、DNS）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../discover-service/discovery-relabeling/" title="服务发现（Relabelling）" class="md-nav__link">
+      服务发现（Relabelling）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../discover-service/discovery-consul/" title="服务发现（Consul）" class="md-nav__link">
+      服务发现（Consul）
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      Prometheus(Operator)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        Prometheus(Operator)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Kubernetes/Prometheus-Operator/" title="Operator概述" class="md-nav__link">
+      Operator概述
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Kubernetes/Prometheus-Statefulsets-1/" title="手动部署（1）" class="md-nav__link">
+      手动部署（1）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Kubernetes/Prometheus-Statefulsets-2/" title="手动部署（2）" class="md-nav__link">
+      手动部署（2）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Kubernetes/Prometheus-Statefulsets-3/" title="手动部署（联邦）" class="md-nav__link">
+      手动部署（联邦）
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#partials-_" title="partials 和 _ 文件" class="md-nav__link">
+    partials 和 _ 文件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#define-template" title="define 和 template" class="md-nav__link">
+    define 和 template
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="设置模板范围" class="md-nav__link">
+    设置模板范围
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#include" title="include 函数" class="md-nav__link">
+    include 函数
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/k8stech/edit/master/docs/helm/templates/named_templates.md" title="编辑此页" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="_1">命名模板<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<p>前面我们都是只操作的一个模板，现在我们来尝试使用多个模板文件。在本节中，我们可以了解到如何在一个文件中定义命名模板，然后在其他地方使用它们。命名模板（有时也叫子模板）只是在文件内部定义的有名称的模板。主要有两种创建方式以及几种不同的使用方式。</p>
+<p>当使用命名模板的时候有几个重要细节：模板名称是<strong>全局</strong>的，如果声明两个具有相同名称的模板，则会使用最后被加载的模板。由于子 chart 中的模板是与顶级模板一起编译的，所以需要谨慎命名。</p>
+<p>一种流行的命名约定是在每个定义的模板前添加 chart 名称：<code>{{ define "mychart.labels" }}</code>，通过使用特定的 chart 名作为前缀，我们可以避免由于两个不同的 chart 实现了相同名称的模板而引起的冲突。</p>
+<h2 id="partials-_">partials 和 _ 文件<a class="headerlink" href="#partials-_" title="Permanent link">&para;</a></h2>
+<p>到目前为止，我们只使用了一个模板文件，但是 Helm 的模板语言允许我们创建命名的嵌入式模板，可以在其他位置进行访问。在编写这些模板之前，有一些值得一提的命名约定：</p>
+<ul>
+<li><code>templates/</code> 中的大多数文件都被视为 Kubernetes 资源清单文件（NOTES.txt 除外）</li>
+<li>以 <code>_</code> 开头命名的文件也不会被当做 Kubernetes 资源清单文件</li>
+<li>下划线开头的文件不会被当做资源清单之外，还可以被其他 chart 模板调用</li>
+</ul>
+<p><code>_</code> 开头的这些文件其实就是 Helm 中的 <code>partials</code> 文件，所以其实我们完全可以将命名模板定义在这些 <code>partials</code> 文件中，默认就是 <code>_helpers.tpl</code> 文件，其实在前面我们创建的 <code>mychart</code> 包中也可以找到这个文件。</p>
+<h2 id="define-template"><code>define</code> 和 <code>template</code><a class="headerlink" href="#define-template" title="Permanent link">&para;</a></h2>
+<p><code>define</code> 关键字可以让我们在模板文件中创建命名模板，它的语法如下所示：
+<pre class="highlight"><code class="language-yaml">{{ define "MY.NAME" }}
+  # 模板内容区域
+{{ end }}</code></pre></p>
+<p>比如我们可以定义一个模板来封装下 Kubernetes 的 labels 标签：
+<pre class="highlight"><code class="language-yaml">{{- define "mychart.labels" }}
+  labels:
+    generator: helm
+    date: {{ now | htmlDate }}
+{{- end }}</code></pre></p>
+<p>现在我们可以将该模板嵌入到前面的 ConfigMap 模板中，然后将其包含在模板中：
+<pre class="highlight"><code class="language-yaml">{{- define "mychart.labels" }}
+  labels:
+    generator: helm
+    date: {{ now | htmlDate }}
+{{- end }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap
+  {{- template "mychart.labels" }}
+data:
+  myvalue: "Hello World"
+  {{- range $key, $val := .Values.favorite }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}</code></pre></p>
+<p>当模板引擎读取这个文件的时候，它会存储 <code>mychart.labels</code> 的引用，直到该模板被调用，然后会内联渲染该模板。我们渲染这个模板可以都到如下所示的结果（记得先删掉默认生成的 <code>_helpers.tpl</code> 文件）：
+<pre class="highlight"><code class="language-yaml"># Source: mychart/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mychart-1576034036-configmap
+  labels:
+    generator: helm
+    date: 2019-12-11
+data:
+  myvalue: "Hello World"
+  drink: "coffee"
+  food: "pizza"</code></pre></p>
+<p>一般来说，Helm 中约定将这些模板统一放到一个 partials 文件中，通常就是 <code>_helpers.tpl</code> 文件中，我们将上面的命名模板移动到该文件（<code>templates/_helpers.tpl</code>）中去：
+<pre class="highlight"><code class="language-yaml">{{/* 生成基本的 Label 标签 */}}
+{{- define "mychart.labels" }}
+  labels:
+    generator: helm
+    date: {{ now | htmlDate }}
+{{- end }}</code></pre></p>
+<p>一般来说，我们也会用一个简单的块（<code>{{/*...*/}}</code>）来注释这个命名模板的作用。</p>
+<p>现在虽然我们把命名模板放到了 <code>_helpers.tpl</code> 文件中，但是我们在 <code>configmap.yaml</code> 模板中还是可以访问，因为命名模板是全局的：
+<pre class="highlight"><code class="language-yaml">apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap
+  {{- template "mychart.labels" }}
+data:
+  myvalue: "Hello World"
+  {{- range $key, $val := .Values.favorite }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}</code></pre></p>
+<p>因为上面我们提到过命名模板是全局的，我们可以再渲染下上面的模板可以得到正确的结果。</p>
+<h2 id="_2">设置模板范围<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>上面我们定义的模板中，还没有使用到任何对象，只使用了函数，现在我们来修改下定义的命名模板，包含 chart 的名称和版本：
+<pre class="highlight"><code class="language-yaml">{{/* 生成基本的 Label 标签 */}}
+{{- define "mychart.labels" }}
+  labels:
+    generator: helm
+    date: {{ now | htmlDate }}
+    chart: {{ .Chart.Name }}
+    version: {{ .Chart.Version }}
+{{- end }}</code></pre></p>
+<p>现在我们来渲染下模板，会出现下面的错误：
+<pre class="highlight"><code class="language-shell">$ helm install --generate-name --dry-run --debug ./my
+chart
+install.go:148: [debug] Original chart version: ""
+install.go:165: [debug] CHART PATH: /Users/ych/devs/workspace/yidianzhishi/cour
+se/k8strain/content/helm/manifests/mychart
+
+Error: unable to build kubernetes objects from release manifest: error validati
+ng "": error validating data: [unknown object type "nil" in ConfigMap.metadata.
+labels.chart, unknown object type "nil" in ConfigMap.metadata.labels.version]
+helm.go:76: [debug] error validating "": error validating data: [unknown object
+ type "nil" in ConfigMap.metadata.labels.chart, unknown object type "nil" in Co
+nfigMap.metadata.labels.version]
+......</code></pre></p>
+<p>我们可以看到提示 <code>labels.chart</code> 为 <code>nil</code>，这是因为我们使用的 <code>.Chart.Name</code> 不在定义的这个模板的作用域范围内，当渲染命名模板（使用 <code>define</code> 定义）的时候，它将接收模板调用传递的作用域。在我们这个示例中，我们是这样引用这个模板的：
+<pre class="highlight"><code class="language-yaml">{{- template "mychart.labels" }}</code></pre></p>
+<p>没有传入任何作用域，所以在模板内我们无法访问 <code>.</code> 中的任何内容，当然要解决很简单，我们只需要把作用域范围传递给模板即可：
+<pre class="highlight"><code class="language-yaml">apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap
+  {{- template "mychart.labels" . }}
+......</code></pre></p>
+<p>我们这里在使用 <code>template</code> 调用模板的时候传递了 <code>.</code>，我们可以很容易传递 <code>.Values</code> 或者 <code>.Values.favorite</code> 或者我们想要的任何范围，但是这里我们想要的是顶级作用域，所以我们传递的是 <code>.</code>。</p>
+<p>现在我们再来重新渲染我们的模板，可以得到如下所示的结果：
+<pre class="highlight"><code class="language-yaml"># Source: mychart/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mychart-1576035668-configmap
+  labels:
+    generator: helm
+    date: 2019-12-11
+    chart: mychart
+    version: 0.1.0
+data:
+  myvalue: "Hello World"
+  drink: "coffee"
+  food: "pizza"</code></pre></p>
+<p>现在 <code>{{ .Chart.Name }}</code> 解析为了 mychart，而 <code>{{ .Chart.Version }}</code> 解析为了 <code>0.1.0</code>。</p>
+<h2 id="include">include 函数<a class="headerlink" href="#include" title="Permanent link">&para;</a></h2>
+<p>假设我们定义了一个如下所示的简单模板：
+<pre class="highlight"><code class="language-yaml">{{- define "mychart.app" -}}
+app_name: {{ .Chart.Name }}
+app_version: "{{ .Chart.Version }}"
+{{- end -}}</code></pre></p>
+<p>现在我们想把上面的内容插入到模板的 <code>labels</code> 部分，在 <code>data</code> 部分也想要这个内容：
+<pre class="highlight"><code class="language-yaml">apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap
+  labels:
+    {{ template "mychart.app" . }}
+data:
+  myvalue: "Hello World"
+  {{- range $key, $val := .Values.favorite }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
+{{ template "mychart.app" . }}</code></pre></p>
+<p>但是我们直接渲染上面的模板还是会有错误：
+<pre class="highlight"><code class="language-shell">$ helm install --generate-name --dry-run --debug ./my
+chart
+install.go:148: [debug] Original chart version: ""
+install.go:165: [debug] CHART PATH: /Users/ych/devs/workspace/yidianzhishi/cour
+se/k8strain/content/helm/manifests/mychart
+
+Error: unable to build kubernetes objects from release manifest: error validati
+ng "": error validating data: [ValidationError(ConfigMap): unknown field "app_n
+ame" in io.k8s.api.core.v1.ConfigMap, ValidationError(ConfigMap): unknown field
+ "app_version" in io.k8s.api.core.v1.ConfigMap]
+helm.go:76: [debug] error validating "": error validating data: [ValidationErro
+r(ConfigMap): unknown field "app_name" in io.k8s.api.core.v1.ConfigMap, Validat
+ionError(ConfigMap): unknown field "app_version" in io.k8s.api.core.v1.ConfigMap]
+......
+</code></pre></p>
+<p>因为 <code>template</code> 只是一个动作，而不是一个函数，所以无法将模板调用的输出传递给其他函数，只是内联插入，相当于渲染的结果是这样的：
+<pre class="highlight"><code class="language-yaml">apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: measly-whippet-configmap
+  labels:
+    app_name: mychart
+app_version: "0.1.0+1478129847"
+data:
+  myvalue: "Hello World"
+  drink: "coffee"
+  food: "pizza"
+  app_name: mychart
+app_version: "0.1.0+1478129847"</code></pre></p>
+<p>很明显上面的 YAML 文件是不符合 ConfigMap 资源对象的格式要求的，所以报错了。为解决这个问题，Helm 提供了代替 <code>template</code> 的函数 <code>include</code>，可以将模板的内容导入到当前的管道中，这样就可以在管道中传递给其他函数进行处理了，如下所示：
+<pre class="highlight"><code class="language-yaml">apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap
+  labels:
+{{ include "mychart.app" . | indent 4 }}
+data:
+  myvalue: "Hello World"
+  {{- range $key, $val := .Values.favorite }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
+{{ include "mychart.app" . | indent 2 }}</code></pre></p>
+<p>现在我们重新渲染就可以得到正确的结果了，这是因为我们用 <code>include</code> 函数得到模板内容后通过管道传给了后面的 <code>indent</code> 函数来保证了缩进：
+<pre class="highlight"><code class="language-yaml"> Source: mychart/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mychart-1576036671-configmap
+  labels:
+    app_name: mychart
+    app_version: "0.1.0"
+data:
+  myvalue: "Hello World"
+  drink: "coffee"
+  food: "pizza"
+  app_name: mychart
+  app_version: "0.1.0"</code></pre></p>
+<div class="admonition info">
+<p class="admonition-title">建议</p>
+<p>在 Helm 模板中最好使用 <code>include</code> 而不是 <code>template</code>，这样可以更好地处理 YAML 文档的输出格式。</p>
+</div>
+<p>有时候如果我们只想导入内容而不是模板，这个时候我们可以通过下面描述的 <code>.Files</code> 对象来访问文件实现。</p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+
+
+
+<!-- Application footer -->
+<footer class="md-footer">
+
+    <!-- Further information -->
+    <div class="md-footer-meta md-typeset">
+        <div class="md-footer-meta__inner md-grid">
+
+            <!-- Copyright and theme information -->
+            <div class="md-footer-copyright">
+                
+                <div class="md-footer-copyright__highlight">
+                    Copyright &copy; 2020 Kubernetes技术栈
+                </div>
+                
+                powered by
+                <a href="https://www.k8stech.net" title="Kubernetes技术栈">www.k8stech.net</a>
+            </div>
+
+            <!-- Social links -->
+            
+            
+            
+        </div>
+    </div>
+</footer>
+
+
+    </div>
+    
+      <script src="../../../assets/javascripts/application.d9aa80ab.js"></script>
+      
+        
+        
+          
+          <script src="../../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+              
+                <script src="../../../assets/javascripts/lunr/tinyseg.js"></script>
+              
+              
+                <script src="../../../assets/javascripts/lunr/lunr.jp.js"></script>
+              
+            
+          
+          
+        
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../../.."}})</script>
+      
+        <script src="../../../assets/js/hljs/highlight.pack.js"></script>
+      
+        <script src="../../../assets/js/prism.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,16 @@
+apiVersion: v2
+name: wordpress
+description: A Helm chart for Kubernetes
+type: application
+# chart版本
+version: 0.1.0
+# 应用的版本
+appVersion: 5.3.2
+
+# 依赖声明
+dependencies:
+- name: mysql
+  version: 1.6.2
+  repository: http://mirror.azure.cn/kubernetes/charts/
+  condition: mysql.enabled
+

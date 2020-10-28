@@ -1,0 +1,100 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "wordpress.fullname" . }}
+  labels:
+    app: {{ template "wordpress.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  replicas: {{ .Values.replicaCount }}   
+  {{- if .Values.updateStrategy }}
+  strategy: {{ toYaml .Values.updateStrategy | nindent 4 }}
+  {{- end }}
+  selector:
+    matchLabels:
+      app: {{ template "wordpress.fullname" . }}
+      chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+      release: "{{ .Release.Name }}"
+  template:
+    metadata:
+      labels:
+        app: {{ template "wordpress.fullname" . }}
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+        release: "{{ .Release.Name }}"
+    spec:
+      {{- if .Values.nodeSelector }}
+      nodeSelector: {{ toYaml .Values.nodeSelector | nindent 8 }}
+      {{- end }}
+      {{- if .Values.affinity }}
+      affinity: {{ toYaml .Values.affinity | nindent 8 }}
+      {{- end }}
+      {{- if .Values.tolerations }}
+      tolerations: {{ toYaml .Values.tolerations | nindent 8}}
+      {{- end }}
+      volumes:
+      - name: wordpress-data
+        {{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingCliam | default (include "wordpress.fullname" .) }}
+        {{- else }}
+        emptyDir: {}
+        {{- end }}
+      {{- if .Values.image.pullSecrets }}
+      imagePullSecrets:
+      {{- range .Values.image.pullSecrets }}
+      - name: {{ . }}
+      {{- end }}
+      {{- end }}
+      containers:
+      - image: {{ printf "%s:%s" .Values.image.name .Values.image.tag}}
+        name: web
+        imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+        ports:
+        - containerPort: 80
+          name: web
+        env:
+        - name: WORDPRESS_DB_HOST
+          {{- if .Values.mysql.enabled }}
+          value: {{ printf "%s:%d" (include "mysql.fullname" .) (int64 .Values.mysql.service.port) }}
+          {{- else }}
+          value: {{ .Values.externalDatabase.host | quote }}
+          {{- end }}
+        - name: WORDPRESS_DB_USER
+          {{- if .Values.mysql.enabled }}
+          value: {{ .Values.mysql.mysqlUser | quote }}
+          {{- else }}
+          value: {{ .Values.externalDatabase.user | quote }}
+          {{- end }}
+        - name: WORDPRESS_DATABASE_NAME
+          {{- if .Values.mysql.enabled }}
+          value: {{ .Values.mysql.mysqlDatabase | quote }}
+          {{- else }}
+          value: {{ .Values.externalDatabase.database | quote }}
+          {{- end }}
+        - name: WORDPRESS_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              {{- if .Values.mysql.enabled }}
+              name: {{ template "mysql.fullname" . }}
+              key: mysql-password
+              {{- else }}
+              name: {{ template "wordpress.externaldbSecret" . }}
+              key: db-password
+              {{- end }}
+        {{- if .Values.liveness }}
+        livenessProbe: {{ toYaml .Values.liveness | nindent 10 }}
+        {{- end }}
+        {{- if .Values.readiness }}
+        readinessProbe: {{ toYaml .Values.readiness | nindent 10 }}
+        {{- end }}
+        {{- if .Values.lifecycle }}
+        lifecycle: {{ toYaml .Values.lifecycle | nindent 10 }}
+        {{- end }} 
+        {{- if .Values.resources }}
+        resources: {{ toYaml .Values.resources | nindent 10 }}
+        {{- end }}
+        volumeMounts:
+        - name: wordpress-data
+          mountPath: /var/www/html

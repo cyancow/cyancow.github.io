@@ -1,0 +1,1063 @@
+
+
+
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+        <link rel="canonical" href="https://docs.prometheus.cool/controller/job/">
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="复制">
+      
+        <meta name="lang:clipboard.copied" content="已复制">
+      
+        <meta name="lang:search.language" content="jp">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="没有找到符合条件的结果">
+      
+        <meta name="lang:search.result.one" content="找到 1 个符合条件的结果">
+      
+        <meta name="lang:search.result.other" content="# 个符合条件的结果">
+      
+        <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
+      
+      <link rel="shortcut icon" href="../../assets/img/prometheus_logo.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.2">
+    
+    
+      
+        <title>Job 与 CronJob - 云原生监控神器Prometheus</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.982221ab.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.224b79ff.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ef5350">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.1f0bcf2b.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i,700|Ubuntu+Mono">
+        <style>body,input{font-family:"Ubuntu","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../assets/styles/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/styles/prism.css">
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="red" data-md-color-accent="red">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#job-cronjob" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://docs.prometheus.cool" title="云原生监控神器Prometheus" class="md-header-nav__button md-logo">
+          
+            <img src="../../assets/img/prometheus_logo.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              云原生监控神器Prometheus
+            </span>
+            <span class="md-header-nav__topic">
+              Job 与 CronJob
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            键入以开始搜索
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/k8stech/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://docs.prometheus.cool" title="云原生监控神器Prometheus" class="md-nav__button md-logo">
+      
+        <img src="../../assets/img/prometheus_logo.png" width="48" height="48">
+      
+    </a>
+    云原生监控神器Prometheus
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/k8stech/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="介绍" class="md-nav__link">
+      介绍
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      监控基础与概述
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        监控基础与概述
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/whymonitor/" title="为什么要监控" class="md-nav__link">
+      为什么要监控
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/monitorterms/" title="监控术语" class="md-nav__link">
+      监控术语
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/metricstory/" title="指标物语" class="md-nav__link">
+      指标物语
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/monitorcontrast/" title="开源监控对比" class="md-nav__link">
+      开源监控对比
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Prometheus 基础
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Prometheus 基础
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-introduction/" title="Prometheus介绍" class="md-nav__link">
+      Prometheus介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/tsdb-contrast/" title="时序数据库对比" class="md-nav__link">
+      时序数据库对比
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-datamodel/" title="数据模型" class="md-nav__link">
+      数据模型
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/node-exporter/" title="Node_Exporter" class="md-nav__link">
+      Node_Exporter
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-config/" title="Prometheus安装与配置" class="md-nav__link">
+      Prometheus安装与配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Prometheus 进阶
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Prometheus 进阶
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/auto-ops-exporter-1/" title="自动化维护Exporter（一）" class="md-nav__link">
+      自动化维护Exporter（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/auto-ops-exporter-2/" title="自动化维护Exporter（二）" class="md-nav__link">
+      自动化维护Exporter（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/docker-swarm-monitor-1/" title="Docker-Swarm集群监控（一）" class="md-nav__link">
+      Docker-Swarm集群监控（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/docker-swarm-monitor-2/" title="Docker-Swarm集群监控（二）" class="md-nav__link">
+      Docker-Swarm集群监控（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/commonly-exporter/" title="常用Exporter介绍与配置" class="md-nav__link">
+      常用Exporter介绍与配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Prometheus(警报)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Prometheus(警报)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-basic/" title="PromQL详解（一）" class="md-nav__link">
+      PromQL详解（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-operator/" title="PromQL详解（二）" class="md-nav__link">
+      PromQL详解（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-operator2/" title="PromQL详解（三）" class="md-nav__link">
+      PromQL详解（三）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-function/" title="PromQL函数" class="md-nav__link">
+      PromQL函数
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-overview/" title="AlertManager" class="md-nav__link">
+      AlertManager
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-rules-1/" title="Rules详解（一）" class="md-nav__link">
+      Rules详解（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-rules-2/" title="Rules详解（二）" class="md-nav__link">
+      Rules详解（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-receiver/" title="Receiver配置" class="md-nav__link">
+      Receiver配置
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-silences/" title="Silences配置" class="md-nav__link">
+      Silences配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Prometheus(联邦集群)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Prometheus(联邦集群)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/federation-overview/" title="Prometheus 联邦集群" class="md-nav__link">
+      Prometheus 联邦集群
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/pushgateway/" title="Pushgateway 代理" class="md-nav__link">
+      Pushgateway 代理
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/alertmanager-ha/" title="Alertmanager 高可用" class="md-nav__link">
+      Alertmanager 高可用
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Prometheus(服务发现)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Prometheus(服务发现)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-overview/" title="服务发现（文件、DNS）" class="md-nav__link">
+      服务发现（文件、DNS）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-relabeling/" title="服务发现（Relabelling）" class="md-nav__link">
+      服务发现（Relabelling）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-consul/" title="服务发现（Consul）" class="md-nav__link">
+      服务发现（Consul）
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      Prometheus(Operator)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        Prometheus(Operator)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Operator/" title="Operator概述" class="md-nav__link">
+      Operator概述
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-1/" title="手动部署（1）" class="md-nav__link">
+      手动部署（1）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-2/" title="手动部署（2）" class="md-nav__link">
+      手动部署（2）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-3/" title="手动部署（联邦）" class="md-nav__link">
+      手动部署（联邦）
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#job" title="Job" class="md-nav__link">
+    Job
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cronjob" title="CronJob" class="md-nav__link">
+    CronJob
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/k8stech/edit/master/docs/controller/job.md" title="编辑此页" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="job-cronjob">Job 与 CronJob<a class="headerlink" href="#job-cronjob" title="Permanent link">&para;</a></h1>
+<p>今天我们来给大家介绍另外一类资源对象：<code>Job</code>，我们在日常的工作中经常都会遇到一些需要进行批量数据处理和分析的需求，当然也会有按时间来进行调度的工作，在我们的 Kubernetes 集群中为我们提供了 <code>Job</code> 和 <code>CronJob</code> 两种资源对象来应对我们的这种需求。</p>
+<p><code>Job</code> 负责处理任务，即仅执行一次的任务，它保证批处理任务的一个或多个 Pod 成功结束。而<code>CronJob</code> 则就是在 <code>Job</code> 上加上了时间调度。</p>
+<h2 id="job">Job<a class="headerlink" href="#job" title="Permanent link">&para;</a></h2>
+<p>我们用 <code>Job</code> 这个资源对象来创建一个任务，我们定义一个 <code>Job</code> 来执行一个倒计时的任务，对应的资源清单如下所示：(job-demo.yaml)
+<pre class="highlight"><code class="language-yaml">apiVersion: batch/v1
+kind: Job
+metadata:
+  name: job-demo
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: counter
+        image: busybox
+        command:
+        - "bin/sh"
+        - "-c"
+        - "for i in 9 8 7 6 5 4 3 2 1; do echo $i; done"</code></pre></p>
+<p>我们可以看到 <code>Job</code> 中也是一个 Pod 模板，和之前的 Deployment、StatefulSet 之类的是一致的，只是 Pod 中的容器要求是一个任务，而不是一个常驻前台的进程了，因为需要退出，另外值得注意的是 <code>Job</code> 的 <code>RestartPolicy</code> 仅支持 <code>Never</code> 和 <code>OnFailure</code> 两种，不支持 <code>Always</code>，我们知道 <code>Job</code> 就相当于来执行一个批处理任务，执行完就结束了，如果支持 <code>Always</code> 的话是不是就陷入了死循环了？</p>
+<p>直接创建这个 Job 对象：
+<pre class="highlight"><code class="language-shell">$ kubectl apply -f job-demo.yaml
+job.batch/job-demo created
+$ kubectl get job 
+NAME       COMPLETIONS   DURATION   AGE
+job-demo   1/1           26s        3m4s
+$ kubectl get pods         
+NAME                      READY   STATUS      RESTARTS   AGE
+job-demo-frs2r            0/1     Completed   0          2m41s</code></pre></p>
+<p><code>Job</code> 对象创建成功后，我们可以查看下对象的详细描述信息：
+<pre class="highlight"><code class="language-shell">$ kubectl describe job job-demo
+Name:           job-demo
+Namespace:      default
+Selector:       controller-uid=b1191631-c71c-45e7-86c9-ebca69cb6125
+Labels:         controller-uid=b1191631-c71c-45e7-86c9-ebca69cb6125
+                job-name=job-demo
+.......
+Pod Template:
+  Labels:  controller-uid=b1191631-c71c-45e7-86c9-ebca69cb6125
+           job-name=job-demo
+  Containers:
+   ......
+Events:
+  Type    Reason            Age   From            Message
+  ----    ------            ----  ----            -------
+  Normal  SuccessfulCreate  49s   job-controller  Created pod: job-demo-z48h2</code></pre></p>
+<p>可以看到，Job 对象在创建后，它的 Pod 模板，被自动加上了一个 <code>controller-uid=&lt; 一个随机字符串 &gt;</code> 这样的 Label 标签，而这个 Job 对象本身，则被自动加上了这个 Label 对应的 Selector，从而 保证了 Job 与它所管理的 Pod 之间的匹配关系。而 Job 控制器之所以要使用这种携带了 UID 的 Label，就是为了避免不同 Job 对象所管理的 Pod 发生重合。</p>
+<p>我们可以看到很快 Pod 变成了 <code>Completed</code> 状态，这是因为容器的任务执行完成正常退出了，我们可以查看对应的日志：
+<pre class="highlight"><code class="language-shell">$ kubectl logs job-demo-frs2r
+9
+8
+7
+6
+5
+4
+3
+2
+1</code></pre></p>
+<p>如果的任务执行失败了，我们这里定义了 <code>restartPolicy=Never</code>，那么任务在执行失败后 Job 控制器就会不断地尝试创建一个新 Pod，当然，这个尝试肯定不能无限进行下去。我们可以通过 Job 对象的 <code>spec.backoffLimit</code> 字段来定义重试次数，另外需要注意的是 Job 控制器重新创建 Pod 的间隔是呈指数增加的，即下一次重新创建 Pod 的动作会分别发生在 10s、20s、40s… 后。</p>
+<p>如果我们定义的 <code>restartPolicy=OnFailure</code>，那么任务执行失败后，Job 控制器就不会去尝试创建新的 Pod了，它会不断地尝试重启 Pod 里的容器。</p>
+<p>上面我们这里的 Job 任务对应的 Pod 在运行结束后，会变成 <code>Completed</code> 状态，但是如果执行任务的 Pod 因为某种原因一直没有结束怎么办呢？同样我们可以在 Job 对象中通过设置字段 <code>spec.activeDeadlineSeconds</code> 来限制任务运行的最长时间，比如：
+<pre class="highlight"><code class="language-yaml">spec:
+ activeDeadlineSeconds: 100</code></pre></p>
+<p>那么当我们的任务 Pod 运行超过了 100s 后，这个 Job 的所有 Pod 都会被终止，并且， Pod 的终止原因会变成 <code>DeadlineExceeded</code>。</p>
+<p>除此之外，我们还可以通过设置 <code>spec.parallelism</code> 参数来进行并行控制，该参数定义了一个 Job 在任意时间最多可以有多少个 Pod 同时运行。<code>spec.completions</code> 参数可以定义 Job 至少要完成的 Pod 数目。</p>
+<h2 id="cronjob">CronJob<a class="headerlink" href="#cronjob" title="Permanent link">&para;</a></h2>
+<p><code>CronJob</code> 其实就是在 <code>Job</code> 的基础上加上了时间调度，我们可以在给定的时间点运行一个任务，也可以周期性地在给定时间点运行。这个实际上和我们 Linux 中的 <code>crontab</code> 就非常类似了。</p>
+<p>一个 <code>CronJob</code> 对象其实就对应中 <code>crontab</code> 文件中的一行，它根据配置的时间格式周期性地运行一个<code>Job</code>，格式和 <code>crontab</code> 也是一样的。</p>
+<p>crontab 的格式为：<code>分 时 日 月 星期 要运行的命令</code> 。</p>
+<ul>
+<li>第1列分钟0～59 </li>
+<li>第2列小时0～23） </li>
+<li>第3列日1～31 </li>
+<li>第4列月1～12 </li>
+<li>第5列星期0～7（0和7表示星期天） </li>
+<li>第6列要运行的命令</li>
+</ul>
+<p>现在，我们用 <code>CronJob</code> 来管理我们上面的 <code>Job</code> 任务，定义如下所示的资源清单：(cronjob-demo.yaml)
+<pre class="highlight"><code class="language-yaml">apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: cronjob-demo
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: hello
+            image: busybox
+            args:
+            - "bin/sh"
+            - "-c"
+            - "for i in 9 8 7 6 5 4 3 2 1; do echo $i; done"</code></pre></p>
+<p>这里的 Kind 变成了 <code>CronJob</code> 了，要注意的是<code>.spec.schedule</code>字段是必须填写的，用来指定任务运行的周期，格式就和 <code>crontab</code> 一样，另外一个字段是<code>.spec.jobTemplate</code>, 用来指定需要运行的任务，格式当然和 <code>Job</code> 是一致的。还有一些值得我们关注的字段 <code>.spec.successfulJobsHistoryLimit</code> 和 <code>.spec.failedJobsHistoryLimit</code>，表示历史限制，是可选的字段，指定可以保留多少完成和失败的 <code>Job</code>，默认没有限制，所有成功和失败的 <code>Job</code> 都会被保留。然而，当运行一个 <code>CronJob</code> 时，<code>Job</code> 可以很快就堆积很多，所以一般推荐设置这两个字段的值。如果设置限制的值为 0，那么相关类型的 <code>Job</code> 完成后将不会被保留。</p>
+<p>我们直接新建上面的资源对象：
+<pre class="highlight"><code class="language-shell">$ kubectl create -f cronjob-demo.yaml
+cronjob "cronjob-demo" created</code></pre></p>
+<p>然后可以查看对应的 Cronjob 资源对象：
+<pre class="highlight"><code class="language-shell">$ kubectl get cronjob
+NAME           SCHEDULE      SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+cronjob-demo   */1 * * * *   False     0        &lt;none&gt;          7s</code></pre></p>
+<p>稍微等一会儿查看可以发现多了几个 Job 资源对象，这个就是因为上面我们设置的 CronJob 资源对象，每1分钟执行一个新的 Job：
+<pre class="highlight"><code>$ kubectl get job 
+NAME                      COMPLETIONS   DURATION   AGE
+cronjob-demo-1574147280   1/1           6s         2m45s
+cronjob-demo-1574147340   1/1           11s        105s
+cronjob-demo-1574147400   1/1           5s         45s
+$ kubectl get pods
+NAME                      READY   STATUS      RESTARTS   AGE
+cronjob-demo-1574147340-ksd5x   0/1     Completed           0          3m7s
+cronjob-demo-1574147400-pts94   0/1     Completed           0          2m7s
+cronjob-demo-1574147460-t5hcd   0/1     Completed           0          67s
+cronjob-demo-1574147520-vmjfr   0/1     ContainerCreating   0          7s</code></pre></p>
+<p>这个就是 CronJob 的基本用法，一旦不再需要 CronJob，我们可以使用 kubectl 命令删除它：
+<pre class="highlight"><code class="language-shell">$ kubectl delete cronjob cronjob-demo
+cronjob "cronjob-demo" deleted</code></pre></p>
+<p>不过需要注意的是这将会终止正在创建的 Job，但是运行中的 Job 将不会被终止，不会删除 Job 或 它们的 Pod。</p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+
+
+
+<!-- Application footer -->
+<footer class="md-footer">
+
+    <!-- Further information -->
+    <div class="md-footer-meta md-typeset">
+        <div class="md-footer-meta__inner md-grid">
+
+            <!-- Copyright and theme information -->
+            <div class="md-footer-copyright">
+                
+                <div class="md-footer-copyright__highlight">
+                    Copyright &copy; 2020 Kubernetes技术栈
+                </div>
+                
+                powered by
+                <a href="https://www.k8stech.net" title="Kubernetes技术栈">www.k8stech.net</a>
+            </div>
+
+            <!-- Social links -->
+            
+            
+            
+        </div>
+    </div>
+</footer>
+
+
+    </div>
+    
+      <script src="../../assets/javascripts/application.d9aa80ab.js"></script>
+      
+        
+        
+          
+          <script src="../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+              
+                <script src="../../assets/javascripts/lunr/tinyseg.js"></script>
+              
+              
+                <script src="../../assets/javascripts/lunr/lunr.jp.js"></script>
+              
+            
+          
+          
+        
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+        <script src="../../assets/js/hljs/highlight.pack.js"></script>
+      
+        <script src="../../assets/js/prism.js"></script>
+      
+    
+  </body>
+</html>

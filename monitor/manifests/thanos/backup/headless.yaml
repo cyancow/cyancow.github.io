@@ -1,0 +1,15 @@
+#This service creates a srv record for querier to find about store-api's
+apiVersion: v1
+kind: Service
+metadata:
+  name: thanos-store-gateway
+  namespace: kube-mon
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+  - name: grpc
+    port: 10901
+    targetPort: grpc
+  selector:
+    thanos-store-api: "true"

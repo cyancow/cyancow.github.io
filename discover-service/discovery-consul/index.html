@@ -1,0 +1,1705 @@
+
+
+
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+        <link rel="canonical" href="https://docs.prometheus.cool/discover-service/discovery-consul/">
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="复制">
+      
+        <meta name="lang:clipboard.copied" content="已复制">
+      
+        <meta name="lang:search.language" content="jp">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="没有找到符合条件的结果">
+      
+        <meta name="lang:search.result.one" content="找到 1 个符合条件的结果">
+      
+        <meta name="lang:search.result.other" content="# 个符合条件的结果">
+      
+        <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
+      
+      <link rel="shortcut icon" href="../../assets/img/prometheus_logo.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.2">
+    
+    
+      
+        <title>服务发现（Consul） - 云原生监控神器Prometheus</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.982221ab.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.224b79ff.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ef5350">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.1f0bcf2b.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i,700|Ubuntu+Mono">
+        <style>body,input{font-family:"Ubuntu","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../assets/styles/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/styles/prism.css">
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="red" data-md-color-accent="red">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#consul" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://docs.prometheus.cool" title="云原生监控神器Prometheus" class="md-header-nav__button md-logo">
+          
+            <img src="../../assets/img/prometheus_logo.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              云原生监控神器Prometheus
+            </span>
+            <span class="md-header-nav__topic">
+              服务发现（Consul）
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            键入以开始搜索
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/k8stech/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://docs.prometheus.cool" title="云原生监控神器Prometheus" class="md-nav__button md-logo">
+      
+        <img src="../../assets/img/prometheus_logo.png" width="48" height="48">
+      
+    </a>
+    云原生监控神器Prometheus
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/k8stech/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="介绍" class="md-nav__link">
+      介绍
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      监控基础与概述
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        监控基础与概述
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/whymonitor/" title="为什么要监控" class="md-nav__link">
+      为什么要监控
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/monitorterms/" title="监控术语" class="md-nav__link">
+      监控术语
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/metricstory/" title="指标物语" class="md-nav__link">
+      指标物语
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/monitorcontrast/" title="开源监控对比" class="md-nav__link">
+      开源监控对比
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Prometheus 基础
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Prometheus 基础
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-introduction/" title="Prometheus介绍" class="md-nav__link">
+      Prometheus介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/tsdb-contrast/" title="时序数据库对比" class="md-nav__link">
+      时序数据库对比
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-datamodel/" title="数据模型" class="md-nav__link">
+      数据模型
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/node-exporter/" title="Node_Exporter" class="md-nav__link">
+      Node_Exporter
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-config/" title="Prometheus安装与配置" class="md-nav__link">
+      Prometheus安装与配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Prometheus 进阶
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Prometheus 进阶
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/auto-ops-exporter-1/" title="自动化维护Exporter（一）" class="md-nav__link">
+      自动化维护Exporter（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/auto-ops-exporter-2/" title="自动化维护Exporter（二）" class="md-nav__link">
+      自动化维护Exporter（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/docker-swarm-monitor-1/" title="Docker-Swarm集群监控（一）" class="md-nav__link">
+      Docker-Swarm集群监控（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/docker-swarm-monitor-2/" title="Docker-Swarm集群监控（二）" class="md-nav__link">
+      Docker-Swarm集群监控（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/commonly-exporter/" title="常用Exporter介绍与配置" class="md-nav__link">
+      常用Exporter介绍与配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Prometheus(警报)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Prometheus(警报)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-basic/" title="PromQL详解（一）" class="md-nav__link">
+      PromQL详解（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-operator/" title="PromQL详解（二）" class="md-nav__link">
+      PromQL详解（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-operator2/" title="PromQL详解（三）" class="md-nav__link">
+      PromQL详解（三）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-function/" title="PromQL函数" class="md-nav__link">
+      PromQL函数
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-overview/" title="AlertManager" class="md-nav__link">
+      AlertManager
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-rules-1/" title="Rules详解（一）" class="md-nav__link">
+      Rules详解（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-rules-2/" title="Rules详解（二）" class="md-nav__link">
+      Rules详解（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-receiver/" title="Receiver配置" class="md-nav__link">
+      Receiver配置
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-silences/" title="Silences配置" class="md-nav__link">
+      Silences配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Prometheus(联邦集群)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Prometheus(联邦集群)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/federation-overview/" title="Prometheus 联邦集群" class="md-nav__link">
+      Prometheus 联邦集群
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/pushgateway/" title="Pushgateway 代理" class="md-nav__link">
+      Pushgateway 代理
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/alertmanager-ha/" title="Alertmanager 高可用" class="md-nav__link">
+      Alertmanager 高可用
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" checked>
+    
+    <label class="md-nav__link" for="nav-7">
+      Prometheus(服务发现)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Prometheus(服务发现)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../discovery-overview/" title="服务发现（文件、DNS）" class="md-nav__link">
+      服务发现（文件、DNS）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../discovery-relabeling/" title="服务发现（Relabelling）" class="md-nav__link">
+      服务发现（Relabelling）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        服务发现（Consul）
+      </label>
+    
+    <a href="./" title="服务发现（Consul）" class="md-nav__link md-nav__link--active">
+      服务发现（Consul）
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#consul" title="Consul架构" class="md-nav__link">
+    Consul架构
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#consul_1" title="Consul集群安装环境" class="md-nav__link">
+    Consul集群安装环境
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#consul-177" title="二进制安装Consul 1.7.7" class="md-nav__link">
+    二进制安装Consul 1.7.7
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server1-3" title="创建Server{1-3}配置文件" class="md-nav__link">
+    创建Server{1-3}配置文件
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" title="启动服务" class="md-nav__link">
+    启动服务
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" title="查看集群" class="md-nav__link">
+    查看集群
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consulsyslog" title="将Consul日志加入Syslog" class="md-nav__link">
+    将Consul日志加入Syslog
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prometheusconsul" title="Prometheus集成Consul" class="md-nav__link">
+    Prometheus集成Consul
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#consul-template" title="使用Consul-template动态配置服务" class="md-nav__link">
+    使用Consul-template动态配置服务
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" title="结语：" class="md-nav__link">
+    结语：
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      Prometheus(Operator)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        Prometheus(Operator)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Operator/" title="Operator概述" class="md-nav__link">
+      Operator概述
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-1/" title="手动部署（1）" class="md-nav__link">
+      手动部署（1）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-2/" title="手动部署（2）" class="md-nav__link">
+      手动部署（2）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-3/" title="手动部署（联邦）" class="md-nav__link">
+      手动部署（联邦）
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#consul" title="Consul架构" class="md-nav__link">
+    Consul架构
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#consul_1" title="Consul集群安装环境" class="md-nav__link">
+    Consul集群安装环境
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#consul-177" title="二进制安装Consul 1.7.7" class="md-nav__link">
+    二进制安装Consul 1.7.7
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server1-3" title="创建Server{1-3}配置文件" class="md-nav__link">
+    创建Server{1-3}配置文件
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" title="启动服务" class="md-nav__link">
+    启动服务
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" title="查看集群" class="md-nav__link">
+    查看集群
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consulsyslog" title="将Consul日志加入Syslog" class="md-nav__link">
+    将Consul日志加入Syslog
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prometheusconsul" title="Prometheus集成Consul" class="md-nav__link">
+    Prometheus集成Consul
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#consul-template" title="使用Consul-template动态配置服务" class="md-nav__link">
+    使用Consul-template动态配置服务
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" title="结语：" class="md-nav__link">
+    结语：
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/k8stech/edit/master/docs/discover-service/discovery-consul.md" title="编辑此页" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                  <h1>服务发现（Consul）</h1>
+                
+                <blockquote>
+<p>本章节会对consul的架构与配置做全面讲解。</p>
+</blockquote>
+<h3 id="consul">Consul架构<a class="headerlink" href="#consul" title="Permanent link">&para;</a></h3>
+<p><img alt="" src="https://images.k8stech.net/consul-architecture.png" /></p>
+<p>上图是官网提供的一个事例系统图，图中的Server是consul服务端高可用集群，Client是consul客户端。consul客户端不保存数据，客户端将接收到的请求转发给响应的Server端。Server之间通过局域网或广域网通信实现数据一致性。每个Server或Client都是一个consul agent。</p>
+<p>Consul集群间使用了GOSSIP协议通信和raft一致性算法。上面这张图涉及到了很多术语：</p>
+<ul>
+<li>
+<p>Agent——agent是一直运行在Consul集群中每个成员上的守护进程。通过运行consul agent来启动。agent可以运行在client或者server模式。指定节点作为client或者server是非常简单的，除非有其他agent实例。所有的agent都能运行DNS或者HTTP接口，并负责运行时检查和保持服务同步。</p>
+</li>
+<li>
+<p>Client——一个Client是一个转发所有RPC到server的代理。这个client是相对无状态的。client唯一执行的后台活动是加入LAN gossip池。这有一个最低的资源开销并且仅消耗少量的网络带宽。</p>
+</li>
+<li>
+<p>Server——一个server是一个有一组扩展功能的代理，这些功能包括参与Raft选举，维护集群状态，响应RPC查询，与其他数据中心交互WAN gossip和转发查询给leader或者远程数据中心。</p>
+</li>
+<li>
+<p>DataCenter——虽然数据中心的定义是显而易见的，但是有一些细微的细节必须考虑。例如，在EC2中，多个可用区域被认为组成一个数据中心。我们定义数据中心为一个私有的，低延迟和高带宽的一个网络环境。这不包括访问公共网络，但是对于我们而言，同一个EC2中的多个可用区域可以被认为是一个数据中心的一部分。</p>
+</li>
+<li>
+<p>Consensus——一致性，使用Consensus来表明就leader选举和事务的顺序达成一致。为了以容错方式达成一致，一般有超过半数一致则可以认为整体一致。Consul使用Raft实现一致性，进行leader选举，在consul中的使用bootstrap时，可以进行自选，其他server加入进来后bootstrap就可以取消。</p>
+</li>
+<li>
+<p>Gossip——Consul建立在Serf的基础之上，它提供了一个用于多播目的的完整的gossip协议。Serf提供成员关系，故障检测和事件广播。Serf是去中心化的服务发现和编制的解决方案，节点失败侦测与发现，具有容错、轻量、高可用的特点。</p>
+</li>
+<li>
+<p>LAN Gossip——它包含所有位于同一个局域网或者数据中心的所有节点。</p>
+</li>
+<li>
+<p>WAN Gossip——它只包含Server。这些server主要分布在不同的数据中心并且通常通过因特网或者广域网通信。</p>
+</li>
+<li>
+<p>RPC——远程过程调用。这是一个允许client请求server的请求/响应机制。</p>
+</li>
+</ul>
+<p>在每个数据中心，client和server是混合的。一般建议有3-5台server。这是基于有故障情况下的可用性和性能之间的权衡结果，因为越多的机器加入达成共识越慢。然而，并不限制client的数量，它们可以很容易的扩展到数千或者数万台。</p>
+<p>同一个数据中心的所有节点都必须加入gossip协议。这意味着gossip协议包含一个给定数据中心的所有节点。这服务于几个目的：第一，不需要在client上配置server地址。发现都是自动完成的。第二，检测节点故障的工作不是放在server上，而是分布式的。这使的故障检测相比心跳机制有更高的可扩展性。第三：它用来作为一个消息层来通知事件，比如leader选举发生时。</p>
+<p>每个数据中心的server都是Raft节点集合的一部分。这意味着它们一起工作并选出一个leader，一个有额外工作的server。leader负责处理所有的查询和事务。作为一致性协议的一部分，事务也必须被复制到所有其他的节点。因为这一要求，当一个非leader得server收到一个RPC请求时，它将请求转发给集群leader。</p>
+<p>server节点也作为WAN gossip Pool的一部分。这个Pool不同于LAN Pool，因为它是为了优化互联网更高的延迟，并且它只包含其他Consul server节点。这个Pool的目的是为了允许数据中心能够以low-touch的方式发现彼此。这使得一个新的数据中心可以很容易的加入现存的WAN gossip。因为server都运行在这个pool中，它也支持跨数据中心请求。当一个server收到来自另一个数据中心的请求时，它随即转发给正确数据中心一个server。该server再转发给本地leader。</p>
+<p>这使得数据中心之间只有一个很低的耦合，但是由于故障检测，连接缓存和复用，跨数据中心的请求都是相对快速和可靠的。</p>
+<h3 id="consul_1">Consul集群安装环境<a class="headerlink" href="#consul_1" title="Permanent link">&para;</a></h3>
+<p>此处启动的是单实例多端口，如果你是多实例，请自行更改相关配置</p>
+<table>
+<thead>
+<tr>
+<th>ServerName</th>
+<th>IP Addr &amp; Port</th>
+<th>Consul Roles</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>server1</td>
+<td>192.168.1.153:8500</td>
+<td>Server1</td>
+</tr>
+<tr>
+<td>server2</td>
+<td>192.168.1.154:8500</td>
+<td>Server2</td>
+</tr>
+<tr>
+<td>server3</td>
+<td>192.168.1.155:8500</td>
+<td>Server3</td>
+</tr>
+<tr>
+<td>node-exporter</td>
+<td>192.168.1.151:9100</td>
+<td>Node-Exporter</td>
+</tr>
+</tbody>
+</table>
+<h4 id="consul-177">二进制安装Consul 1.7.7<a class="headerlink" href="#consul-177" title="Permanent link">&para;</a></h4>
+<p>配置为systemd启动, Docker方式部署链接(https://juejin.im/post/5d4289e1e51d45620b21c34a)</p>
+<pre class="highlight"><code class="language-bash"># 下载consul
+CONSUL_VERSION='1.7.7'
+wget https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip
+
+# 解压安装
+unzip consul_${CONSUL_VERSION}_linux_amd64.zip
+chown root:root consul
+mv consul /usr/local/bin/
+consul --version
+
+# 启用自动补全
+consul -autocomplete-install
+complete -C /usr/local/bin/consul consul
+
+# 创建用户和目录
+useradd -M -s /sbin/nologin consul
+mkdir -p /data/consul/server/{data,config}
+chown -R consul.consul /data/consul/
+
+# 配置Systemd
+
+# consul-server1
+cat &gt; /lib/systemd/system/consul-server1.service &lt;&lt; EOF
+[Unit]
+Description="consul server1"
+Requires=network-online.target
+After=network-online.target
+
+[Service]
+User=consul
+Group=consul
+ExecStart=/usr/local/bin/consul agent -config-dir=/data/consul/server/config
+ExecReload=/usr/local/bin/consul reload
+KillMode=process
+Restart=on-failure
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# consul-server2
+cat &gt; /lib/systemd/system/consul-server2.service &lt;&lt; EOF
+[Unit]
+Description="consul server2"
+Requires=network-online.target
+After=network-online.target
+
+[Service]
+User=consul
+Group=consul
+ExecStart=/usr/local/bin/consul agent -config-dir=/data/consul/server/config
+ExecReload=/usr/local/bin/consul reload
+KillMode=process
+Restart=on-failure
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# consul-server3
+cat &gt; /lib/systemd/system/consul-server3.service &lt;&lt; EOF
+[Unit]
+Description="consul server3"
+Requires=network-online.target
+After=network-online.target
+
+[Service]
+User=consul
+Group=consul
+ExecStart=/usr/local/bin/consul agent -config-dir=/data/consul/server/config
+ExecReload=/usr/local/bin/consul reload
+KillMode=process
+Restart=on-failure
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
+EOF</code></pre>
+
+<h4 id="server1-3">创建Server{1-3}配置文件<a class="headerlink" href="#server1-3" title="Permanent link">&para;</a></h4>
+<pre class="highlight"><code class="language-bash"># 生成密钥
+CONSUL_KEY=`consul keygen`
+
+# node_id 一定不可以重复,server name可以随便定义
+
+# 创建server1配置文件
+cat &gt; /data/consul/server/config/config.json &lt;&lt; EOF
+{
+  "datacenter": "prometheus",
+  "bind_addr":"192.168.1.153",
+  "log_level": "INFO",
+  "node_id":"09d82408-bc4f-49e0-1111-61ef1d4842f7",
+  "node_name": "server1",
+  "data_dir":"/data/consul/server/data",
+  "server": true,
+  "bootstrap_expect": 3,
+  "encrypt": "${CONSUL_KEY}",
+  "ui":true,
+  "client_addr":"0.0.0.0",
+  "retry_join":["192.168.1.153:8301","192.168.1.154:8301","192.168.1.155:8301"],
+  "ports": {
+     "http": 8500,
+     "dns": 8600,
+     "serf_lan":8301,
+     "serf_wan":8302,
+     "server":8300,
+     "grpc":8400
+  },
+  "acl": {
+    "enabled": true,
+    "default_policy": "deny",
+    "down_policy": "extend-cache",
+    "tokens":{
+        "master":"${CONSUL_HTTP_TOKEN}",
+        "agent":"${CONSUL_HTTP_TOKEN}"
+    }
+  }
+}
+EOF
+
+# 创建server2配置文件
+cat &gt; /data/consul/server/config/config.json &lt;&lt; EOF
+{
+  "datacenter": "prometheus",
+  "bind_addr":"192.168.1.154",
+  "log_level": "INFO",
+  "node_id":"613ccd6e-68d1-3bbd-2222-3cbc450f019d",
+  "node_name": "server2",
+  "data_dir":"/data/consul/server/data",
+  "server": true,
+  "bootstrap_expect": 3,
+  "encrypt": "${CONSUL_KEY}",
+  "ui":true,
+  "client_addr":"0.0.0.0",
+  "retry_join":["192.168.1.153:8301","192.168.1.154:8301","192.168.1.155:8301"],
+  "ports": {
+     "http": 8500,
+     "dns": 8600,
+     "serf_lan":8301,
+     "serf_wan":8302,
+     "server":8300,
+     "grpc":8400
+  },
+  "acl": {
+    "enabled": true,
+    "default_policy": "deny",
+    "down_policy": "extend-cache",
+    "tokens":{
+        "master":"${CONSUL_HTTP_TOKEN}",
+        "agent":"${CONSUL_HTTP_TOKEN}"
+    }
+  }
+}
+EOF
+
+# 创建server3配置文件
+cat &gt; /data/consul/server/config/config.json &lt;&lt; EOF
+{
+  "datacenter": "prometheus",
+  "bind_addr":"192.168.1.155",
+  "log_level": "INFO",
+  "node_id":"d8a09ffd-7ccb-84bd-3333-8d8b7a01951e",
+  "node_name": "server3",
+  "data_dir":"/data/consul/server/data",
+  "server": true,
+  "bootstrap_expect": 3,
+  "encrypt": "${CONSUL_KEY}",
+  "ui":true,
+  "client_addr":"0.0.0.0",
+  "retry_join":["192.168.1.153:8301","192.168.1.154:8301","192.168.1.155:8301"],
+  "ports": {
+     "http": 8500,
+     "dns": 8600,
+     "serf_lan":8301,
+     "serf_wan":8302,
+     "server":8300,
+     "grpc":8400
+  },
+  "acl": {
+    "enabled": true,
+    "default_policy": "deny",
+    "down_policy": "extend-cache",
+    "tokens":{
+        "master":"${CONSUL_HTTP_TOKEN}",
+        "agent":"${CONSUL_HTTP_TOKEN}"
+    }
+  }
+}
+EOF</code></pre>
+
+<h4 id="_1">启动服务<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h4>
+<pre class="highlight"><code class="language-bash">systemctl enable consul-server1 &amp;&amp; systemctl start consul-server1
+systemctl enable consul-server2 &amp;&amp; systemctl start consul-server2
+systemctl enable consul-server3 &amp;&amp; systemctl start consul-server3
+systemctl status consul-server1</code></pre>
+
+<p>生成http_acl_token，写入config.jso中的tokens数组中的master与agent。<code>注意，consul acl bootstrap只能执行一次.</code></p>
+<pre class="highlight"><code class="language-bash">consul acl bootstrap
+AccessorID:       ae4f5026-73e7-ff56-548c-3ae0fc76022f
+SecretID:         08ad8862-f702-eb26-0276-d8255b11267e
+Description:      Bootstrap Token (Global Management)
+Local:            false
+Create Time:      2020-09-02 23:25:47.533701389 +0800 CST
+Policies:
+   00000000-0000-0000-0000-000000000001 - global-management
+AccessorID:       ae4f5026-73e7-ff56-548c-3ae0fc76022f
+SecretID:         08ad8862-f702-eb26-0276-d8255b11267e
+export CONSUL_HTTP_TOKEN='your_token'
+</code></pre>
+
+<h4 id="_2">查看集群<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h4>
+<p>返回空节点是正常的，因为开启了ACL，所以访问的时候需要加入token，如果<code>CONSUL_HTTP_TOKEN</code>变量已经加入profile，不需要在指定token。</p>
+<pre class="highlight"><code class="language-bash">
+# 环境变量
+cat &gt;&gt; /etc/profile &lt;&lt; EOF
+export CONSUL_HTTP_TOKEN='08ad8862-f702-eb26-0276-d8255b11267e'
+EOF
+
+# consul members  --token='08ad8862-f702-eb26-0276-d8255b11267e' 
+Node     Address             Status  Type    Build  Protocol  DC          Segment
+server1  192.168.1.153:8301  alive   server  1.7.7  2         prometheus  &lt;all&gt;
+server2  192.168.1.154:8301  alive   server  1.7.7  2         prometheus  &lt;all&gt;
+server3  192.168.1.155:8301  alive   server  1.7.7  2         prometheus  &lt;all&gt;
+
+# 验证集群UI
+在页面http://127.0.0.1:8500/ui/prometheus/acls/tokens 输入配置中的 master token，再刷新界面可以在services和nodes中查看到信息
+
+# 验证API，通过在header中增加x-consul-token则可返回节点列表
+curl http://127.0.0.1:8500/v1/catalog/nodes -H 'x-consul-token: ${CONSUL_HTTP_TOKEN}'</code></pre>
+
+<h4 id="consulsyslog">将Consul日志加入Syslog<a class="headerlink" href="#consulsyslog" title="Permanent link">&para;</a></h4>
+<p>此处为可选项，如果你需要单独将日志输出到ELK，那么此项配置非常有必要，因为默认的日志都打到syslog中了。</p>
+<pre class="highlight"><code class="language-bash"># 创建目录&amp;赋权
+mkdir -p /var/log/consul/
+chown -R syslog.syslog /var/log/consul/
+
+# 创建日志配置文件
+cat &gt;/etc/rsyslog.d/consul.conf &lt;&lt;EOF
+local0.* /var/log/consul/consul.log
+EOF
+
+# 修改默认配置文件中的以下内容
+vim /etc/rsyslog.d/50-default.conf
+
+# 变更前
+*.*;auth,authpriv.none          -/var/log/syslog
+
+# 变更后
+*.*;auth,authpriv.none,local0.none          -/var/log/syslog
+
+# 重启rsyslog让配置生效。
+$ systemctl restart rsyslog
+
+# 创建日志轮循规则
+$ cat &gt;/etc/logrotate.d/consul &lt;&lt;EOF
+/var/log/consul/*log {
+missingok
+compress
+notifempty
+daily
+rotate 5
+create 0600 root root
+}
+EOF
+
+# 在Systemd启动脚本中加入`-syslog`参数
+sed -i 's@ExecStart=/usr/local/bin/consul agent@ExecStart=/usr/local/bin/consul agent -syslog@g' /lib/systemd/system/consul-server{1..3}.service
+
+# 重启服务
+systemctl daemon-reload &amp;&amp; systemctl restart consul-server1
+systemctl daemon-reload &amp;&amp; systemctl restart consul-server2
+systemctl daemon-reload &amp;&amp; systemctl restart consul-server3
+
+# 查看输出日志，对于加入ELK的配置就不过多描述了，如果想了解，加入我们的qq群与微信群咨询相关解决方案。
+tail -f /var/log/consul/consul.log</code></pre>
+
+<p>FAQ : <code>如果集群加入失败 或 提示：Error retrieving members: Unexpected response code: 403 (ACL not found)，toekn格式不对，需要重新检查集群节点tokens配置,格式为:'55eca91c-b5f7-e82d-7777-dba7637e8888'，然后删除/data/consul/server{1..3}/data/目录下的数据，重启服务即可。</code></p>
+<h4 id="prometheusconsul">Prometheus集成Consul<a class="headerlink" href="#prometheusconsul" title="Permanent link">&para;</a></h4>
+<pre class="highlight"><code class="language-bash"># 基于AWS EC2 REDIS 发现规则
+
+cat &gt;&gt; /data/prometheus/conf/prometheus.yml &lt;&lt;EOF
+  - job_name: 'ec2_exporter'
+      consul_sd_configs:
+          - server: 172.26.42.229:8500
+          token: '${CONSUL_HTTP_TOKEN}'
+          services: ['node_exporter']
+      relabel_configs:
+          - source_labels: [__address__]
+          regex: 172.26.42.229:8300
+          action: drop
+          - source_labels: [__meta_consul_tags]
+          regex: ".*,prod,.*"
+          replacement: prod
+          action: replace
+          target_label: env
+
+  - job_name: 'redis_exporter'
+      consul_sd_configs:
+          - server: 172.26.42.229:28500
+          token: '${CONSUL_HTTP_TOKEN}'
+          services: ['redis_exporter']
+      relabel_configs:
+          - source_labels: [__address__]
+          regex: 172.26.42.229:28300
+          action: drop
+          - source_labels: [__meta_consul_tags]
+          regex: ".*,prod,.*"
+          replacement: prod
+          action: replace
+          target_label: env
+  - job_name: 'mysql_exporter'
+      consul_sd_configs:
+          - server: 172.26.42.229:38500
+          token: '${CONSUL_HTTP_TOKEN}'
+          services: ['mysql_exporter']
+      relabel_configs:
+          - source_labels: [__address__]
+          regex: 172.26.42.229:38300
+          action: drop
+          - source_labels: [__meta_consul_tags]
+          regex: ".*,prod,.*"
+          replacement: prod
+          action: replace
+          target_label: env
+EOF
+
+
+# registered nginx01 service to consul1 , ID为唯一标识，用于删除，Name就是consul中service字段的发现关键字，tag可以依据自己的需求relableing。
+curl -H "x-consul-token: ${CONSUL_HTTP_TOKEN}" -X PUT -d '{"ID": "node_exporter01", "Name": "node_exporter", "Address": "192.168.1.220", "Port": 9100, "Tags": ["prod"], "EnableTagOverride": false}' \
+http://192.168.1.153:8500/v1/agent/service/register
+
+# registered redis01 to consul2
+curl -H "x-consul-token: ${CONSUL_HTTP_TOKEN}" -X PUT -d '{"ID": "redis_exporter01", "Name": "redis_exporter", "Address": "172.26.42.229", "Port": 9121, "Tags": ["prod"], "EnableTagOverride": false}' \
+http://192.168.1.153:8500/v1/agent/service/register
+
+# registered mysql01 to consul2
+curl -H "x-consul-token: ${CONSUL_HTTP_TOKEN}" -X PUT -d '{"ID": "mysql_exporter01", "Name": "mysql_exporter", "Address": "172.26.42.229", "Port": 9105, "Tags": ["prod"], "EnableTagOverride": false}' \
+http://192.168.1.153:8500/v1/agent/service/register 
+
+# delete nginx01 service 
+curl -X PUT -H "x-consul-token: ${CONSUL_HTTP_TOKEN}" http://192.168.1.153:8500/v1/agent/service/deregister/node_exporter01
+
+# delete redis01 service
+curl -X PUT -H "x-consul-token: ${CONSUL_HTTP_TOKEN}" http://192.168.1.153:8500/v1/agent/service/deregister/redis_exporter01
+
+# delete mysql_exporter01 service
+curl -X PUT -H "x-consul-token: ${CONSUL_HTTP_TOKEN}" http://192.168.1.153:8500/v1/agent/service/deregister/mysql_exporter01
+</code></pre>
+
+<h3 id="consul-template">使用Consul-template动态配置服务<a class="headerlink" href="#consul-template" title="Permanent link">&para;</a></h3>
+<pre class="highlight"><code class="language-bash"># 安装Consul-template 下载地址：https://releases.hashicorp.com/consul-template/
+wget https://releases.hashicorp.com/consul-template/0.22.0/consul-template_0.22.0_linux_amd64.zip
+unzip consul-template_0.22.0_linux_amd64.zip
+mv consul-template /usr/local/bin/
+# 查看版本
+consul-template -v
+consul-template v0.22.0 (6cae10fe)
+
+#常用参数的作用：
+-consul-auth=&lt;username[:password]&gt;     # 设置基本的认证用户名和密码。
+-consul-addr=&lt;address&gt;                 # 设置Consul实例的地址。
+-max-stale=&lt;duration&gt;                  # 查询过期的最大频率，默认是1s。
+-dedup                                 # 启用重复数据删除，当许多consul template实例渲染一个模板的时候可以降低consul的负载。
+-consul-ssl                            # 使用https连接Consul。
+-consul-ssl-verify                     # 通过SSL连接的时候检查证书。
+-consul-ssl-cert                       # SSL客户端证书发送给服务器。
+-consul-ssl-key                        # 客户端认证时使用的SSL/TLS私钥。
+-consul-ssl-ca-cert                    # 验证服务器的CA证书列表。
+-consul-token=&lt;token&gt;                  # 设置Consul API的token。
+-syslog                                # 把标准输出和标准错误重定向到syslog，syslog的默认级别是local0。
+-syslog-facility=&lt;facility&gt;            # 设置syslog级别，默认是local0，必须和-syslog配合使用。
+-template=&lt;template&gt;                   # 增加一个需要监控的模板，格式是：'templatePath:outputPath(:command)'，多个模板则可以设置多次。
+-wait=&lt;duration&gt;                       # 当呈现一个新的模板到系统和触发一个命令的时候，等待的最大最小时间。如果最大值被忽略，默认是最小值的4倍。
+-retry=&lt;duration&gt;                      # 当在和consul api交互的返回值是error的时候，等待的时间，默认是5s。
+-config=&lt;path&gt;                         # 配置文件或者配置目录的路径。
+-pid-file=&lt;path&gt;                       # PID文件的路径。
+-log-level=&lt;level&gt;                     # 设置日志级别，可以是"debug","info", "warn" (default), and "err"。
+-dry                                   # Dump生成的模板到标准输出，不会生成到磁盘。
+-once                                  # 运行consul-template一次后退出，不以守护进程运行
+
+# 在conf目录下创建1个nginx.json的配置文件
+cat &gt;&gt; /data/consul/server1/config/nginx.json &lt;&lt;EOF
+{
+    "service":{
+        "name":"nginx",
+        "tags":[
+            "web"
+        ],
+        "port":80,
+        "check":{
+            "http":"http://127.0.0.1:80",
+            "interval":"10s"
+        },
+        "token":"233b604b-b92e-48c8-a253-5f11514e4b50"
+    }
+}
+EOF
+
+# 热加载配置文件
+consul reload
+# 验证服务是否注册成功
+curl -H "x-consul-token: ${CONSUL_HTTP_TOKEN}" http://172.26.42.229:8500/v1/catalog/service/nginx | python -m json.tool
+[
+    {
+        "Address": "192.168.1.153",
+        "CreateIndex": 21233,
+        "Datacenter": "prometheus",
+        "ID": "09d82408-bc4f-49e0-4208-61ef1d4842f7",
+        "ModifyIndex": 21233,
+        "Node": "server1",
+        "NodeMeta": {
+            "consul-network-segment": ""
+        },
+        "ServiceAddress": "",
+        "ServiceConnect": {},
+        "ServiceEnableTagOverride": false,
+        "ServiceID": "nginx",
+        "ServiceKind": "",
+        "ServiceMeta": {},
+        "ServiceName": "nginx",
+        "ServicePort": 80,
+        "ServiceProxy": {
+            "MeshGateway": {}
+        },
+        "ServiceTags": [
+            "web"
+        ],
+        "ServiceWeights": {
+            "Passing": 1,
+            "Warning": 1
+        },
+        "TaggedAddresses": {
+            "lan": "192.168.1.153",
+            "wan": "192.168.1.155"
+        }
+    }
+]
+
+# 创建模板
+cat &gt; tmpltest.ctmpl &lt;&lt; EOF
+{{range services}}
+{{.Name}}
+{{range .Tags}}
+{{.}}{{end}}
+{{end}}
+EOF
+
+# 调用模板渲染
+consul-template -consul-addr 192.168.1.153:8500 -template "/data/consul/consul-template/conf/tmpltest.ctmpl:result" -once
+
+# 查看模板渲染的输出结果，返回的结果：consul是系统自带的服务，nginx是刚才注册的服务,Tags是web
+cat result
+
+consul
+
+nginx
+
+web
+
+# 创建nginx模板文件
+cat &gt;&gt; /data/consul/consul-template/conf/nginx.conf.ctmpl &lt;&lt; EOF
+{{range services}} {{$name := .Name}} {{$service := service .Name}}
+upstream {{$name}} {
+  zone upstream-{{$name}} 64k;
+  {{range $service}}server {{.Address}}:{{.Port}} max_fails=3 fail_timeout=60 weight=1;
+  {{else}}server 127.0.0.1:65535; # force a 502{{end}}
+} {{end}}
+
+server {
+  listen 80 default_server;
+
+  location / {
+    root /usr/share/nginx/html/;
+    index index.html;
+  }
+
+  location /stub_status {
+    stub_status;
+  }
+
+{{range services}} {{$name := .Name}}
+  location /{{$name}} {
+    proxy_pass http://{{$name}};
+  }
+{{end}}
+}
+EOF
+
+# 调用模板文件生成Nginx配置文件
+consul-template -consul-addr 192.168.1.153:8500 -template "/data/consul/consul-template/conf/nginx.conf.ctmpl:nginx.conf" -once
+
+# 为了更加安全，token从环境变量里读取，使用CONSUL_TOKEN和VAULT_TOKEN。强烈建议你不要把token放到未加密的文本配置文件中。
+# 创建一个nginx.hcl文件
+cat &gt;&gt; nginx.hcl &lt;&lt; EOF
+consul {
+address = "192.168.1.153:8500"
+}
+
+template {
+source = "/data/consul/consul-template/conf/nginx.conf.ctmpl"
+destination = "/etc/nginx/conf/conf.d/default.conf"
+command = "service nginx reload"
+}
+EOF
+
+# 执行渲染命令
+consul-template -config "nginx.hcl:test.out"
+
+# 同时渲染多个template并放出后台启动
+cat &gt; consul_temp.sh &lt;&lt; EOF
+#!/bin/bash
+#prom 
+cd /data/consul/consul-template/ &amp;&amp; nohup /usr/local/bin/consul-template -config=/data/consul/consul-template/hcl_conf/ &amp; 2&gt;&amp;1
+EOF
+</code></pre>
+
+<h3 id="_3">结语：<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>相比于直接使用静态配置和基于文件发现，是不利于云环境以及k8s环境的，因为我们大多时候更多监控对象都是动态的。因此，通过服务发现，使得Prometheus相比于其他传统监控解决方案更适用于云以及k8s环境下的监控需求。</p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+
+
+
+<!-- Application footer -->
+<footer class="md-footer">
+
+    <!-- Further information -->
+    <div class="md-footer-meta md-typeset">
+        <div class="md-footer-meta__inner md-grid">
+
+            <!-- Copyright and theme information -->
+            <div class="md-footer-copyright">
+                
+                <div class="md-footer-copyright__highlight">
+                    Copyright &copy; 2020 Kubernetes技术栈
+                </div>
+                
+                powered by
+                <a href="https://www.k8stech.net" title="Kubernetes技术栈">www.k8stech.net</a>
+            </div>
+
+            <!-- Social links -->
+            
+            
+            
+        </div>
+    </div>
+</footer>
+
+
+    </div>
+    
+      <script src="../../assets/javascripts/application.d9aa80ab.js"></script>
+      
+        
+        
+          
+          <script src="../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+              
+                <script src="../../assets/javascripts/lunr/tinyseg.js"></script>
+              
+              
+                <script src="../../assets/javascripts/lunr/lunr.jp.js"></script>
+              
+            
+          
+          
+        
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+        <script src="../../assets/js/hljs/highlight.pack.js"></script>
+      
+        <script src="../../assets/js/prism.js"></script>
+      
+    
+  </body>
+</html>

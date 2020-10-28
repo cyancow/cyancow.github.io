@@ -1,0 +1,2467 @@
+
+
+
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+        <link rel="canonical" href="https://docs.prometheus.cool/advanced/commonly-exporter/">
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="复制">
+      
+        <meta name="lang:clipboard.copied" content="已复制">
+      
+        <meta name="lang:search.language" content="jp">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="没有找到符合条件的结果">
+      
+        <meta name="lang:search.result.one" content="找到 1 个符合条件的结果">
+      
+        <meta name="lang:search.result.other" content="# 个符合条件的结果">
+      
+        <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
+      
+      <link rel="shortcut icon" href="../../assets/img/prometheus_logo.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.2">
+    
+    
+      
+        <title>常用Exporter介绍与配置 - 云原生监控神器Prometheus</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.982221ab.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.224b79ff.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ef5350">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.1f0bcf2b.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i,700|Ubuntu+Mono">
+        <style>body,input{font-family:"Ubuntu","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../assets/styles/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/styles/prism.css">
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="red" data-md-color-accent="red">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#exporter" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://docs.prometheus.cool" title="云原生监控神器Prometheus" class="md-header-nav__button md-logo">
+          
+            <img src="../../assets/img/prometheus_logo.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              云原生监控神器Prometheus
+            </span>
+            <span class="md-header-nav__topic">
+              常用Exporter介绍与配置
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            键入以开始搜索
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/k8stech/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://docs.prometheus.cool" title="云原生监控神器Prometheus" class="md-nav__button md-logo">
+      
+        <img src="../../assets/img/prometheus_logo.png" width="48" height="48">
+      
+    </a>
+    云原生监控神器Prometheus
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/k8stech/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="介绍" class="md-nav__link">
+      介绍
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      监控基础与概述
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        监控基础与概述
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/whymonitor/" title="为什么要监控" class="md-nav__link">
+      为什么要监控
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/monitorterms/" title="监控术语" class="md-nav__link">
+      监控术语
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/metricstory/" title="指标物语" class="md-nav__link">
+      指标物语
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/monitorcontrast/" title="开源监控对比" class="md-nav__link">
+      开源监控对比
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Prometheus 基础
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Prometheus 基础
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-introduction/" title="Prometheus介绍" class="md-nav__link">
+      Prometheus介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/tsdb-contrast/" title="时序数据库对比" class="md-nav__link">
+      时序数据库对比
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-datamodel/" title="数据模型" class="md-nav__link">
+      数据模型
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/node-exporter/" title="Node_Exporter" class="md-nav__link">
+      Node_Exporter
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-config/" title="Prometheus安装与配置" class="md-nav__link">
+      Prometheus安装与配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+    
+    <label class="md-nav__link" for="nav-4">
+      Prometheus 进阶
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Prometheus 进阶
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../auto-ops-exporter-1/" title="自动化维护Exporter（一）" class="md-nav__link">
+      自动化维护Exporter（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../auto-ops-exporter-2/" title="自动化维护Exporter（二）" class="md-nav__link">
+      自动化维护Exporter（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../docker-swarm-monitor-1/" title="Docker-Swarm集群监控（一）" class="md-nav__link">
+      Docker-Swarm集群监控（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../docker-swarm-monitor-2/" title="Docker-Swarm集群监控（二）" class="md-nav__link">
+      Docker-Swarm集群监控（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        常用Exporter介绍与配置
+      </label>
+    
+    <a href="./" title="常用Exporter介绍与配置" class="md-nav__link md-nav__link--active">
+      常用Exporter介绍与配置
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nginx-vts-exporter" title="nginx-vts-exporter" class="md-nav__link">
+    nginx-vts-exporter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nginx-lua" title="nginx-lua方式" class="md-nav__link">
+    nginx-lua方式
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snmp_exporter" title="snmp_exporter" class="md-nav__link">
+    snmp_exporter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#blackbox-exporter" title="blackbox-exporter" class="md-nav__link">
+    blackbox-exporter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#process-exporter" title="process-exporter" class="md-nav__link">
+    process-exporter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ipmi-exporter" title="ipmi-exporter" class="md-nav__link">
+    ipmi-exporter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mysqld-exporter" title="mysqld-exporter" class="md-nav__link">
+    mysqld-exporter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mongodb-exporter" title="mongodb-exporter" class="md-nav__link">
+    mongodb-exporter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jmx-exporter" title="jmx-exporter" class="md-nav__link">
+    jmx-exporter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kafka-exporter-zookeeper_exporter" title="kafka-exporter &amp; zookeeper_exporter" class="md-nav__link">
+    kafka-exporter &amp; zookeeper_exporter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rabbitmq-exporter" title="rabbitmq-exporter" class="md-nav__link">
+    rabbitmq-exporter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ceph-exporter" title="ceph-exporter" class="md-nav__link">
+    ceph-exporter
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Prometheus(警报)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Prometheus(警报)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-basic/" title="PromQL详解（一）" class="md-nav__link">
+      PromQL详解（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-operator/" title="PromQL详解（二）" class="md-nav__link">
+      PromQL详解（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-operator2/" title="PromQL详解（三）" class="md-nav__link">
+      PromQL详解（三）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-function/" title="PromQL函数" class="md-nav__link">
+      PromQL函数
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-overview/" title="AlertManager" class="md-nav__link">
+      AlertManager
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-rules-1/" title="Rules详解（一）" class="md-nav__link">
+      Rules详解（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-rules-2/" title="Rules详解（二）" class="md-nav__link">
+      Rules详解（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-receiver/" title="Receiver配置" class="md-nav__link">
+      Receiver配置
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-silences/" title="Silences配置" class="md-nav__link">
+      Silences配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Prometheus(联邦集群)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Prometheus(联邦集群)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/federation-overview/" title="Prometheus 联邦集群" class="md-nav__link">
+      Prometheus 联邦集群
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/pushgateway/" title="Pushgateway 代理" class="md-nav__link">
+      Pushgateway 代理
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/alertmanager-ha/" title="Alertmanager 高可用" class="md-nav__link">
+      Alertmanager 高可用
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Prometheus(服务发现)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Prometheus(服务发现)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-overview/" title="服务发现（文件、DNS）" class="md-nav__link">
+      服务发现（文件、DNS）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-relabeling/" title="服务发现（Relabelling）" class="md-nav__link">
+      服务发现（Relabelling）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-consul/" title="服务发现（Consul）" class="md-nav__link">
+      服务发现（Consul）
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      Prometheus(Operator)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        Prometheus(Operator)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Operator/" title="Operator概述" class="md-nav__link">
+      Operator概述
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-1/" title="手动部署（1）" class="md-nav__link">
+      手动部署（1）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-2/" title="手动部署（2）" class="md-nav__link">
+      手动部署（2）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-3/" title="手动部署（联邦）" class="md-nav__link">
+      手动部署（联邦）
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nginx-vts-exporter" title="nginx-vts-exporter" class="md-nav__link">
+    nginx-vts-exporter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nginx-lua" title="nginx-lua方式" class="md-nav__link">
+    nginx-lua方式
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snmp_exporter" title="snmp_exporter" class="md-nav__link">
+    snmp_exporter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#blackbox-exporter" title="blackbox-exporter" class="md-nav__link">
+    blackbox-exporter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#process-exporter" title="process-exporter" class="md-nav__link">
+    process-exporter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ipmi-exporter" title="ipmi-exporter" class="md-nav__link">
+    ipmi-exporter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mysqld-exporter" title="mysqld-exporter" class="md-nav__link">
+    mysqld-exporter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mongodb-exporter" title="mongodb-exporter" class="md-nav__link">
+    mongodb-exporter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jmx-exporter" title="jmx-exporter" class="md-nav__link">
+    jmx-exporter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kafka-exporter-zookeeper_exporter" title="kafka-exporter &amp; zookeeper_exporter" class="md-nav__link">
+    kafka-exporter &amp; zookeeper_exporter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rabbitmq-exporter" title="rabbitmq-exporter" class="md-nav__link">
+    rabbitmq-exporter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ceph-exporter" title="ceph-exporter" class="md-nav__link">
+    ceph-exporter
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/k8stech/edit/master/docs/advanced/commonly-exporter.md" title="编辑此页" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="exporter">常用exporter介绍与配置<a class="headerlink" href="#exporter" title="Permanent link">&para;</a></h1>
+<h4 id="nginx-vts-exporter">nginx-vts-exporter<a class="headerlink" href="#nginx-vts-exporter" title="Permanent link">&para;</a></h4>
+<p><a href="https://hnlq715.github.io/nginx-vts-exporter/">nginx-vts-exporter</a></p>
+<p><a href="https://github.com/vozlt/nginx-module-vts#installation">nginx-vts-module</a></p>
+<p>安装：</p>
+<pre class="highlight"><code class="language-bash"># ubuntu 安装nginx
+apt install nginx
+apt install gcc libpcre3-dev zlib1g-dev libssl-dev libxml2-dev libxslt1-dev  libgd-dev google-perftools libgoogle-perftools-dev \
+libperl-dev libatomic-ops-dev  libgeoip-dev</code></pre>
+
+<div class="admonition warning">
+<p class="admonition-title">自行编译nginx-vts模块</p>
+<p>安装完以后的nginx默认模块中是没有nginx-vts，nginx-vts模块需要单独编译加入</p>
+</div>
+<p>编译nginx-vts</p>
+<pre class="highlight"><code class="language-bash">mkdir /data/nginx-vts-exporter
+cd /data/nginx-vts-exporter
+# 下载nginx1.14.0源码包
+wget https://nginx.org/download/nginx-1.14.0.tar.gz
+# 下载最新的nginx-vts模块
+wget https://github.com/vozlt/nginx-module-vts/archive/v0.1.18.tar.gz
+# 编译nginx，加入nginx-vts
+./configure --user=nginx --group=nginx --sbin-path=/usr/sbin/nginx --conf-path=/etc/nginx/nginx.conf --with-select_module --with-poll_module --with-threads --with-file-aio --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_addition_module --with-http_xslt_module --with-http_xslt_module=dynamic --with-http_image_filter_module --with-http_image_filter_module=dynamic --with-http_geoip_module --with-http_geoip_module=dynamic --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_auth_request_module --with-http_random_index_module --with-http_secure_link_module --with-http_degradation_module --with-http_slice_module --with-http_stub_status_module --with-http_perl_module --with-http_perl_module=dynamic --with-mail --with-mail=dynamic --with-mail_ssl_module --with-stream --with-stream=dynamic --with-stream_ssl_module --with-stream_realip_module --with-stream_geoip_module --with-stream_ssl_preread_module --with-google_perftools_module --with-cpp_test_module --with-compat --with-pcre --with-pcre-jit  --with-zlib-asm=CPU --with-libatomic --with-debug --with-ld-opt="-Wl,-E" --add-module=/data/nginx-vts-exporter/nginx-module-vts
+make &amp;&amp; make install 
+# 使用 nginx -V 验证编译结果
+nginx -V
+nginx version: nginx/1.14.0
+built by gcc 7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04)
+built with OpenSSL 1.1.1  11 Sep 2018
+TLS SNI support enabled
+configure arguments: --user=nginx --group=nginx --sbin-path=/usr/sbin/nginx --conf-path=/etc/nginx/nginx.conf --with-select_module --with-poll_module --with-threads --with-file-aio --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_addition_module --with-http_xslt_module --with-http_xslt_module=dynamic --with-http_image_filter_module --with-http_image_filter_module=dynamic --with-http_geoip_module --with-http_geoip_module=dynamic --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_auth_request_module --with-http_random_index_module --with-http_secure_link_module --with-http_degradation_module --with-http_slice_module --with-http_stub_status_module --with-http_perl_module --with-http_perl_module=dynamic --with-mail --with-mail=dynamic --with-mail_ssl_module --with-stream --with-stream=dynamic --with-stream_ssl_module --with-stream_realip_module --with-stream_geoip_module --with-stream_ssl_preread_module --with-google_perftools_module --with-cpp_test_module --with-compat --with-pcre --with-pcre-jit --with-zlib-asm=CPU --with-libatomic --with-debug --with-ld-opt=-Wl,-E --add-module=/data/nginx-vts-exporter/nginx-module-vts
+# nginx.conf 配置
+cat /etc/nginx/nginx.conf
+http {
+...
+      # nginx-vts
+        vhost_traffic_status_zone;
+        vhost_traffic_status_filter on;
+        vhost_traffic_status_filter_by_set_key $status $server_name;
+...
+}  
+# vhost配置
+cat nginx-vts.conf
+server {
+    listen  50001;
+    server_name localhost;
+
+    location /status {
+            #allow 127.0.0.1;
+            #deny all;
+            vhost_traffic_status_display;
+            vhost_traffic_status_display_format html;
+    }
+}</code></pre>
+
+<p>安装最新版本nginx-vts-exporter0.10.7，这里需要安装go语言环境，提前配置好即可。</p>
+<pre class="highlight"><code class="language-bash">wget https://github.com/hnlq715/nginx-vts-exporter/archive/v0.10.7.tar.gz
+# 如果没有安装promu会报错
+wget https://github.com/prometheus/promu/releases/download/v0.5.0/promu-0.5.0.linux-amd64.tar.gz
+tar xf promu-0.5.0.linux-amd64.tar.gz
+mv promu-0.5.0.linux-amd64/promu /bin/
+cd /data/nginx-vts-exporter/nginx-vts-exporter-0.10.7
+make
+# 把新编译好的二进制文件复制到nginx-vts-expoter目录下
+cp nginx-vts-exporter-0.10.7 /data/nginx-vts-exporter/nginx-vts-exporter
+cat &lt;&lt;EOF&gt;&gt; /lib/systemd/system/nginx-vts-exporter.service
+[Unit]
+Description=nginx_exporter
+After=network.target
+
+[Service]
+Type=simple
+User=prometheus
+ExecStart=/data/nginx-vts-exporter/nginx-vts-exporter -nginx.scrape_uri=http://localhost:50001/status/format/json
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+EOF</code></pre>
+
+<p>配置</p>
+<p>如果想统计所有的虚拟主机，就在http配置中添加配置，否则就只在想要监控的server中添加配置
+配置说明：</p>
+<p>添加在nginx.conf中的http段落下。</p>
+<ul>
+<li>开启基础监控 </li>
+</ul>
+<p><code>vhost_traffic_status_zone;</code> </p>
+<ul>
+<li>开启详细状态码统计</li>
+</ul>
+<p><code>vhost_traffic_status_filter on;</code></p>
+<p><code>vhost_traffic_status_filter_by_set_key $status $server_name;</code></p>
+<ul>
+<li>开启URL统计</li>
+</ul>
+<p><code>vhost_traffic_status_filter on;</code></p>
+<p><code>vhost_traffic_status_filter_by_set_key $uri uris::$server_name;</code></p>
+<p>添加Prometheus配置</p>
+<pre class="highlight"><code class="language-yaml">scrape_configs:
+  # The job name is added as a label `job=&lt;job_name&gt;` to any timeseries scraped from this config.
+  - job_name: 'prometheus'
+
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+
+    static_configs:
+    - targets: ['192.168.1.210:9090']
+  #nginx-vts
+  - job_name: 'nginx-vts'
+    static_configs:
+    - targets: ['192.168.1.220:9913']</code></pre>
+
+<p>添加到grafana中，我这里的grafana是最新版本的7.0.3 <a href="https://grafana.com/grafana/download">官方下载地址</a></p>
+<pre class="highlight"><code class="language-bash">sudo wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
+sudo add-apt-repository "deb https://packages.grafana.com/oss/deb stable main"
+sudo apt-get update
+sudo apt-get install grafana
+# 如果太慢的话，可以使用二进制安装
+# Ubuntu
+wget https://packages.grafana.com/oss/deb/pool/main/g/grafana/grafana_7.0.3_amd64.deb
+# Centos
+wget https://dl.grafana.com/oss/release/grafana-7.0.3-1.x86_64.rpm</code></pre>
+
+<p>登录grafana，默认用户密码是admin，数据源配置写Prometheus ip:9090，导入 grafana id 2949，便可以查看相关数据了。</p>
+<h4 id="nginx-lua">nginx-lua方式<a class="headerlink" href="#nginx-lua" title="Permanent link">&para;</a></h4>
+<p>使用的是 nginx-lua-prometheus 这个库，负责去采集 nginx 内部的指标，暴露给 Prometheus 拉取。</p>
+<p>要使用这个库，需要启用 Nginx 对于 lua 的支持，编译方式跟上面一样，加入lua编译模块就可以，这里使用 <a href="https://openresty.org/en/">openresty</a> ，同时也建议把 nginx 换成 openresty来做web服务器~性能方面，你懂的。。。</p>
+<pre class="highlight"><code class="language-bash"># centos
+wget -O /etc/yum.repos.d/openresty.repo  https://openresty.org/package/centos/openresty.repo
+yum check-update
+yum install -y openresty
+# ubuntu
+sudo apt-get -y install --no-install-recommends wget gnupg ca-certificates
+wget -O - https://openresty.org/package/pubkey.gpg | sudo apt-key add -
+echo "deb http://openresty.org/package/ubuntu $(lsb_release -sc) main" \
+    | sudo tee /etc/apt/sources.list.d/openresty.list
+sudo apt-get update
+sudo apt-get -y install openresty</code></pre>
+
+<p>在 nginx.conf 的 http 块添加如下配置 https://github.com/knyar/nginx-lua-prometheus/blob/master/prometheus.lua</p>
+<pre class="highlight"><code class="language-bash"># lua
+lua_shared_dict prometheus_metrics 10M;
+# 注意这个文件
+lua_package_path "/usr/local/nginx/conf/prometheus.lua";
+init_by_lua '
+  prometheus = require("prometheus").init("prometheus_metrics")
+  metric_requests = prometheus:counter(
+    "nginx_http_requests_total", "Number of HTTP requests", {"host", "status"})
+  metric_latency = prometheus:histogram(
+    "nginx_http_request_duration_seconds", "HTTP request latency", {"host"})
+  metric_connections = prometheus:gauge(
+    "nginx_http_connections", "Number of HTTP connections", {"state"})
+';
+log_by_lua '
+  metric_requests:inc(1, {ngx.var.server_name, ngx.var.status})
+  metric_latency:observe(tonumber(ngx.var.request_time), {ngx.var.server_name})
+';</code></pre>
+
+<p>新增一个用于暴露指标的服务器配置文件</p>
+<pre class="highlight"><code class="language-bash">server {
+  listen 9145;
+  server_name localhost;
+  location /metrics {
+    content_by_lua '
+      metric_connections:set(ngx.var.connections_active, {"active"})
+      metric_connections:set(ngx.var.connections_reading, {"reading"})
+      metric_connections:set(ngx.var.connections_waiting, {"waiting"})
+      metric_connections:set(ngx.var.connections_writing, {"writing"})
+      prometheus:collect()
+    ';
+  }
+}</code></pre>
+
+<p>reload 一下 Nginx，就可以去访问指标了</p>
+<pre class="highlight"><code class="language-bash">[root@iZ1rp1vunvZ vhost]# curl http://127.0.0.1:9145/metrics
+# HELP nginx_http_connections Number of HTTP connections
+# TYPE nginx_http_connections gauge
+nginx_http_connections{state="active"} 879
+nginx_http_connections{state="reading"} 0
+nginx_http_connections{state="waiting"} 851
+nginx_http_connections{state="writing"} 25
+......
+# HELP nginx_http_requests_total Number of HTTP requests
+# TYPE nginx_http_requests_total counter
+nginx_http_requests_total{host="",status="302"} 39
+nginx_http_requests_total{host="",status="400"} 48
+nginx_http_requests_total{host="",status="404"} 4</code></pre>
+
+<p>Prometheus 配置文件 Nginx 的配置</p>
+<p>Rules</p>
+<pre class="highlight"><code class="language-yaml">  - alert: NginxHighHttp4xxErrorRate
+    expr: sum(rate(nginx_http_requests_total{status=~"^4.."}[1m])) / sum(rate(nginx_http_requests_total[1m])) * 100 &gt; 5
+    for: 5m
+    labels:
+      severity: error
+    annotations:
+      summary: "Nginx high HTTP 4xx error rate (instance {{ $labels.instance }})"
+      description: "Too many HTTP requests with status 4xx (&gt; 5%)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+  - alert: NginxHighHttp5xxErrorRate
+    expr: sum(rate(nginx_http_requests_total{status=~"^5.."}[1m])) / sum(rate(nginx_http_requests_total[1m])) * 100 &gt; 5
+    for: 5m
+    labels:
+      severity: error
+    annotations:
+      summary: "Nginx high HTTP 5xx error rate (instance {{ $labels.instance }})"
+      description: "Too many HTTP requests with status 5xx (&gt; 5%)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"</code></pre>
+
+<pre class="highlight"><code class="language-bash">  - job_name: 'Nginx'
+    static_configs:
+      - targets: ['192.168.201.179:9145','192.168.201.180:9145']</code></pre>
+
+<div class="admonition info">
+<p class="admonition-title">注</p>
+<p>1、参数 vhost_traffic_status_filter_by_host vts-module 默认是将一个vhost的metrics汇总到第一个server_name 上显示出来，如果想按域名分开统计，可以开启此参数。注意：如果一个vhost拥有多个域名，开启此配置，在监控和展示层面上会比较麻烦。</p>
+<p>2、如果没有url统计需求，谨慎开启uri过滤。如果需要开启，要做好相关限制，比如限制采集数量上限vhost_traffic_status_filter_max_node。尽量才用精确配置，比如将url过滤参数写在需要监控的localtion中，而不是整个server配置段里。还有做好反扫描配置。</p>
+<p>3、如果在http段配置默认采集所有vhosts 信息，可在server配置段内，通过vhost_traffic_status_bypass_stats on跳过采集</p>
+<p>4、nginx-vts-modules 与模块nginx_upstream_check_module冲突</p>
+</div>
+<h4 id="snmp_exporter">snmp_exporter<a class="headerlink" href="#snmp_exporter" title="Permanent link">&para;</a></h4>
+<div class="admonition info">
+<p class="admonition-title">SNMP简介</p>
+<p>简单网络管理协议（SNMP－Simple Network Management Protocol)是一个与网络设备交互的简单方法。</p>
+<p>SNMP的常用版本有三个：SNMPv1、SNMPv2、SNMPv3</p>
+<p>SNMPv1是为基于公共管理的初始标准。</p>
+<p>SNMPv2是SNMPv1框架下衍生出来的，但是没有定义信息，其后修订为SNMPv2c,一个带有于SNMPv1类似信息格式的给予公共管理的版本。SNMPv2添加了几个新的数据类型（Counter32、Counter64、Gauge32、UInteger32、NsapAdress 以及BIT STRING),以及对OID表和OID值的设置的增强。</p>
+<p>SNMPv3是一个带有新的信息格式、ACL、安全功能和远处SNMP参数配置的、扩展了SNMPv2框架的版本。</p>
+<p>MIB和OID</p>
+<p>OID(对象标识符），是SNMP代理提供的具有唯一标识的键值。MIB（管理信息基）提供数字化OID到可读文本的映射。</p>
+<p>SNMP OID是用一种按照层次化格式组织的、树状结构中的唯一地址来表示的，它与DNS层次相似。与其他格式的寻址方式类型，OID以两种格式加以应用：全名和先对名（有时称为“相关”）</p>
+<p>MIB介绍</p>
+<p>MIB的内部结构刚开始时会让人感觉有些奇怪和不好理解，不过它的结构非常好，你可以在不懂的情况下一个一个看进去。MIB的结构来源于IETF RFC1155和2578定义的管理信息结构。如果你想要修改或编写自己的MIB，在动手前理解SMI非常有帮助。</p>
+</div>
+<p>环境准备：</p>
+<table>
+<thead>
+<tr>
+<th>主机名</th>
+<th>IP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SNMP-HOST</td>
+<td>192.168.1.123</td>
+</tr>
+<tr>
+<td>SNMP Exportor</td>
+<td>192.168.1.220</td>
+</tr>
+</tbody>
+</table>
+<p>安装snmp&amp;snmp_exporter</p>
+<pre class="highlight"><code class="language-bash"># Ubuntu
+apt update
+apt install snmpd snmp libsnmp-dev
+# Centos
+yum install -y net-snmp-utils
+# 下载snmp-exporter
+wget https://github.com/prometheus/snmp_exporter/releases/download/v0.18.0/snmp_exporter-0.18.0.linux-amd64.tar.gz
+tar xvf snmp_exporter-0.18.0.linux-amd64.tar.gz
+mv snmp_exporter-0.18.0.linux-amd64 snmp_exporter
+# 配置启动服务
+cat &lt;&lt;EOF&gt;&gt;  /lib/systemd/system/snmp_exporter.service
+[Unit]
+Description=prometheus
+After=network.target
+
+[Service]
+Type=simple
+User=prometheus
+ExecStart=/data/snmp_exporter --config.file=/data/snmp_exporter/snmp.yml
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+EOF</code></pre>
+
+<p>相关配置</p>
+<pre class="highlight"><code class="language-bash"># snmp配置
+cat /etc/snmp/snmpd.conf |egrep -v "(^#|^$)"
+agentAddress  udp:127.0.0.1:161,udp:192.168.1.123:161
+                                                 #  system + hrSystem groups only
+view   systemonly  included   .1.3.6.1.2.1
+...
+
+# snmp_exporter读取的配置文件使用tar包中的即可，如果是对于一些网络设备或者其他专属服务器需要自己向厂商索取MIB文件。
+
+# Prometheus配置
+  - job_name: 'snmp'
+    static_configs:
+      - targets:
+        - 192.168.1.123
+        labels:
+          tag: snmp-test
+    metrics_path: /snmp
+    params:
+      module: [if_mib]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 192.168.1.123:9116</code></pre>
+
+<p>rules:</p>
+<pre class="highlight"><code class="language-yaml">cat rules/snmp.yml 
+groups:
+  - name: traffic
+    rules:
+    - record: traffic_out_bps 
+      expr: (ifHCOutOctets - (ifHCOutOctets offset 1m)) *8/60
+      #expr: sum by (tag, job, instance, ifIndex) ((ifHCOutOctets - (ifHCOutOctets offset 1m)) *8/60)
+      #labels:
+      #  instance: ""
+      #  ifIndex: ""
+    - record: traffic_in_bps
+      expr: (ifHCInOctets - (ifHCInOctets offset 1m)) *8/60
+
+    ### alert
+    - alert: BeijingProxyTrafficOutProblem
+      expr: (sum by(tag) (avg_over_time(traffic_out_bps{ifIndex=~"7|9", tag=~"beijing.+"}[5m]) /1024/1024)) &gt;= 200
+      for: 2m
+      labels:
+        level: CRITICAL
+      annotations:
+        message: "traffic out has problem (network: , current: Mbps)"
+    - alert: BeijingProxyTrafficInProblem
+      expr: (sum by(tag) (avg_over_time(traffic_in_bps{ifIndex=~"7|9", tag=~"beijing.+"}[5m]) /1024/1024)) &gt;= 500
+      for: 2m
+      labels:
+        level: CRITICAL
+      annotations:
+        message: "traffic in has problem (network: , current: Mbps)"
+
+    - alert: BeijingProxyWanTrafficOutProblem
+      expr: (sum by(tag) (avg_over_time(traffic_out_bps{ifIndex=~"6|8", tag=~"beijing.+"}[5m]) /1024/1024)) &gt;= 30
+      for: 2m
+      labels:
+        level: CRITICAL
+      annotations:
+        message: "traffic out bond0 has problem (network: , current: Mbps)"
+    - alert: BeijingProxyWanTrafficInProblem
+      expr: (sum by(tag) (avg_over_time(traffic_in_bps{ifIndex=~"6|8", tag=~"beijing.+"}[5m]) /1024/1024)) &gt;= 30
+      for: 2m
+      labels:
+        level: CRITICAL
+      annotations:
+        message: "traffic in bond0 has problem (network: , current: Mbps)"
+
+    - alert: AliyunProxyTrafficOutProblem
+      expr: (sum by(tag) (avg_over_time(traffic_out_bps{ifIndex="2", tag=~"aliyun.+"}[5m]) /1024/1024)) &gt; 200
+      for: 2m
+      labels:
+        level: CRITICAL
+      annotations:
+        message: "traffic out has problem (network: , current: Mbps)"
+    - alert: AliyunProxyTrafficInProblem
+      expr: (sum by(tag) (avg_over_time(traffic_in_bps{ifIndex="2", tag=~"aliyun.+"}[5m]) /1024/1024)) &gt; 200
+      for: 2m
+      labels:
+        level: CRITICAL
+      annotations:
+        message: "traffic in has problem (network: , current: Mbps)"</code></pre>
+
+<h4 id="blackbox-exporter">blackbox-exporter<a class="headerlink" href="#blackbox-exporter" title="Permanent link">&para;</a></h4>
+<div class="admonition info">
+<p class="admonition-title">黑盒/白盒介绍</p>
+<p>黑盒监控：主要关注的现象，一般都是正在发生的东西，例如出现一个告警，业务接口不正常，那么这种监控就是站在用户的角度能看到的监控，重点在于能对正在发生的故障进行告警。</p>
+<p>白盒监控：有很多种，有中间件，有存储，有 web 服务器例如 redis 可以使用 info 暴露内部的指标信息；例如 mysql 可以使用 show variables 暴露内部指标信息；例如 nginx 可以使用 nginx_status 来暴露内部信息，系统业务指标可以通过埋点或者命令进行采集。</p>
+<p>应用场景：HTTP、TCP、ICMP、POST、SSL证书监控</p>
+</div>
+<p>参数说明：
+<pre class="highlight"><code class="language-bash">Flags:
+  -h, --help                Show context-sensitive help (also try --help-long and --help-man).
+      --config.file="blackbox.yml"
+                            Blackbox exporter configuration file.
+      --web.listen-address=":9115"
+                            The address to listen on for HTTP requests.
+      --timeout-offset=0.5  Offset to subtract from timeout in seconds.
+      --config.check        If true validate the config file and then exit.
+      --history.limit=100   The maximum amount of items to keep in the history.
+      --log.level=info      Only log messages with the given severity or above. One of: [debug, info, warn, error]
+      --version             Show application version.</code></pre></p>
+<p>下载安装：
+<pre class="highlight"><code class="language-bash"># 下载
+wget https://github.com/prometheus/blackbox_exporter/releases/download/v0.17.0/blackbox_exporter-0.17.0.linux-amd64.tar.gz
+tar xvf blackbox_exporter-0.17.0.linux-amd64.tar.gz &amp;&amp; mv blackbox_exporter-0.17.0.linux-amd64 blackbox_exporter
+
+# 创建开机启动systemd脚本
+cat &lt;&lt;EOF&gt;&gt; /lib/systemd/system/blackbox_exporter.service
+[Unit]
+Description=blackbox_exporter
+Documentation=https://prometheus.io/
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=prometheus
+ExecStart=/data/blackbox_exporter/blackbox_exporter  --config.file=/data/blackbox_exporter/blackbox.yml
+RestartSec=1
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+EOF
+# 加入开机启动
+systemctl enable blackbox_exporter
+systemctl statr  blackbox_exporter</code></pre></p>
+<p>配置文件：</p>
+<pre class="highlight"><code class="language-bash"># blackbox配置
+cat blackbox.yml
+modules:
+  http_2xx:
+    prober: http
+    timeout: 20s
+    http:
+      preferred_ip_protocol: "ip4" ##如果http监测是使用ipv4 就要写上，目前国内使用ipv6很少。
+  http_post_2xx_query: ##用于post请求使用的模块）由于每个接口传参不同 可以定义多个module 用于不同接口（例如此命名为http_post_2xx_query &gt;用于监测query.action接口
+    prober: http
+    timeout: 20s
+    http:
+      preferred_ip_protocol: "ip4" ##使用ipv4
+      method: POST
+      headers:
+        Content-Type: application/json ##header头
+        uuid: '123'
+        Token: '456'
+        #body: '{"hmac":"","params":{"publicFundsKeyWords":"xxx"}}' ##传参
+      body: '{""}}' ##传参
+  tls_connect_tls:
+    prober: tcp
+    timeout: 5s
+    tcp:
+      tls: true
+  tcp_connect:
+    prober: tcp
+    timeout: 5s
+ #
+  pop3s_banner:
+    prober: tcp
+    tcp:
+      query_response:
+      - expect: "^+OK"
+      tls: true
+      tls_config:
+        insecure_skip_verify: false
+  ssh_banner:
+    prober: tcp
+    tcp:
+      query_response:
+      - expect: "^SSH-2.0-"
+  irc_banner:
+    prober: tcp
+    tcp:
+      query_response:
+      - send: "NICK prober"
+      - send: "USER prober prober prober :prober"
+      - expect: "PING :([^ ]+)"
+        send: "PONG ${1}"
+      - expect: "^:[^ ]+ 001"
+  icmp:
+    prober: icmp
+    timeout: 20s
+# Prometheus配置
+  - job_name: 'http_200_monitor'
+    metrics_path: /probe
+    params:
+      module: [http_2xx]  # Look for a HTTP 200 response.
+    scrape_interval: 30s
+    file_sd_configs:
+      - files:
+        - /data/prometheus/prod_config/domain_config/get.yml
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9115  # The blackbox exporter's real hostname:port.
+  - job_name: 'http_post_200_monitor'
+    metrics_path: /probe
+    params:
+      module: [http_post_2xx_query]  # Look for a HTTP POST 200  response.
+    scrape_interval: 30s
+    file_sd_configs:
+      - files:
+        - /data/prometheus/prod_config/domain_config/post.yml
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9115  # The blackbox exporter's real hostname:port.
+  - job_name: 'blackbox_telnet_port'
+    metrics_path: /probe
+    params:
+      module: [tcp_connect]
+    scrape_interval: 30s
+    file_sd_configs:
+      - files:
+        - /data/prometheus/prod_config/host_config/*.yml
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9115  # The blackbox exporter's real hostname:port.</code></pre>
+
+<h4 id="process-exporter">process-exporter<a class="headerlink" href="#process-exporter" title="Permanent link">&para;</a></h4>
+<p>process-exporter是用于监控系统进程，通过使用process-exporter，可从宏观角度监控应用的运行状态（譬如监控nginx、mysql、mongodb、haproxy等等的进程资源。</p>
+<p>参数说明：</p>
+<p>配置文件中有几个配置，需要理解一下，除了 <code>{{.Matches}}</code> ，其他都是linux的基础知识。</p>
+<p><code>{{.Comm}}</code> 包含原始可执行文件的基本名称，即第二个字段 /proc/<code>&lt;pid&gt;</code>/stat</p>
+<p><code>{{.ExeBase}}</code>  包含可执行文件的基名</p>
+<p><code>{{.ExeFull}}</code> 包含可执行文件的完全限定路径</p>
+<p><code>{{.Username}}</code>  包含有效用户的所属用户名</p>
+<p><code>{{.Matches}}</code> MAP包含应用cmdline regexps产生的所有匹配项</p>
+<p>name 选项其实影响的是metrics中的key：groupname，以监控mysql作为例子</p>
+<p>使用 <code>ps -ef | grep mysql</code> 查询MySQL 进程</p>
+<p><code>mysql    22322     1  0 Jul07 ?        00:02:24 /usr/sbin/mysqld --daemonize --pid-file=/run/mysqld/mysqld.pid</code></p>
+<p>此处的描述信息，仅供参考理解，真实的还是需要在PromeQL中查询为准。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>Metrics</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{{.Comm}}</code></td>
+<td>groupname="mysql-server"</td>
+<td>exe或者sh文件名称</td>
+</tr>
+<tr>
+<td><code>{{.ExeBase}}</code></td>
+<td>groupname="mysql-server *:3306"</td>
+<td>/usr/bin/mysql</td>
+</tr>
+<tr>
+<td><code>{{.ExeFull}}</code></td>
+<td>groupname="/usr/bin/mysql-server *:3306"</td>
+<td>ps中的进程完成信息</td>
+</tr>
+<tr>
+<td><code>{{.Username}}</code></td>
+<td>groupname="mysql"</td>
+<td>使用进程所属的用户进行分组</td>
+</tr>
+<tr>
+<td><code>{{.Matches}}</code></td>
+<td>groupname="map[:mysql]"</td>
+<td>表示配置到关键字'mysql'</td>
+</tr>
+</tbody>
+</table>
+<p>安装：</p>
+<pre class="highlight"><code class="language-bash"># 下载
+wget https://github.com/ncabatoff/process-exporter/releases/download/v0.6.0/process-exporter-0.6.0.linux-amd64.tar.gz
+tar xvf process-exporter-0.6.0.linux-amd64.tar.gz
+mv process-exporter-0.6.0.linux-amd64 process-exporter
+
+# systemd启动脚本
+cat &lt;&lt;EOF&gt;&gt; /lib/systemd/system/process_exporter.service 
+[Unit]
+Description=blackbox_exporter
+Documentation=https://prometheus.io/
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=prometheus
+ExecStart=/data/process-exporter/process-exporter -config.path /data/process-exporter/config.yml
+RestartSec=1
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+EOF
+# 启动
+
+</code></pre>
+
+<p>配置</p>
+<p>监控gitlab</p>
+<pre class="highlight"><code class="language-yaml">process_names:
+  - comm:
+    - process-exporter
+  - exe:
+    - /data/process-exporter/process-exporter
+  - name: "{{.Username}}"
+    cmdline:
+    - 'git'</code></pre>
+
+<p>监控Confluence</p>
+<pre class="highlight"><code class="language-yaml">process_names:
+  - comm:
+    - process-exporter
+  - exe:
+    - /data/process-exporter/process-exporter
+  - name: "{{.Matches}}"
+    exe:
+    - /opt/atlassian/confluence/jre/bin/java
+    cmdline:
+    - 'confluence'</code></pre>
+
+<p>针对Prometheus的监控</p>
+<pre class="highlight"><code class="language-yaml">process_names:
+  - comm:
+    - prometheus
+    - alertmanager
+    - process-exporter
+    - blackbox_exporter
+    - prometheus-webhook-dingtalk
+    - blackbox_exporter
+    - nginx-vts
+    - nginx
+  - exe:
+    - /usr/local/prometheus/prometheus
+    - /usr/local/alertmanager/alertmanager
+    - /bin/prometheus-webhook-dingtalk
+    - /data/blackbox_exporter/blackbox_exporter
+    - /data/process-exporter/process-exporter
+    - /data/nginx-vts-exporter/nginx-vts-exporter
+    - /usr/sbin/nginx</code></pre>
+
+<p>Prometheus配置文件</p>
+<pre class="highlight"><code class="language-yaml">  - job_name: 'process'
+    scrape_interval: 10s
+    static_configs:
+    - targets: ['192.168.1.220:9256']
+      labels:
+        app:    'operations'
+        env:    'process-monitor'
+        service: 'process-monitor-service'
+        region: 'ap-southeast-1'</code></pre>
+
+<h4 id="ipmi-exporter">ipmi-exporter<a class="headerlink" href="#ipmi-exporter" title="Permanent link">&para;</a></h4>
+<div class="admonition info">
+<p class="admonition-title">IPMI协议概述</p>
+<p>IPMI<em>是一个智能平台管理接口。用户可以利用</em>IPMI监视服务器等设备的物理特征，如各部件的温度、电压、风扇工作状态、电源供应以及机箱入侵等 。</p>
+<p>IPMI 的基础在于运行于专用芯片/控制器 — 有时指通常位于系统主板或刀片上的服务处理器或 BMC（基板管理控制器）— 的专业固件。这就创建了单独在系统内运行的无代理管理子系统 — 独立于 CPU、BIOS 和操作系统的类型或条件。这些“自治”特性消除了所有依操作系统而定的管理代理（基于代理）所遇到的限制，例如操作系统不响应或未加载的情况。由于 IPMI 通常是预先集成，因此使用 IPMI 的投资回报率可以确保 IT 车间能够很好地控制成本。</p>
+<p>所有的 IPMI 功能可以通过使用规格中指定的标准化说明，向 BMC over IP 发送命令来实现。IPMI 固件接收事件信息并将其记录在系统事件日志 (SEL) 中，维护对系统中的传感器进行描述的传感器数据记录 (SDR)。</p>
+<p>当需要对系统文本控制台进行远程访问时，Serial Over LAN (SOL) 功能将非常有用。SOL 通过 IPMI 会话重定向本地串行接口，允许远程访问 Windows 的紧急事件管理控制台 (EMS) 特殊管理控制台 (SAC)，或访问 LINUX 串行控制台。这个过程的步骤是 IPMI 固件截取数据，然后通过局域网重新发送定向到串行端口的信息。 这就提供了远程查看 BOOT、OS 加载器或紧急事件管理控制台以诊断并修复服务器相关问题的标准方法，而无需考虑供应商。它允许在引导阶段配置各种组件。</p>
+<p>管理员还可以使用 IPMI 主动监测组件的状况，以确保不超出预置阈值，例如服务器温度。这样，通过避免不定期的断电，协助维护了 IT 资源的运行时间。 请记住，不论其他设备或组件（只要 NIC 正常运行，服务器接电）的条件如何，IPMI 自治功能都能使其正常工作。IPMI 可以监测和控制其他系统组件以最大限度地降低对系统的整体影响，同时能够发送消息派遣技术人员。IPMI 的预告故障能力也有助于 IT 周期的管理。通过检查系统事件日志 (SEL)，可以更轻松的预先判定故障组件。</p>
+</div>
+<p>需要安装：</p>
+<ul>
+<li>
+<p>IPMI驱动（硬件设备被操作系统识别）</p>
+</li>
+<li>
+<p>ipmitool（通过驱动获取服务器信息）</p>
+</li>
+<li>
+<p>ipmi_expoter</p>
+</li>
+</ul>
+<p>参数说明：</p>
+<p>安装：</p>
+<pre class="highlight"><code class="language-bash"># Ubuntu  此处的主机必须支持ipmi bmc，不然openipmi启动不了
+apt install openipmi ipmitool
+# freeipmi是exporter依赖的相关模块，需要安装exporter采集的机器上
+apt install freeipmi
+# 加载模块
+modprobe ipmi_msghandler
+modprobe ipmi_devintf
+modprobe ipmi_si
+modprobe ipmi_poweroff
+modprobe ipmi_watchdog
+# 此处有一点一定要注意，如果不是真实的服务器的话，在加载ipmi_si的时候会报错，因为我在pve虚拟化中使用虚拟机测试，安装完成以后，ipmi_si 模块始终加载不了
+lsmod |grep ^ipmi
+ipmi_watchdog          28672  0
+ipmi_poweroff          16384  0
+ipmi_ssif              32768  0
+ipmi_si                61440  1
+ipmi_devintf           20480  0
+ipmi_msghandler       102400  5 ipmi_devintf,ipmi_si,ipmi_watchdog,ipmi_ssif,ipmi_poweroff
+# 安装ipmi_exporter
+wget https://github.com/soundcloud/ipmi_exporter/releases/download/v1.2.0/ipmi_exporter-v1.2.0.linux-amd64.tar.gz
+tar xvf ipmi_exporter-v1.2.0.linux-amd64.tar.gz
+mv  ipmi_exporter-v1.2.0.linux-amd64 ipmi_exporter
+cat &lt;&lt;EOF&gt;&gt; /lib/systemd/system/ipmi_exporter.service
+[unit]
+Description=ipmi_exporter
+Documentation=https://github.com/soundcloud/ipmi_exporter/
+After=network.target
+
+[Service]
+User=root
+Group=root
+Type=simple
+Restart=on-failure
+WorkingDirectory=/data/ipmi_exporter
+ExecStart=/data/ipmi_exporter/ipmi_exporter --config.file=ipmi.yml
+ExecReload=/bin/kill -HUP $MAINPID
+RuntimeDirectory=ipmi_exporter
+RuntimeDirectoryMode=0750
+LimitNOFILE=10000
+TimeoutStopSec=20
+
+[Install]
+WantedBy=multi-user.target
+EOF
+# 配置ipm访问，在目标主机，我这里是pve server01做实例
+ipmitool user list 1 # 查看当前的用户列表
+ID  Name         Callin  Link Auth  IPMI Msg   Channel Priv Limit
+1                    true    false      false      NO ACCESS
+2   root             true    true       true       ADMINISTRATOR
+3                    true    false      false      NO ACCESS
+4                    true    false      false      NO ACCESS
+5                    true    false      false      NO ACCESS
+6                    true    false      false      NO ACCESS
+7                    true    false      false      NO ACCESS
+8                    true    false      false      NO ACCESS
+9                    true    false      false      NO ACCESS
+10                   true    false      false      NO ACCESS
+# 设置ID 3 为 user为 test 密码 test
+ipmitool  user  set name 3 test
+ipmitool  user  set password 3 test
+ipmitool  user  enable 3
+# 验证
+ipmitool user list 1 
+ID  Name         Callin  Link Auth  IPMI Msg   Channel Priv Limit
+1                    true    false      false      NO ACCESS
+2   root             true    true       true       ADMINISTRATOR
+3   test             true    false      false      NO ACCESS
+4                    true    false      false      NO ACCESS
+5                    true    false      false      NO ACCESS
+6                    true    false      false      NO ACCESS
+7                    true    false      false      NO ACCESS
+8                    true    false      false      NO ACCESS
+9                    true    false      false      NO ACCESS
+10                   true    false      false      NO ACCESS
+# privilege value：1 callback 2 user 3 operator 4 administrator 5 OEM
+# 设置用户test权限 channel 为 1，user ID 为 3，privilege 为 4
+ipmitool channel setaccess 1 3 callin=on ipmi=on link=on privilege=4
+# 验证权限
+ipmitool channel getaccess 1 3
+Maximum User IDs     : 10
+Enabled User IDs     : 1
+
+User ID              : 3
+User Name            : test
+Fixed Name           : No
+Access Available     : call-in / callback
+Link Authentication  : enabled
+IPMI Messaging       : enabled
+Privilege Level      : ADMINISTRATOR
+Enable Status        : disabled
+ipmitool  user list 1
+# 再次使用ipmitool  user list 1验证
+ipmitool  user list 1
+ID  Name         Callin  Link Auth  IPMI Msg   Channel Priv Limit
+1                    true    false      false      NO ACCESS
+2   root             true    true       true       ADMINISTRATOR
+3   test             true    true       true       ADMINISTRATOR
+4                    true    false      false      NO ACCESS
+5                    true    false      false      NO ACCESS
+6                    true    false      false      NO ACCESS
+7                    true    false      false      NO ACCESS
+8                    true    false      false      NO ACCESS
+9                    true    false      false      NO ACCESS
+10                   true    false      false      NO ACCESS
+# OK，针对网络做下配置，注意主机的网段与子网掩码
+ipmitool lan set 1 ipaddr 192.168.1.229
+ipmitool lan set 1 netmask 255.255.252.0
+ipmitool lan set 1 defgw ipaddr 192.168.1.123
+ipmitool lan set 1 access on
+# 验证网络配置
+ipmitool lan print 1
+IP Address Source       : Static Address
+IP Address              : 192.168.1.227
+Subnet Mask             : 255.255.252.0
+MAC Address             : xx:xx:52:xx:xx:81
+SNMP Community String   : public</code></pre>
+
+<p>配置</p>
+<pre class="highlight"><code class="language-yaml">cat ipmi.yml
+modules:
+  # HP DL585 / DELL R815
+  # 比如有HP和DELL两个型号的ipmi账号密码一致，可配置在一个module下
+  # default为默认module，如果在prometheus配置文件中未指定params信息，所有ip会使用default下的账号密码
+  default:
+    user: test            # ipmi账号
+    pass: test           # ipmi密码
+    driver: "LAN_2_0"      # ipmi协议，LAN_2_0为IPMI2.0协议，LAN为IPMI1.5协议
+    privilege: "admin"     # 指定账号所属的权限
+    timeout: 10000         # 采集超时时间
+    collectors:            # 需要应用的采集器，bmc信息，ipmi传感器信息，dcmi功耗信息
+      - bmc
+      - ipmi
+      - dcmi
+    exclude_sensor_ids:    # 忽略的传感器id
+      - 2
+
+# Prometheus配置
+cat prometheus.yml
+  - job_name: 'ipmi-exporter'
+    static_configs:
+      - targets:
+        - 192.168.1.228
+        - 192.168.1.227
+        labels:
+          tag: pve-ipmi
+    metrics_path: /ipmi
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 192.168.1.220:9290</code></pre>
+
+<p>对于Kubernetes的ipmi_exporter的使用与安装，会在后续将Kubernetes的时候详细描述。</p>
+<h4 id="mysqld-exporter">mysqld-exporter<a class="headerlink" href="#mysqld-exporter" title="Permanent link">&para;</a></h4>
+<p>参数说明：</p>
+<pre class="highlight"><code class="language-bash">mysqld_exporter -h
+...
+      --web.listen-address=":9104"
+                               Address to listen on for web interface and telemetry.
+      --web.telemetry-path="/metrics"
+                               Path under which to expose metrics.
+      --timeout-offset=0.25    Offset to subtract from timeout in seconds.
+      --config.my-cnf="/root/.my.cnf"
+                               Path to .my.cnf file to read MySQL credentials from.
+      --collect.mysql.user     Collect data from mysql.user
+...</code></pre>
+
+<p>安装：
+<pre class="highlight"><code class="language-bash"># 下载安装mysqld-exporter
+wget https://github.com/prometheus/mysqld_exporter/releases/download/v0.12.1/mysqld_exporter-0.12.1.linux-amd64.tar.gz
+tar xvf mysqld_exporter-0.12.1.linux-amd64.tar.gz &amp;&amp; mv mysqld_exporter-0.12.1.linux-amd64 mysqld_exporter &amp;&amp; mkdir /data/mysqld_exporter/conf/
+# 加入systemd启动脚本
+cat &lt;&lt;EOF&gt;&gt; /lib/systemd/system/mysqld_exporter.service
+[Unit]
+Description=Prometheus
+Documentation=https://prometheus.io/
+After=network.target
+
+[Service]
+Type=simple
+User=prometheus
+ExecStart=/data/mysqld_exporter/mysqld_exporter --config.my-cnf="/data/mysqld_exporter/conf/test1-rds.cnf" --web.listen-address=":9104"
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# 加入开机启动mysqld_exporter服务，此时先不要启动mysqld_exporter服务，把配置文件配置完成在启动。
+systemctl enable mysqld_exporter</code></pre></p>
+<p>MySQL相关配置</p>
+<pre class="highlight"><code class="language-bash"># 登录MySQL，创建mysqld_exporter只读账户
+mysql&gt; create user 'mysqld_exporter'@'%' identified by '123456';
+GRANT PROCESS, REPLICATION CLIENT, SELECT ON *.* TO 'mysqld_exporter'@'%'  WITH MAX_USER_CONNECTIONS 3;
+flush privileges;
+
+# 验证创建的只读用户
+mysql&gt; select user,host from mysql.user;
++------------------+-----------+
+| user             | host      |
++------------------+-----------+
+| mysqld_exporter  | %         |
+| debian-sys-maint | localhost |
+| mysql.session    | localhost |
+| mysql.sys        | localhost |
+| root             | localhost |
++------------------+-----------+
+5 rows in set (0.01 sec)
+mysql&gt; show grants for mysqld_exporter@"%";
++---------------------------------------------------------------------------+
+| Grants for mysqld_exporter@%                                              |
++---------------------------------------------------------------------------+
+| GRANT SELECT, PROCESS, REPLICATION CLIENT ON *.* TO 'mysqld_exporter'@'%' |
++---------------------------------------------------------------------------+
+1 row in set (0.01 sec)
+
+# my.cnf 配置文件，如果是多个服务监控可以启动多个mysqld来配置。
+cat &lt;&lt;EOF&gt;&gt; /data/mysqld_exporter/conf/test1-rds.cnf
+[client]
+user=mysqld_exporter
+password=123456
+port=3306
+host=localhost
+EOF
+</code></pre>
+
+<p>Prometheus配置</p>
+<pre class="highlight"><code class="language-bash">cat prometheus.yml
+  - job_name: mysql-exporter
+    honor_labels: true
+    static_configs:
+    - targets: ['localhost:9104']
+      labels:
+        app: web
+        env: rds
+        region: cn-north-1
+</code></pre>
+
+<p>也可以使用sd_config文件发现，这里就不讲了，后续再自动发现章节会详细讲解。</p>
+<h4 id="mongodb-exporter">mongodb-exporter<a class="headerlink" href="#mongodb-exporter" title="Permanent link">&para;</a></h4>
+<div class="admonition info">
+<p class="admonition-title">mongodb简介:</p>
+<p>MongoDB使用C++语言编写的非关系型数据库。特点是高性能、易部署、易使用，存储数据十分方便。</p>
+<p>特性：</p>
+<ul>
+<li>面向集合存储，易于存储对象类型的数据</li>
+<li>模式自由</li>
+<li>支持动态查询</li>
+<li>支持完全索引，包含内部对象</li>
+<li>支持复制和故障恢复</li>
+<li>使用高效的二进制数据存储，包括大型对象</li>
+<li>文件存储格式为BSON(一种JSON的扩展)</li>
+</ul>
+<p>概念：</p>
+<ul>
+<li>文档：是MongoDB中数据的基本单元，非常类似于关系型数据库系统中的行（但是比行要复杂很多）。</li>
+<li>集合：就是一组文档，如果说MongoDB中的文档类似于关系型数据库中的行，那么集合就如同表。</li>
+<li>MongoDB的单个计算机可以容纳多个独立的数据库，每一个数据库都有自己的集合和权限。</li>
+<li>MongoDB自带简洁但功能强大的JavaScript shell，这个工具对于管理MongoDB实例和操作数据库作用非常大。</li>
+<li>每一个文档都有一个特殊的键"_id",它在文档所处的集合中是唯一的，相当于关系数据库中的表的主键。</li>
+</ul>
+</div>
+<p>mongodb_exporter功能：</p>
+<ul>
+<li>MongoDB Server Status metrics (cursors, operations, indexes, storage, etc)</li>
+<li>MongoDB Replica Set metrics (members, ping, replication lag, etc)</li>
+<li>MongoDB Replication Oplog metrics (size, length in time, etc)</li>
+<li>MongoDB Sharding metrics (shards, chunks, db/collections, balancer operations)</li>
+<li>MongoDB RocksDB storage-engine metrics (levels, compactions, cache usage, i/o rates, etc)</li>
+<li>MongoDB WiredTiger storage-engine metrics (cache, blockmanger, tickets, etc)</li>
+<li>MongoDB Top Metrics per collection (writeLock, readLock, query, etc*)</li>
+</ul>
+<p>度量标准 <code>mongodb_mongod_replset_oplog_*</code> 在主/从复制模式下不起作用，因为它在MongoDB 3.2中已弃用，在4.0中已删除。</p>
+<p>参数说明：</p>
+<pre class="highlight"><code class="language-bash">Flags:
+  -h, --help                   Show context-sensitive help (also try --help-long and --help-man).
+      --web.auth-file=WEB.AUTH-FILE
+                               Path to YAML file with server_user, server_password keys for HTTP Basic authentication (overrides
+                               HTTP_AUTH environment variable).
+      --web.ssl-cert-file=WEB.SSL-CERT-FILE
+                               Path to SSL certificate file.
+      --web.ssl-key-file=WEB.SSL-KEY-FILE
+                               Path to SSL key file.
+      --web.listen-address=":9216"
+                               Address to listen on for web interface and telemetry.
+      --web.telemetry-path="/metrics"
+                               Path under which to expose metrics.
+      --collect.database       Enable collection of Database metrics
+      --collect.collection     Enable collection of Collection metrics
+      --collect.topmetrics     Enable collection of table top metrics
+      --collect.indexusage     Enable collection of per index usage stats
+      --collect.connpoolstats  Collect MongoDB connpoolstats
+      --mongodb.uri=[mongodb://][user:pass@]host1[:port1][,host2[:port2],...][/database][?options]
+                               MongoDB URI, format
+      --test                   Check MongoDB connection, print buildInfo() information and exit.
+      --version                Show application version.
+      --log.level="info"       Only log messages with the given severity or above. Valid levels: [debug, info, warn, error, fatal]
+      --log.format="logger:stderr"
+                               Set the log target and format. Example: "logger:syslog?appname=bob&amp;local=7" or "logger:stdout?json=true"</code></pre>
+
+<p>安装：</p>
+<pre class="highlight"><code class="language-bash"># 下载安装
+mkdir /data/mongodb_exporter
+wget https://github.com/percona/mongodb_exporter/releases/download/v0.11.0/mongodb_exporter-0.11.0.linux-amd64.tar.gz
+tar xvf mongodb_exporter-0.11.0.linux-amd64.tar.gz &amp;&amp; mv mongodb_exporter-0.11.0.linux-amd64 mongodb_exporter
+
+# 1. 你没有设置用户密码的话，先要对mongodb创建超管用户
+# 2. 然后修改配置文件开启auth = true（3.x）security: authorization: enabled（4.x）
+# 3. 重启生效。
+use admin;
+db.createUser({user: 'admin', pwd: '778899', roles: [{role: 'userAdminAnyDatabase', db: 'admin'}]})
+# 登录mongodb，创建
+mongo --port 27017 # 默认端口是27017，如果没有更改可以不使用--port参数
+use admin
+db.auth("admin","778899")
+db.createUser(
+  {
+    user: "mongodb_exporter",
+    pwd: "1234567",
+    roles: [
+        { role: "clusterMonitor", db: "admin" },
+        { role: "read", db: "local" }
+    ]
+  }
+)
+# 在systemd中引入MONGODB_URI=mongodb://mongodb_exporter:1234567@localhost:27017环境变量。
+cat &lt;&lt;EOF&gt;&gt; /lib/systemd/system/mongodb_exporter.service
+[Unit]
+Documentation=https://prometheus.io/
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=prometheus
+Environment="MONGODB_URI=mongodb://mongodb_exporter:1234567@localhost:27017"
+Restart=always
+ExecStart=/data/mongodb_exporter/mongodb_exporter --web.listen-address=":9217"
+
+[Install]
+WantedBy=multi-user.target
+EOF</code></pre>
+
+<p>配置</p>
+<p>Prometheus配置</p>
+<pre class="highlight"><code class="language-bash">  - job_name: 'mongodb-exporter'
+    scrape_interval: 10s
+    static_configs:
+    - targets: ['192.168.1.220:9217']
+      labels:
+        app:    'operations'
+        env:    'mongodb-monitor'</code></pre>
+
+<h4 id="jmx-exporter">jmx-exporter<a class="headerlink" href="#jmx-exporter" title="Permanent link">&para;</a></h4>
+<p>JMX（英语：Java Management Extensions，即Java管理扩展）是Java平台上为应用程序、设备、系统等植入管理功能的框架。</p>
+<p>jmx_exporter搭配不同的配置文件可提供不同系统的metrics数据，用于监控相关指标信息。</p>
+<p>此处使用jmx-exporter监控Tomcat，至于Resin与其他jvm容器的大体监控原理基本上是一样的。</p>
+<p>参数说明：</p>
+<p>安装：</p>
+<pre class="highlight"><code class="language-bash"># 下载tomcat
+wget https://mirrors.tuna.tsinghua.edu.cn/apache/tomcat/tomcat-8/v8.5.57/bin/apache-tomcat-8.5.57.tar.gz
+tar xvf apache-tomcat-8.5.57.tar.gz
+cd apache-tomcat-8.5.57 &amp;&amp; bin/startup.sh
+# 下载jmx_exporter
+wget https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.12.0/jmx_prometheus_javaagent-0.12.0.jar
+
+# 下载tomcat.yml
+wget https://raw.githubusercontent.com/prometheus/jmx_exporter/master/example_configs/tomcat.yml
+
+​
+# 目录结构
+tree /data/jmx_exporter
+/data/jmx_exporter
+├── jmx_prometheus_javaagent-0.12.0.jar
+└── tomcat.yml
+
+# JMX_exporter支持jar包启动直接添加javaagent，但是这里监控的是tomcat，一般是修改path/bin/catalina.sh添加JAVA_OPTS，让jar包跟随tomcat启动。
+
+# tomcat启动顺序不要轻易改动，因此不建议直接修改catalina.sh，直接修改path/bin/setenv.sh内容，启动tomcat会直接加载，这里我们监听tomcat使的端口为18080，如果有多个tomcat实例，请注意每一个实例需要有不同的监听端口。
+
+# 新建添加内容，tomcat目录
+vim /usr/local/apache-tomcat-8.5.57/bin/catalina.sh
+​
+export CATALINA_OPTS="-javaagent:/data/jmx_exporter/jmx_prometheus_javaagent-0.12.0.jar=38080:/data/jmx_exporter/example.yml"
+​
+# 重新启动tomcat
+sh shutdown.sh
+sh startup.sh
+
+# 验证
+netstat -anplt|grep 38080
+tcp6       0      0 :::38080                :::*                    LISTEN      8863/java</code></pre>
+
+<p>配置</p>
+<pre class="highlight"><code class="language-bash">cat example.yml
+---
+lowercaseOutputLabelNames: true
+lowercaseOutputName: true
+whitelistObjectNames: ["java.lang:type=OperatingSystem"]
+rules:
+ - pattern: 'java.lang&lt;type=OperatingSystem&gt;&lt;&gt;((?!process_cpu_time)\w+):'
+   name: os_$1
+   type: GAUGE
+   attrNameSnakeCase: true</code></pre>
+
+<pre class="highlight"><code class="language-bash">cat  prometheus.yml
+  - job_name: 'jmx-exporter'
+    scrape_interval: 10s
+    static_configs:
+    - targets: ['192.168.1.220:38080']
+      labels:
+        app:    'operations'
+        env:    'tomcat-monitor'</code></pre>
+
+<p>配置 grafana 导入模板 ID 8563</p>
+<h4 id="kafka-exporter-zookeeper_exporter">kafka-exporter &amp; zookeeper_exporter<a class="headerlink" href="#kafka-exporter-zookeeper_exporter" title="Permanent link">&para;</a></h4>
+<p>Kafka集群是把状态保存在Zookeeper中的，因此需要搭建Zookeeper集群。</p>
+<p>参数说明：</p>
+<p>安装：</p>
+<p>zookeeper集群搭建</p>
+<pre class="highlight"><code class="language-bash">mkdir /etc/zookeeper #项目目录
+mkdir /etc/zkdata #存放快照日志
+mkdir /etc/zkdatalog #存放事物日志
+cd /etc/zookeeper
+wget https://mirrors.cnnic.cn/apache/zookeeper/zookeeper-3.5.8/apache-zookeeper-3.5.8-bin.tar.gz
+tar xvf apache-zookeeper-3.5.8-bin.tar.gz
+cd /etc/zookeeper/apache-zookeeper-3.5.8-bin/conf/ &amp;&amp; cp zoo_sample.cfg zoo.cfg
+# 查配置文件
+cat zoo.cfg |egrep -v "^#"
+tickTime=2000
+initLimit=10
+syncLimit=5
+dataDir=/etc/zkdata
+dataLogDir=/etc/zkdatalog
+clientPort=12181
+server.1=192.168.1.220:12888:13888
+server.2=192.168.1.221:12888:13888
+server.3=192.168.1.222:12888:13888
+leaderServes=no
+4lw.commands.whitelist=mntr,ruok
+# 以上操作是在server1做的，server2、server3都需要做一遍。
+# zk server1 192.168.1.220 
+echo "1" &gt; /etc/zkdata/myid
+# zk server2 192.168.1.221
+echo "2" &gt; /etc/zkdata/myid
+#zk server3 192.168.1.222
+echo "3" &gt; /etc/zkdata/myid
+
+# 启动，三个节点都需要启动
+cd /etc/zookeeper/apache-zookeeper-3.5.8/bin &amp;&amp; ./zkServer.sh start
+
+# 查看状态
+./bin/zkServer.sh status
+ZooKeeper JMX enabled by default
+Using config: /etc/zookeeper/apache-zookeeper-3.5.8-bin/bin/../conf/zoo.cfg
+Client port found: 12181. Client address: localhost.
+Mode: follower
+</code></pre>
+
+<p>Kafka集群搭建</p>
+<p>注意：kafka的id是唯一的，ip需要自行调整</p>
+<pre class="highlight"><code class="language-bash">mkdir /etc/kafka
+cd /etc/kafka &amp;&amp; wget https://mirrors.cnnic.cn/apache/kafka/2.2.2/kafka_2.12-2.2.2.tgz
+tar xf kafka_2.12-2.2.2.tgz
+cd kafka_2.12-2.2.2/config
+# config目录下需要修改的信息
+cat server.properties
+listeners=PLAINTEXT://192.168.1.221:9092
+advertised.listeners=PLAINTEXT://192.168.1.221:9092
+log.dirs=/etc/kafka/kafka-logs
+zookeeper.connect=192.168.1.220:12181,192.168.1.221:12181,192.168.1.222:12181
+
+cat producer.properties 
+bootstrap.servers=192.168.1.220:9092,192.168.1.221:9092,192.168.1.222:9092
+
+cat consumer.properties
+bootstrap.servers=192.168.1.220:9092,192.168.1.221:9092,192.168.1.222:9092
+# 启动
+./bin/kafka-server-start.sh -daemon ./config/server.properties &amp;
+
+# 查看topic信息
+/etc/kafka/kafka_2.12-2.2.2/bin/kafka-topics.sh --list --zookeeper 192.168.1.220:2181,192.168.1.221:2181,192.168.1.222:2181
+
+# 创建topic --replication-factor 2 复制两份 --partitions 3 创建3个分区 --topic 主题为deniss_topic
+/etc/kafka/kafka_2.12-2.2.2/bin/kafka-topics.sh --create --zookeeper 192.168.1.220:2181,192.168.1.221:2181,192.168.1.222:2181 --replication-factor 3 --partitions 3 --topic deniss_topic1
+
+# 创建 consumer group
+
+./bin/kafka-consumer-groups.sh --bootstrap-server 192.168.1.220:9092,192.168.1.221:9092,192.168.1.222:9092 --group kafka-consumer-1  --topic deniss-test1 --execute --reset-offsets --to-earliest
+
+./bin/kafka-consumer-groups.sh --bootstrap-server 192.168.1.220:9092,192.168.1.221:9092,192.168.1.222:9092 --group kafka-consumer-2  --topic deniss-test2 --execute --reset-offsets --to-earliest
+
+# 查看
+
+./bin/kafka-consumer-groups.sh --bootstrap-server 192.168.1.220:9092,192.168.1.221:9092,192.168.1.222:9092 --group kafka-consumer-1 --describe
+
+# 启动生产者
+
+./kafka-console-producer.sh --broker-list 192.168.1.220:9092,192.168.1.221:9092,192.168.1.222:9092 --topic deniss_topic
+
+# 启动消费者后，可以直接在生产者发送信息，这时，消费者会收到信息。
+
+./kafka-console-consumer.sh --bootstrap-server 192.168.1.220:9092,192.168.1.221:9092,192.168.1.222:9092 --topic deniss_topic
+</code></pre>
+
+<p>安装kafkae_exporter</p>
+<pre class="highlight"><code class="language-bash">cd /data
+wget https://github.com/danielqsj/kafka_exporter/releases/download/v1.2.0/kafka_exporter-1.2.0.linux-amd64.tar.gz
+mv kafka_exporter-1.2.0.linux-amd64 kafka_exporter
+
+# 加入systemd启动脚本
+
+cat &lt;&lt;EOF&gt;&gt; /lib/systemd/system/kafka_exporter.service
+[Unit]
+Description=node_exporter
+Documentation=https://prometheus.io/
+After=network.target
+
+[Service]
+Type=simple
+User=prometheus
+ExecStart=/data/kafka_exporter/kafka_exporter --kafka.server=192.168.1.220:9092
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# 加入开机启动 
+systemctl enable kafka_exporter.service
+systemctl start kafka_exporter.service
+</code></pre>
+
+<p>安装zookeeper-exporter</p>
+<p>参数：</p>
+<pre class="highlight"><code class="language-bash">./zookeeper-exporter -h
+Usage of ./zookeeper-exporter:
+  -listen string
+        address to listen on (default "0.0.0.0:9141")
+  -location string
+        metrics location (default "/metrics")
+  -timeout int
+        timeout for connection to zk servers, in seconds (default 30)
+  -zk-host string
+        zookeeper host (default "127.0.0.1")
+  -zk-list string
+        comma separated list of zk servers, i.e. '10.0.0.1:2181,10.0.0.2:2181,10.0.0.3:2181', this flag overrides --zk-host/port
+  -zk-port string
+        zookeeper port (default "2181")</code></pre>
+
+<p>安装：</p>
+<pre class="highlight"><code class="language-bash">wget https://github.com/dabealu/zookeeper-exporter/releases/download/v0.1.8/zookeeper-exporter-v0.1.8-linux.tar.gz
+tar xf zookeeper-exporter-v0.1.8-linux.tar.gz
+mv zookeeper-exporter-v0.1.8-linux/ zookeeper-exporter
+
+# 创建system脚本
+cat &lt;&lt;EOF&gt;&gt; /lib/systemd/system/zookeeper-exporter.service
+[Unit]
+Description=node_exporter
+Documentation=https://prometheus.io/
+After=network.target
+
+[Service]
+Type=simple
+User=prometheus
+ExecStart=/data/zookeeper-exporter/zookeeper-exporter -zk-list "192.168.1.220:12181,192.168.1.221:12181,192.168.1.222:12181"
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+EOF
+</code></pre>
+
+<p>配置</p>
+<p>Prometheus配置</p>
+<pre class="highlight"><code class="language-bash"># kafka
+  - job_name: 'kafka-exporter'
+    scrape_interval: 10s
+    static_configs:
+    - targets: ['192.168.1.221:9308']
+      labels:
+        app:    'operations'
+        env:    'kafka-monitor'
+</code></pre>
+
+<h4 id="rabbitmq-exporter">rabbitmq-exporter<a class="headerlink" href="#rabbitmq-exporter" title="Permanent link">&para;</a></h4>
+<p>RabbitMQ是流行的开源消息队列系统，是AMQP（Advanced Message Queuing Protocol高级消息队列协议）的标准实现，
+用erlang语言开发。RabbitMQ据说具有良好的性能和时效性，同时还能够非常好的支持集群和负载部署，非常适合在较大规模的分布式系统中使用。</p>
+<p>参数说明</p>
+<p>安装：
+<pre class="highlight"><code class="language-bash"># 安装rabbit-mq server 3.6.10
+apt install rabbitmq-server
+# 添加访问用户
+rabbitmqctl add_user admin 123456
+rabbitmqctl set_user_tags admin administrator
+rabbitmqctl set_permissions -p "/" admin ".*" ".*" ".*"
+# 查看添加用户
+rabbitmqctl list_permissions -p /
+# 使用插件开启管理页面访问
+rabbitmq-plugins enable rabbitmq_management
+# 安装rabbitmq_exporter
+wget https://github.com/kbudde/rabbitmq_exporter/releases/download/v1.0-wip2/rabbitmq_exporter-1.0.0-WIP.linux-amd64.tar.gz
+# 启动命令
+cd /data/rabbit_mq/rabbitmq_exporter
+cat &lt;&lt;EOF&gt;&gt; /lib/systemd/system/rabbitmq_exporter.service
+[Unit]
+Documentation=https://prometheus.io/
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=prometheus
+Restart=always
+ExecStart=/data/rabbit_mq/rabbitmq_exporter/rabbitmq_exporter RABBIT_USER=admin RABBIT_PASSWORD=123456 OUTPUT_FORMAT=JSON PUBLISH_PORT=9099 RABBIT_URL=http://192.168.1.221:15672
+
+[Install]
+WantedBy=multi-user.target
+EOF</code></pre></p>
+<p>配置：</p>
+<p>Prometheus配置
+<pre class="highlight"><code class="language-bash">  - job_name: 'rabbitmq-exporter'
+    scrape_interval: 10s
+    static_configs:
+    - targets: ['192.168.1.221:9419']
+      labels:
+        app:    'operations'
+        env:    'rabbitmq-monitor'</code></pre></p>
+<p>Grafana官方rabbitmq_exporter模板ID <code>4371</code> or <code>4279</code></p>
+<h4 id="ceph-exporter">ceph-exporter<a class="headerlink" href="#ceph-exporter" title="Permanent link">&para;</a></h4>
+<p>预先装好go环境，</p>
+<p>安装依赖：</p>
+<pre class="highlight"><code class="language-bash"># ubuntu
+apt install -y librados-dev
+# centos
+yum install -y librados-dev</code></pre>
+
+<p>下载源码包编译
+<pre class="highlight"><code class="language-bash">mkdir ~/go/src/github.com/cyancow
+cd ~/go/src/github.com/cyancow
+git clone https://github.com/cyancow/ceph_exporter
+go mod init 
+go mod vendor 或者 go get
+go build
+mv ceph_exporter /data/ceph_exporter</code></pre></p>
+<p>加入systemd启动脚本</p>
+<pre class="highlight"><code class="language-bash">cat /lib/systemd/system/ceph_exporter.service 
+
+[Unit]
+Description=Prometheus's ceph metrics exporter
+After=prometheus.ervice
+
+[Service]
+User=prometheus
+ExecStart=/data/ceph-exporter/ceph_exporter
+
+[Install]
+WantedBy=multi-user.target
+Alias=ceph_exporter.service</code></pre>
+
+<p>Prometheus配置</p>
+<pre class="highlight"><code class="language-bash">scrape_configs:
+  - job_name: 'ceph_exporter'
+    static_configs:
+    - targets: ['localhost:9128']</code></pre>
+
+<p>grafana 配置模板 id 917 </p>
+<p><a href="https://prometheus.io/docs/instrumenting/exporters/">官方exporter合集</a></p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+
+
+
+<!-- Application footer -->
+<footer class="md-footer">
+
+    <!-- Further information -->
+    <div class="md-footer-meta md-typeset">
+        <div class="md-footer-meta__inner md-grid">
+
+            <!-- Copyright and theme information -->
+            <div class="md-footer-copyright">
+                
+                <div class="md-footer-copyright__highlight">
+                    Copyright &copy; 2020 Kubernetes技术栈
+                </div>
+                
+                powered by
+                <a href="https://www.k8stech.net" title="Kubernetes技术栈">www.k8stech.net</a>
+            </div>
+
+            <!-- Social links -->
+            
+            
+            
+        </div>
+    </div>
+</footer>
+
+
+    </div>
+    
+      <script src="../../assets/javascripts/application.d9aa80ab.js"></script>
+      
+        
+        
+          
+          <script src="../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+              
+                <script src="../../assets/javascripts/lunr/tinyseg.js"></script>
+              
+              
+                <script src="../../assets/javascripts/lunr/lunr.jp.js"></script>
+              
+            
+          
+          
+        
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+        <script src="../../assets/js/hljs/highlight.pack.js"></script>
+      
+        <script src="../../assets/js/prism.js"></script>
+      
+    
+  </body>
+</html>

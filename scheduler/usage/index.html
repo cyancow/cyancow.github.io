@@ -1,0 +1,1303 @@
+
+
+
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+        <link rel="canonical" href="https://docs.prometheus.cool/scheduler/usage/">
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="复制">
+      
+        <meta name="lang:clipboard.copied" content="已复制">
+      
+        <meta name="lang:search.language" content="jp">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="没有找到符合条件的结果">
+      
+        <meta name="lang:search.result.one" content="找到 1 个符合条件的结果">
+      
+        <meta name="lang:search.result.other" content="# 个符合条件的结果">
+      
+        <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
+      
+      <link rel="shortcut icon" href="../../assets/img/prometheus_logo.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.2">
+    
+    
+      
+        <title>调度 - 云原生监控神器Prometheus</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.982221ab.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.224b79ff.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ef5350">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.1f0bcf2b.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i,700|Ubuntu+Mono">
+        <style>body,input{font-family:"Ubuntu","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../assets/styles/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/styles/prism.css">
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="red" data-md-color-accent="red">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#_1" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://docs.prometheus.cool" title="云原生监控神器Prometheus" class="md-header-nav__button md-logo">
+          
+            <img src="../../assets/img/prometheus_logo.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              云原生监控神器Prometheus
+            </span>
+            <span class="md-header-nav__topic">
+              调度
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            键入以开始搜索
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/k8stech/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://docs.prometheus.cool" title="云原生监控神器Prometheus" class="md-nav__button md-logo">
+      
+        <img src="../../assets/img/prometheus_logo.png" width="48" height="48">
+      
+    </a>
+    云原生监控神器Prometheus
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/k8stech/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="介绍" class="md-nav__link">
+      介绍
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      监控基础与概述
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        监控基础与概述
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/whymonitor/" title="为什么要监控" class="md-nav__link">
+      为什么要监控
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/monitorterms/" title="监控术语" class="md-nav__link">
+      监控术语
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/metricstory/" title="指标物语" class="md-nav__link">
+      指标物语
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/monitorcontrast/" title="开源监控对比" class="md-nav__link">
+      开源监控对比
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Prometheus 基础
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Prometheus 基础
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-introduction/" title="Prometheus介绍" class="md-nav__link">
+      Prometheus介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/tsdb-contrast/" title="时序数据库对比" class="md-nav__link">
+      时序数据库对比
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-datamodel/" title="数据模型" class="md-nav__link">
+      数据模型
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/node-exporter/" title="Node_Exporter" class="md-nav__link">
+      Node_Exporter
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-config/" title="Prometheus安装与配置" class="md-nav__link">
+      Prometheus安装与配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Prometheus 进阶
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Prometheus 进阶
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/auto-ops-exporter-1/" title="自动化维护Exporter（一）" class="md-nav__link">
+      自动化维护Exporter（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/auto-ops-exporter-2/" title="自动化维护Exporter（二）" class="md-nav__link">
+      自动化维护Exporter（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/docker-swarm-monitor-1/" title="Docker-Swarm集群监控（一）" class="md-nav__link">
+      Docker-Swarm集群监控（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/docker-swarm-monitor-2/" title="Docker-Swarm集群监控（二）" class="md-nav__link">
+      Docker-Swarm集群监控（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/commonly-exporter/" title="常用Exporter介绍与配置" class="md-nav__link">
+      常用Exporter介绍与配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Prometheus(警报)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Prometheus(警报)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-basic/" title="PromQL详解（一）" class="md-nav__link">
+      PromQL详解（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-operator/" title="PromQL详解（二）" class="md-nav__link">
+      PromQL详解（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-operator2/" title="PromQL详解（三）" class="md-nav__link">
+      PromQL详解（三）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-function/" title="PromQL函数" class="md-nav__link">
+      PromQL函数
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-overview/" title="AlertManager" class="md-nav__link">
+      AlertManager
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-rules-1/" title="Rules详解（一）" class="md-nav__link">
+      Rules详解（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-rules-2/" title="Rules详解（二）" class="md-nav__link">
+      Rules详解（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-receiver/" title="Receiver配置" class="md-nav__link">
+      Receiver配置
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-silences/" title="Silences配置" class="md-nav__link">
+      Silences配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Prometheus(联邦集群)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Prometheus(联邦集群)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/federation-overview/" title="Prometheus 联邦集群" class="md-nav__link">
+      Prometheus 联邦集群
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/pushgateway/" title="Pushgateway 代理" class="md-nav__link">
+      Pushgateway 代理
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/alertmanager-ha/" title="Alertmanager 高可用" class="md-nav__link">
+      Alertmanager 高可用
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Prometheus(服务发现)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Prometheus(服务发现)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-overview/" title="服务发现（文件、DNS）" class="md-nav__link">
+      服务发现（文件、DNS）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-relabeling/" title="服务发现（Relabelling）" class="md-nav__link">
+      服务发现（Relabelling）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-consul/" title="服务发现（Consul）" class="md-nav__link">
+      服务发现（Consul）
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      Prometheus(Operator)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        Prometheus(Operator)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Operator/" title="Operator概述" class="md-nav__link">
+      Operator概述
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-1/" title="手动部署（1）" class="md-nav__link">
+      手动部署（1）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-2/" title="手动部署（2）" class="md-nav__link">
+      手动部署（2）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-3/" title="手动部署（联邦）" class="md-nav__link">
+      手动部署（联邦）
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nodeselector" title="nodeSelector" class="md-nav__link">
+    nodeSelector
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="亲和性和反亲和性调度" class="md-nav__link">
+    亲和性和反亲和性调度
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" title="节点亲和性" class="md-nav__link">
+    节点亲和性
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pod" title="Pod 亲和性" class="md-nav__link">
+    Pod 亲和性
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pod_1" title="Pod 反亲和性" class="md-nav__link">
+    Pod 反亲和性
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" title="污点与容忍" class="md-nav__link">
+    污点与容忍
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/k8stech/edit/master/docs/scheduler/usage.md" title="编辑此页" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="_1">调度<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<p>一般情况下我们部署的 Pod 是通过集群的自动调度策略来选择节点的，默认情况下调度器考虑的是资源足够，并且负载尽量平均，但是有的时候我们需要能够更加细粒度的去控制 Pod 的调度，比如我们希望一些机器学习的应用只跑在有 GPU 的节点上；但是有的时候我们的服务之间交流比较频繁，又希望能够将这服务的 Pod 都调度到同一个的节点上。这就需要使用一些调度方式来控制 Pod 的调度了，主要有两个概念：<strong>亲和性和反亲和性</strong>，亲和性又分成节点亲和性(nodeAffinity)和 Pod 亲和性(podAffinity)。</p>
+<h2 id="nodeselector">nodeSelector<a class="headerlink" href="#nodeselector" title="Permanent link">&para;</a></h2>
+<p>在了解亲和性之前，我们先来了解一个非常常用的调度方式：<code>nodeSelector</code>。我们知道 label 标签是 kubernetes 中一个非常重要的概念，用户可以非常灵活的利用 label 来管理集群中的资源，比如最常见的 Service 对象通过 label 去匹配 Pod 资源，而 Pod 的调度也可以根据节点的 label 来进行调度。</p>
+<p>我们可以通过下面的命令查看我们的 node 的 label：
+<pre class="highlight"><code class="language-shell">$ kubectl get nodes --show-labels
+NAME          STATUS   ROLES    AGE   VERSION   LABELS
+ydzs-master   Ready    master   55d   v1.16.2   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=ydzs-master,kubernetes.io/os=linux,node-role.kubernetes.io/master=
+ydzs-node1    Ready    &lt;none&gt;   55d   v1.16.2   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/fluentd-ds-ready=true,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=ydzs-node1,kubernetes.io/os=linux
+ydzs-node2    Ready    &lt;none&gt;   55d   v1.16.2   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/fluentd-ds-ready=true,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=ydzs-node2,kubernetes.io/os=linux
+ydzs-node3    Ready    &lt;none&gt;   53d   v1.16.2   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/fluentd-ds-ready=true,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=ydzs-node3,kubernetes.io/os=linux,monitor=prometheus
+ydzs-node4    Ready    &lt;none&gt;   53d   v1.16.2   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/fluentd-ds-ready=true,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=ydzs-node4,kubernetes.io/os=linux</code></pre></p>
+<p>现在我们先给节点 ydzs-node2 增加一个<code>com=youdianzhishi</code>的标签，命令如下：
+<pre class="highlight"><code class="language-shell">$ kubectl label nodes ydzs-node2 com=youdianzhishi
+node/ydzs-node2 labeled</code></pre></p>
+<p>我们可以通过上面的 <code>--show-labels</code> 参数可以查看上述标签是否生效。当节点被打上了相关标签后，在调度的时候就可以使用这些标签了，只需要在 Pod 的 spec 字段中添加 <code>nodeSelector</code> 字段，里面是我们需要被调度的节点的 label 标签，比如，下面的 Pod 我们要强制调度到 ydzs-node2 这个节点上去，我们就可以使用 nodeSelector 来表示了：(node-selector-demo.yaml)
+<pre class="highlight"><code class="language-yaml">apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: busybox-pod
+  name: test-busybox
+spec:
+  containers:
+  - command:
+    - sleep
+    - "3600"
+    image: busybox
+    imagePullPolicy: Always
+    name: test-busybox
+  nodeSelector:
+    com: youdianzhishi</code></pre></p>
+<p>然后我们可以通过 describe 命令查看调度结果：
+<pre class="highlight"><code class="language-shell">$ kubectl apply -f pod-selector-demo.yaml 
+pod/test-busybox created
+$ kubectl describe pod test-busybox
+Name:         test-busybox
+Namespace:    default
+Priority:     0
+Node:         ydzs-node2/10.151.30.23
+......
+Node-Selectors:  com=youdianzhishi
+Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
+                 node.kubernetes.io/unreachable:NoExecute for 300s
+Events:
+  Type    Reason     Age        From                 Message
+  ----    ------     ----       ----                 -------
+  Normal  Scheduled  &lt;unknown&gt;  default-scheduler    Successfully assigned default/test-busybox to ydzs-node2
+  Normal  Pulling    13s        kubelet, ydzs-node2  Pulling image "busybox"
+  Normal  Pulled     10s        kubelet, ydzs-node2  Successfully pulled image "busybox"
+  Normal  Created    10s        kubelet, ydzs-node2  Created container test-busybox
+  Normal  Started    9s         kubelet, ydzs-node2  Started container test-busybox</code></pre></p>
+<p>我们可以看到 Events 下面的信息，我们的 Pod 通过默认的 <code>default-scheduler</code> 调度器被绑定到了 ydzs-node2 节点。不过需要注意的是<code>nodeSelector</code> 属于强制性的，如果我们的目标节点没有可用的资源，我们的 Pod 就会一直处于 <code>Pending</code> 状态。</p>
+<p>通过上面的例子我们可以感受到 <code>nodeSelector</code> 的方式比较直观，但是还够灵活，控制粒度偏大，接下来我们再和大家了解下更加灵活的方式：节点亲和性(nodeAffinity)。</p>
+<h2 id="_2">亲和性和反亲和性调度<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>前面我们了解了 kubernetes 调度器的调度流程，我们知道默认的调度器在使用的时候，经过了 <code>predicates</code> 和 <code>priorities</code> 两个阶段，但是在实际的生产环境中，往往我们需要根据自己的一些实际需求来控制 Pod 的调度，这就需要用到 <code>nodeAffinity(节点亲和性)</code>、<code>podAffinity(pod 亲和性)</code> 以及 <code>podAntiAffinity(pod 反亲和性)</code>。</p>
+<p>亲和性调度可以分成<strong>软策略</strong>和<strong>硬策略</strong>两种方式:</p>
+<ul>
+<li><code>软策略</code>就是如果现在没有满足调度要求的节点的话，Pod 就会忽略这条规则，继续完成调度过程，说白了就是满足条件最好了，没有的话也无所谓</li>
+<li><code>硬策略</code>就比较强硬了，如果没有满足条件的节点的话，就不断重试直到满足条件为止，简单说就是你必须满足我的要求，不然就不干了</li>
+</ul>
+<p>对于亲和性和反亲和性都有这两种规则可以设置： <code>preferredDuringSchedulingIgnoredDuringExecution</code> 和<code>requiredDuringSchedulingIgnoredDuringExecution</code>，前面的就是软策略，后面的就是硬策略。</p>
+<h3 id="_3">节点亲和性<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>节点亲和性（nodeAffinity）主要是用来控制 Pod 要部署在哪些节点上，以及不能部署在哪些节点上的，它可以进行一些简单的逻辑组合了，不只是简单的相等匹配。</p>
+<p>比如现在我们用一个 Deployment 来管理8个 Pod 副本，现在我们来控制下这些 Pod 的调度，如下例子：（node-affinity-demo.yaml）
+<pre class="highlight"><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-affinity
+  labels:
+    app: node-affinity
+spec:
+  replicas: 8
+  selector:
+    matchLabels:
+      app: node-affinity
+  template:
+    metadata:
+      labels:
+        app: node-affinity
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.7.9
+        ports:
+        - containerPort: 80
+          name: nginxweb
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:  # 硬策略
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: NotIn
+                values:
+                - ydzs-node3
+          preferredDuringSchedulingIgnoredDuringExecution:  # 软策略
+          - weight: 1
+            preference:
+              matchExpressions:
+              - key: com
+                operator: In
+                values:
+                - youdianzhishi</code></pre></p>
+<p>上面这个 Pod 首先是要求不能运行在 ydzs-node3 这个节点上，如果有个节点满足 <code>com=youdianzhishi</code> 的话就优先调度到这个节点上。</p>
+<p>由于上面 ydzs-node02 节点我们打上了 <code>com=youdianzhishi</code> 这样的 label 标签，所以按要求会优先调度到这个节点来的，现在我们来创建这个 Pod，然后查看具体的调度情况是否满足我们的要求。
+<pre class="highlight"><code class="language-shell">$ kubectl apply -f node-affinty-demo.yaml 
+deployment.apps/node-affinity created
+$ kubectl get pods -l app=node-affinity -o wide
+NAME                            READY   STATUS    RESTARTS   AGE     IP             NODE         NOMINATED NODE   READINESS GATES
+node-affinity-cdd9d54d9-bgbbh   1/1     Running   0          2m28s   10.244.2.247   ydzs-node2   &lt;none&gt;           &lt;none&gt;
+node-affinity-cdd9d54d9-dlbck   1/1     Running   0          2m28s   10.244.4.16    ydzs-node4   &lt;none&gt;           &lt;none&gt;
+node-affinity-cdd9d54d9-g2jr6   1/1     Running   0          2m28s   10.244.4.17    ydzs-node4   &lt;none&gt;           &lt;none&gt;
+node-affinity-cdd9d54d9-gzr58   1/1     Running   0          2m28s   10.244.1.118   ydzs-node1   &lt;none&gt;           &lt;none&gt;
+node-affinity-cdd9d54d9-hcv7r   1/1     Running   0          2m28s   10.244.2.246   ydzs-node2   &lt;none&gt;           &lt;none&gt;
+node-affinity-cdd9d54d9-kvxw4   1/1     Running   0          2m28s   10.244.2.245   ydzs-node2   &lt;none&gt;           &lt;none&gt;
+node-affinity-cdd9d54d9-p4mmk   1/1     Running   0          2m28s   10.244.2.244   ydzs-node2   &lt;none&gt;           &lt;none&gt;
+node-affinity-cdd9d54d9-t5mff   1/1     Running   0          2m28s   10.244.1.117   ydzs-node1   &lt;none&gt;           &lt;none&gt;</code></pre></p>
+<p>从结果可以看出有4个 Pod 被部署到了 ydzs-node2 节点上，但是可以看到并没有一个 Pod 被部署到 ydzs-node3 这个节点上，因为我们的硬策略就是不允许部署到该节点上，而 ydzs-node2 是软策略，所以会尽量满足。这里的匹配逻辑是 label 标签的值在某个列表中，现在 Kubernetes 提供的操作符有下面的几种：</p>
+<ul>
+<li>In：label 的值在某个列表中</li>
+<li>NotIn：label 的值不在某个列表中</li>
+<li>Gt：label 的值大于某个值</li>
+<li>Lt：label 的值小于某个值</li>
+<li>Exists：某个 label 存在</li>
+<li>DoesNotExist：某个 label 不存在</li>
+</ul>
+<p>但是需要注意的是如果 <code>nodeSelectorTerms</code> 下面有多个选项的话，满足任何一个条件就可以了；如果 <code>matchExpressions</code>有多个选项的话，则必须同时满足这些条件才能正常调度 Pod。</p>
+<h3 id="pod">Pod 亲和性<a class="headerlink" href="#pod" title="Permanent link">&para;</a></h3>
+<p>Pod 亲和性（podAffinity）主要解决 Pod 可以和哪些 Pod 部署在同一个拓扑域中的问题（其中拓扑域用主机标签实现，可以是单个主机，也可以是多个主机组成的 cluster、zone 等等），而 Pod 反亲和性主要是解决 Pod 不能和哪些 Pod 部署在同一个拓扑域中的问题，它们都是处理的 Pod 与 Pod 之间的关系，比如一个 Pod 在一个节点上了，那么我这个也得在这个节点，或者你这个 Pod 在节点上了，那么我就不想和你待在同一个节点上。</p>
+<p>由于我们这里只有一个集群，并没有区域或者机房的概念，所以我们这里直接使用主机名来作为拓扑域，把 Pod 创建在同一个主机上面。
+<pre class="highlight"><code class="language-shell">$ kubectl get nodes --show-labels
+NAME          STATUS   ROLES    AGE   VERSION   LABELS
+ydzs-master   Ready    master   55d   v1.16.2   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=ydzs-master,kubernetes.io/os=linux,node-role.kubernetes.io/master=
+ydzs-node1    Ready    &lt;none&gt;   55d   v1.16.2   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/fluentd-ds-ready=true,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=ydzs-node1,kubernetes.io/os=linux
+ydzs-node2    Ready    &lt;none&gt;   55d   v1.16.2   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/fluentd-ds-ready=true,beta.kubernetes.io/os=linux,com=youdianzhishi,kubernetes.io/arch=amd64,kubernetes.io/hostname=ydzs-node2,kubernetes.io/os=linux
+ydzs-node3    Ready    &lt;none&gt;   53d   v1.16.2   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/fluentd-ds-ready=true,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=ydzs-node3,kubernetes.io/os=linux,monitor=prometheus
+ydzs-node4    Ready    &lt;none&gt;   53d   v1.16.2   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/fluentd-ds-ready=true,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=ydzs-node4,kubernetes.io/os=linux</code></pre></p>
+<p>同样，还是针对上面的资源对象，我们来测试下 Pod 的亲和性：（pod-affinity-demo.yaml）
+<pre class="highlight"><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pod-affinity
+  labels:
+    app: pod-affinity
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: pod-affinity
+  template:
+    metadata:
+      labels:
+        app: pod-affinity
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+          name: nginxweb
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:  # 硬策略
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - busybox-pod
+            topologyKey: kubernetes.io/hostname</code></pre></p>
+<p>上面这个例子中的 Pod 需要调度到某个指定的节点上，并且该节点上运行了一个带有 <code>app=busybox-pod</code> 标签的 Pod。我们可以查看有标签 <code>app=busybox-pod</code> 的 pod 列表：
+<pre class="highlight"><code class="language-shell">$ kubectl get pods -l app=busybox-pod -o wide
+NAME           READY   STATUS    RESTARTS   AGE   IP             NODE         NOMINATED NODE   READINESS GATES
+test-busybox   1/1     Running   0          27m   10.244.2.242   ydzs-node2   &lt;none&gt;           &lt;none&gt;</code></pre></p>
+<p>我们看到这个 Pod 运行在了 ydzs-node2 的节点上面，所以按照上面的亲和性来说，上面我们部署的3个 Pod 副本也应该运行在 ydzs-node2 节点上：
+<pre class="highlight"><code class="language-shell">$ kubectl apply -f pod-affinity-demo.yaml 
+deployment.apps/pod-affinity created
+$ kubectl get pods -o wide -l app=pod-affinity
+NAME                            READY   STATUS    RESTARTS   AGE   IP             NODE         NOMINATED NODE   READINESS GATES
+pod-affinity-587f9b5b58-5nxmf   1/1     Running   0          26s   10.244.2.249   ydzs-node2   &lt;none&gt;           &lt;none&gt;
+pod-affinity-587f9b5b58-m2j7s   1/1     Running   0          26s   10.244.2.248   ydzs-node2   &lt;none&gt;           &lt;none&gt;
+pod-affinity-587f9b5b58-vrd7b   1/1     Running   0          26s   10.244.2.250   ydzs-node2   &lt;none&gt;           &lt;none&gt;</code></pre></p>
+<p>如果我们把上面的 test-busybox 和 pod-affinity 这个 Deployment 都删除，然后重新创建 pod-affinity 这个资源，看看能不能正常调度呢：
+<pre class="highlight"><code class="language-shell">$ kubectl delete -f node-selector-demo.yaml
+pod "test-busybox" deleted
+$  kubectl delete -f pod-affinity-demo.yaml
+deployment.apps "pod-affinity" deleted
+$ kubectl apply -f pod-affinity-demo.yaml
+deployment.apps/pod-affinity created
+$ kubectl get pods -o wide -l app=pod-affinity
+NAME                            READY   STATUS    RESTARTS   AGE   IP       NODE     NOMINATED NODE   READINESS GATES
+pod-affinity-587f9b5b58-bbfgr   0/1     Pending   0          18s   &lt;none&gt;   &lt;none&gt;   &lt;none&gt;           &lt;none&gt;
+pod-affinity-587f9b5b58-lwc8n   0/1     Pending   0          18s   &lt;none&gt;   &lt;none&gt;   &lt;none&gt;           &lt;none&gt;
+pod-affinity-587f9b5b58-pc7ql   0/1     Pending   0          18s   &lt;none&gt;   &lt;none&gt;   &lt;none&gt;           &lt;none&gt;</code></pre></p>
+<p>我们可以看到都处于 <code>Pending</code> 状态了，这是因为现在没有一个节点上面拥有 <code>app=busybox-pod</code> 这个标签的 Pod，而上面我们的调度使用的是硬策略，所以就没办法进行调度了，大家可以去尝试下重新将 test-busybox 这个 Pod 调度到其他节点上，观察下上面的3个副本会不会也被调度到对应的节点上去。</p>
+<p>我们这个地方使用的是 <code>kubernetes.io/hostname</code> 这个拓扑域，意思就是我们当前调度的 Pod 要和目标的 Pod 处于同一个主机上面，因为要处于同一个拓扑域下面，为了说明这个问题，我们把拓扑域改成 <code>beta.kubernetes.io/os</code>，同样的我们当前调度的 Pod 要和目标的 Pod 处于同一个拓扑域中，目标的 Pod 是拥有 <code>beta.kubernetes.io/os=linux</code> 的标签，而我们这里所有节点都有这样的标签，这也就意味着我们所有节点都在同一个拓扑域中，所以我们这里的 Pod 可以被调度到任何一个节点，重新运行上面的 <code>app=busybox-pod</code> 的 Pod，然后再更新下我们这里的资源对象：
+<pre class="highlight"><code class="language-shell">$ kubectl get pods -o wide -l app=pod-affinity
+NAME                           READY   STATUS    RESTARTS   AGE     IP             NODE         NOMINATED NODE   READINESS GATES
+pod-affinity-76c56567c-792n4   1/1     Running   0          2m59s   10.244.2.254   ydzs-node2   &lt;none&gt;           &lt;none&gt;
+pod-affinity-76c56567c-8s2pd   1/1     Running   0          3m53s   10.244.4.18    ydzs-node4   &lt;none&gt;           &lt;none&gt;
+pod-affinity-76c56567c-hx7ck   1/1     Running   0          2m52s   10.244.3.23    ydzs-node3   &lt;none&gt;           &lt;none&gt;</code></pre></p>
+<p>可以看到现在是分别运行在3个节点下面的，因为他们都属于 <code>beta.kubernetes.io/os</code> 这个拓扑域。</p>
+<h3 id="pod_1">Pod 反亲和性<a class="headerlink" href="#pod_1" title="Permanent link">&para;</a></h3>
+<p>Pod 反亲和性（podAntiAffinity）则是反着来的，比如一个节点上运行了某个 Pod，那么我们的模板 Pod 则不希望被调度到这个节点上面去了。我们把上面的 <code>podAffinity</code> 直接改成 <code>podAntiAffinity</code>：(pod-antiaffinity-demo.yaml)
+<pre class="highlight"><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pod-antiaffinity
+  labels:
+    app: pod-antiaffinity
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: pod-antiaffinity
+  template:
+    metadata:
+      labels:
+        app: pod-antiaffinity
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+          name: nginxweb
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:  # 硬策略
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - busybox-pod
+            topologyKey: kubernetes.io/hostname</code></pre></p>
+<p>这里的意思就是如果一个节点上面有一个 <code>app=busybox-pod</code> 这样的 Pod 的话，那么我们的 Pod 就别调度到这个节点上面来，上面我们把<code>app=busybox-pod</code> 这个 Pod 固定到了 ydzs-node2 这个节点上面的，所以正常来说我们这里的 Pod 不会出现在该节点上：
+<pre class="highlight"><code class="language-shell">$ kubectl apply -f pod-antiaffinity-demo.yaml 
+deployment.apps/pod-antiaffinity created
+$ kubectl get pods -l app=pod-antiaffinity -o wide
+NAME                                READY   STATUS    RESTARTS   AGE   IP            NODE         NOMINATED NODE   READINESS GATES
+pod-antiaffinity-84d5bf9df4-9c9qk   1/1     Running   0          73s   10.244.4.19   ydzs-node4   &lt;none&gt;           &lt;none&gt;
+pod-antiaffinity-84d5bf9df4-q6lkm   1/1     Running   0          67s   10.244.3.24   ydzs-node3   &lt;none&gt;           &lt;none&gt;
+pod-antiaffinity-84d5bf9df4-vk9tc   1/1     Running   0          57s   10.244.3.25   ydzs-node3   &lt;none&gt;           &lt;none&gt;</code></pre></p>
+<p>我们可以看到没有被调度到 ydzs-node2 节点上，因为我们这里使用的是 Pod 反亲和性。大家可以思考下，如果这里我们将拓扑域更改成 <code>beta.kubernetes.io/os</code> 会怎么样呢？可以自己去测试下看看。</p>
+<h2 id="_4">污点与容忍<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>对于 <code>nodeAffinity</code> 无论是硬策略还是软策略方式，都是调度 Pod 到预期节点上，而污点（Taints）恰好与之相反，如果一个节点标记为 Taints ，除非 Pod 也被标识为可以容忍污点节点，否则该 Taints 节点不会被调度 Pod。</p>
+<p>比如用户希望把 Master 节点保留给 Kubernetes 系统组件使用，或者把一组具有特殊资源预留给某些 Pod，则污点就很有用了，Pod 不会再被调度到 taint 标记过的节点。我们使用 kubeadm 搭建的集群默认就给 master 节点添加了一个污点标记，所以我们看到我们平时的 Pod 都没有被调度到 master 上去：
+<pre class="highlight"><code class="language-shell">$ kubectl describe node ydzs-master
+Name:               ydzs-master
+Roles:              master
+Labels:             beta.kubernetes.io/arch=amd64
+                    beta.kubernetes.io/os=linux
+                    kubernetes.io/arch=amd64
+                    kubernetes.io/hostname=ydzs-master
+                    kubernetes.io/os=linux
+                    node-role.kubernetes.io/master=
+......
+Taints:             node-role.kubernetes.io/master:NoSchedule
+Unschedulable:      false
+......</code></pre></p>
+<p>我们可以使用上面的命令查看 master 节点的信息，其中有一条关于 Taints 的信息：<code>node-role.kubernetes.io/master:NoSchedule</code>，就表示master 节点打了一个污点的标记，其中影响的参数是 <code>NoSchedule</code>，表示 Pod 不会被调度到标记为 taints 的节点，除了 <code>NoSchedule</code> 外，还有另外两个选项：</p>
+<ul>
+<li>PreferNoSchedule：NoSchedule 的软策略版本，表示尽量不调度到污点节点上去</li>
+<li>NoExecute：该选项意味着一旦 Taint 生效，如该节点内正在运行的 Pod 没有对应容忍（Tolerate）设置，则会直接被逐出</li>
+</ul>
+<p>污点 taint 标记节点的命令如下：
+<pre class="highlight"><code class="language-shell">$ kubectl taint nodes ydzs-node2 test=node2:NoSchedule
+node "ydzs-node2" tainted</code></pre></p>
+<p>上面的命名将 ydzs-node2 节点标记为了污点，影响策略是 <code>NoSchedule</code>，只会影响新的 Pod 调度，如果仍然希望某个 Pod 调度到 taint 节点上，则必须在 Spec 中做出 Toleration 定义，才能调度到该节点，比如现在我们想要将一个 Pod 调度到 master 节点：(taint-demo.yaml)
+<pre class="highlight"><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: taint
+  labels:
+    app: taint
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: taint
+  template:
+    metadata:
+      labels:
+        app: taint
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - name: http
+          containerPort: 80
+      tolerations:
+      - key: "node-role.kubernetes.io/master"
+        operator: "Exists"
+        effect: "NoSchedule"</code></pre></p>
+<p>由于 master 节点被标记为了污点，所以我们这里要想 Pod 能够调度到改节点去，就需要增加容忍的声明：
+<pre class="highlight"><code class="language-yaml">tolerations:
+- key: "node-role.kubernetes.io/master"
+  operator: "Exists"
+  effect: "NoSchedule"</code></pre></p>
+<p>然后创建上面的资源，查看结果：
+<pre class="highlight"><code class="language-shell">$ kubectl apply -f taint-demo.yaml
+deployment.apps "taint" created
+$ kubectl get pods -o wide
+NAME                                      READY     STATUS             RESTARTS   AGE       IP             NODE
+......
+taint-845d8bb4fb-57mhm                    1/1       Running            0          1m        10.244.4.247   ydzs-node2
+taint-845d8bb4fb-bbvmp                    1/1       Running            0          1m        10.244.0.33    ydzs-master
+taint-845d8bb4fb-zb78x                    1/1       Running            0          1m        10.244.4.246   ydzs-node2
+......</code></pre></p>
+<p>我们可以看到有一个 Pod 副本被调度到了 master 节点，这就是容忍的使用方法。</p>
+<p>对于 <code>tolerations</code> 属性的写法，其中的 key、value、effect 与 Node 的 Taint 设置需保持一致， 还有以下几点说明：</p>
+<ul>
+<li>如果 operator 的值是 <code>Exists</code>，则 value 属性可省略</li>
+<li>如果 operator 的值是 <code>Equal</code>，则表示其 key 与 value 之间的关系是 equal(等于)</li>
+<li>如果不指定 operator 属性，则默认值为 <code>Equal</code></li>
+</ul>
+<p>另外，还有两个特殊值：</p>
+<ul>
+<li>空的 key 如果再配合 <code>Exists</code> 就能匹配所有的 key 与 value，也就是是能容忍所有节点的所有 Taints</li>
+<li>空的 effect 匹配所有的 effect</li>
+</ul>
+<p>最后如果我们要取消节点的污点标记，可以使用下面的命令：
+<pre class="highlight"><code class="language-shell">$ kubectl taint nodes ydzs-node2 test-
+node "ydzs-node2" untainted</code></pre></p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+
+
+
+<!-- Application footer -->
+<footer class="md-footer">
+
+    <!-- Further information -->
+    <div class="md-footer-meta md-typeset">
+        <div class="md-footer-meta__inner md-grid">
+
+            <!-- Copyright and theme information -->
+            <div class="md-footer-copyright">
+                
+                <div class="md-footer-copyright__highlight">
+                    Copyright &copy; 2020 Kubernetes技术栈
+                </div>
+                
+                powered by
+                <a href="https://www.k8stech.net" title="Kubernetes技术栈">www.k8stech.net</a>
+            </div>
+
+            <!-- Social links -->
+            
+            
+            
+        </div>
+    </div>
+</footer>
+
+
+    </div>
+    
+      <script src="../../assets/javascripts/application.d9aa80ab.js"></script>
+      
+        
+        
+          
+          <script src="../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+              
+                <script src="../../assets/javascripts/lunr/tinyseg.js"></script>
+              
+              
+                <script src="../../assets/javascripts/lunr/lunr.jp.js"></script>
+              
+            
+          
+          
+        
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+        <script src="../../assets/js/hljs/highlight.pack.js"></script>
+      
+        <script src="../../assets/js/prism.js"></script>
+      
+    
+  </body>
+</html>

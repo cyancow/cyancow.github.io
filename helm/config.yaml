@@ -1,0 +1,12 @@
+mysqlRootPassword: mysqlRootPassword
+persistence:
+  enabled: false
+
+# # - yaml里面的数组的一个item选项  [{},{}]
+# ports:
+# - name: web
+#   containerPort: 80
+# - name: websecure
+#   containerPort: 443
+
+# name: "value1,value2"

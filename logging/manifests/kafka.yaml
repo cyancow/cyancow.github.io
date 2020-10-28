@@ -1,0 +1,13 @@
+resources:
+  limits:
+    cpu: 200m
+    memory: 1536Mi
+  requests:
+    cpu: 100m
+    memory: 1024Mi
+
+livenessProbe:
+  initialDelaySeconds: 60
+
+persistence:
+  storageClass: "rook-ceph-block"

@@ -1,0 +1,42 @@
+apiVersion: stable.example.com/v1beta1
+kind: CronTab
+metadata:
+  name: my-crontab
+  namespace: default
+spec:
+  cronSpec: "* * * */5"
+  image: "busybox"
+  replicas: 10
+
+# 定时的执行某个镜像容器的多个副本
+
+# DELETE:my-crontab对象
+# ADD:my-crontab2
+# UPDATE:my-crontab1
+# ADD:my-crontab对象 -> 
+
+# onAdd() {
+  # 启动一个定时任务 根据 cronSpec
+  # 拉起一个容器：image
+  # 拉起 replicas 副本
+# }
+
+# onDelete() {
+  # 删除所有的副本
+# }
+
+
+# mysql —> statefulset  -> mysql 集群 ，如果其中一个Pod挂掉以后，怎么做数据恢复，怎么保证集群的正常
+# Operator：肯定需要对mysql的各种运维方式要非常了解，实际上就是用代码的方式去实现mysql的运维
+---
+apiVersion: stable.example.com/v1
+kind: MysqlCluster
+metadata:
+  name: test-mysql-cluster
+spec:
+  replicas: 5  # 启动5个实例的mysql集群
+  backup:
+    cronSpec: "* * * */5"
+  image: mysql:5.7
+
+# 如果集群中挂掉了一个Pod，4个，这个时候controller会想一切办法再启动一个Pod，始终会保持5个副本

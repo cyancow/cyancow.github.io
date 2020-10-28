@@ -1,0 +1,8 @@
+Thank you for install {{ .Chart.Name }}
+
+Your release is named {{ .Release.Name }}
+
+try other command:
+
+$ helm status {{ .Release.Name }}
+$ helm get {{ .Release.Name }}

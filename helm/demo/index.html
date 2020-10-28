@@ -1,0 +1,1329 @@
+
+
+
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+        <link rel="canonical" href="https://docs.prometheus.cool/helm/demo/">
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="复制">
+      
+        <meta name="lang:clipboard.copied" content="已复制">
+      
+        <meta name="lang:search.language" content="jp">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="没有找到符合条件的结果">
+      
+        <meta name="lang:search.result.one" content="找到 1 个符合条件的结果">
+      
+        <meta name="lang:search.result.other" content="# 个符合条件的结果">
+      
+        <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
+      
+      <link rel="shortcut icon" href="../../assets/img/prometheus_logo.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.2">
+    
+    
+      
+        <title>示例 - 云原生监控神器Prometheus</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.982221ab.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.224b79ff.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ef5350">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.1f0bcf2b.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i,700|Ubuntu+Mono">
+        <style>body,input{font-family:"Ubuntu","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../assets/styles/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/styles/prism.css">
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="red" data-md-color-accent="red">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#_1" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://docs.prometheus.cool" title="云原生监控神器Prometheus" class="md-header-nav__button md-logo">
+          
+            <img src="../../assets/img/prometheus_logo.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              云原生监控神器Prometheus
+            </span>
+            <span class="md-header-nav__topic">
+              示例
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            键入以开始搜索
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/k8stech/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://docs.prometheus.cool" title="云原生监控神器Prometheus" class="md-nav__button md-logo">
+      
+        <img src="../../assets/img/prometheus_logo.png" width="48" height="48">
+      
+    </a>
+    云原生监控神器Prometheus
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/k8stech/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="介绍" class="md-nav__link">
+      介绍
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      监控基础与概述
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        监控基础与概述
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/whymonitor/" title="为什么要监控" class="md-nav__link">
+      为什么要监控
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/monitorterms/" title="监控术语" class="md-nav__link">
+      监控术语
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/metricstory/" title="指标物语" class="md-nav__link">
+      指标物语
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/monitorcontrast/" title="开源监控对比" class="md-nav__link">
+      开源监控对比
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Prometheus 基础
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Prometheus 基础
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-introduction/" title="Prometheus介绍" class="md-nav__link">
+      Prometheus介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/tsdb-contrast/" title="时序数据库对比" class="md-nav__link">
+      时序数据库对比
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-datamodel/" title="数据模型" class="md-nav__link">
+      数据模型
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/node-exporter/" title="Node_Exporter" class="md-nav__link">
+      Node_Exporter
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-config/" title="Prometheus安装与配置" class="md-nav__link">
+      Prometheus安装与配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Prometheus 进阶
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Prometheus 进阶
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/auto-ops-exporter-1/" title="自动化维护Exporter（一）" class="md-nav__link">
+      自动化维护Exporter（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/auto-ops-exporter-2/" title="自动化维护Exporter（二）" class="md-nav__link">
+      自动化维护Exporter（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/docker-swarm-monitor-1/" title="Docker-Swarm集群监控（一）" class="md-nav__link">
+      Docker-Swarm集群监控（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/docker-swarm-monitor-2/" title="Docker-Swarm集群监控（二）" class="md-nav__link">
+      Docker-Swarm集群监控（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/commonly-exporter/" title="常用Exporter介绍与配置" class="md-nav__link">
+      常用Exporter介绍与配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Prometheus(警报)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Prometheus(警报)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-basic/" title="PromQL详解（一）" class="md-nav__link">
+      PromQL详解（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-operator/" title="PromQL详解（二）" class="md-nav__link">
+      PromQL详解（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-operator2/" title="PromQL详解（三）" class="md-nav__link">
+      PromQL详解（三）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-function/" title="PromQL函数" class="md-nav__link">
+      PromQL函数
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-overview/" title="AlertManager" class="md-nav__link">
+      AlertManager
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-rules-1/" title="Rules详解（一）" class="md-nav__link">
+      Rules详解（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-rules-2/" title="Rules详解（二）" class="md-nav__link">
+      Rules详解（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-receiver/" title="Receiver配置" class="md-nav__link">
+      Receiver配置
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-silences/" title="Silences配置" class="md-nav__link">
+      Silences配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Prometheus(联邦集群)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Prometheus(联邦集群)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/federation-overview/" title="Prometheus 联邦集群" class="md-nav__link">
+      Prometheus 联邦集群
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/pushgateway/" title="Pushgateway 代理" class="md-nav__link">
+      Pushgateway 代理
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/alertmanager-ha/" title="Alertmanager 高可用" class="md-nav__link">
+      Alertmanager 高可用
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Prometheus(服务发现)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Prometheus(服务发现)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-overview/" title="服务发现（文件、DNS）" class="md-nav__link">
+      服务发现（文件、DNS）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-relabeling/" title="服务发现（Relabelling）" class="md-nav__link">
+      服务发现（Relabelling）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-consul/" title="服务发现（Consul）" class="md-nav__link">
+      服务发现（Consul）
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      Prometheus(Operator)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        Prometheus(Operator)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Operator/" title="Operator概述" class="md-nav__link">
+      Operator概述
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-1/" title="手动部署（1）" class="md-nav__link">
+      手动部署（1）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-2/" title="手动部署（2）" class="md-nav__link">
+      手动部署（2）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-3/" title="手动部署（联邦）" class="md-nav__link">
+      手动部署（联邦）
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="应用" class="md-nav__link">
+    应用
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" title="名称" class="md-nav__link">
+    名称
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" title="定制" class="md-nav__link">
+    定制
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/k8stech/edit/master/docs/helm/demo.md" title="编辑此页" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="_1">示例<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<p>前面介绍了 Helm 的基本使用，以及 Helm Chart 包开发相关的一些知识点，下面我们用一个实例来演示下如何开发一个真正的 Helm Chart 包。</p>
+<h2 id="_2">应用<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>我们这里为前面的完整示例 Wordpress 开发一个 Chart 包，在开发 Chart 包之前很明显我们最需要的就是要知道我们自己的应用应该如何使用，如何部署，不然是不可能编写出对应的 Chart 包的。</p>
+<p>我们可以用 <code>helm create</code> 命令来创建一个 Chart 包，这里我们就完全手动来创建，首先创建一个名为 wordpress 的文件夹:
+<pre class="highlight"><code class="language-shell">$ mkdir wordpress &amp;&amp; cd wordpress</code></pre></p>
+<p>然后在目录下面创建如下所示的 <code>Chart.yaml</code> 文件：
+<pre class="highlight"><code class="language-yaml">apiVersion: v2
+name: wordpress
+description: A Helm chart for Kubernetes
+home: https://wordpress.org/
+type: application
+# chart 版本号
+version: 0.1.0
+# wordpress 的应用版本
+appVersion: 5.3.2</code></pre></p>
+<p>由于 Wordpress 应用本身是一来 MySQL 数据库的，所以同样需要添加一个依赖说明 <code>requirements.yaml</code>：
+<pre class="highlight"><code class="language-yaml">dependencies:
+- name: mysql
+  version: 1.6.2
+  repository: http://mirror.azure.cn/kubernetes/charts/
+  condition: mysql.enabled
+  tags:
+    - wordpress-database</code></pre></p>
+<p>这里依赖的应用我们可以通过 <code>helm search</code> 命令来获取，当然也可以随意指定一个 Chart 版本：
+<pre class="highlight"><code class="language-shell">$ helm search repo stable/mysql
+NAME                    CHART VERSION   APP VERSION     DESCRIPTION                                       
+stable/mysql            1.6.2           5.7.28          Fast, reliable, scalable, and easy to use open-...</code></pre></p>
+<p>需要注意的是在依赖的文件中我们添加了一个 <code>condition: mysql.enabled</code> 条件，这意味着当 Values 值 <code>mysql.enabled</code> 为 true 的时候才会真正去依赖这个子 Chart，因为我们完全可以直接使用一个外部的数据库。所以首先我们要先添加一个 <code>mysql.enabled</code> 的 Values 值，添加如下所示的 <code>values.yaml</code> 文件：
+<pre class="highlight"><code class="language-yaml">##
+## MySQL Chart 配置，参考如下 values.yaml
+## https://github.com/helm/charts/blob/master/stable/mysql/values.yaml
+##
+mysql:
+  ## 是否部署mysql服务来满足wordpress的需求。如果要使用外部数据库，将 enabled 设置为 false 并配置 externalDatabase 参数。
+  enabled: true
+  ## todo，其他 mysql 配置
+
+## 当 mysql.enabled=false 的时候使用外部数据库
+externalDatabase:
+  ## 数据库地址
+  host: localhost:3306
+
+  ## Wordpress 数据库的非root用户
+  user: wordpress
+
+  ## 数据库密码
+  password: wordpress
+
+  ## 数据库名称
+  database: wordpress</code></pre></p>
+<p>上面的 Values 配置很好理解，就是如果 <code>mysql.enabled=true</code> 则我们就用 mysql 这个子 Chart 去安装一个 MySQL 数据库，如果为 false 则使用下面 <code>externalDatabase</code> 的外部数据库信息来作为 wordpress 的数据库配置，虽然现在这些配置还完全没有任何作用，但是这些却是一开始就很容易考虑到的事情。</p>
+<p>接下来创建一个 <code>templates</code> 和 <code>charts</code> 目录，并在 <code>charts</code> 目录下面获取 mysql 这个子 chart:
+<pre class="highlight"><code class="language-shell">$ mkdir templates &amp;&amp; mkdir charts
+$ cd charts &amp;&amp; helm fetch stable/mysql &amp;&amp; cd ..</code></pre></p>
+<p>现在的整个 Chart 包目录结构如下所示：
+<pre class="highlight"><code class="language-shell">$ tree .
+.
+├── Chart.yaml
+├── charts
+│   └── mysql-1.6.2.tgz
+├── requirements.yaml
+├── templates
+└── values.yaml
+
+2 directories, 4 files</code></pre></p>
+<p>接下来就是我们的重头戏模板的开发了。我们可以将前面课程示例中的 Wordpress 资源清单直接拷贝到 <code>templates</code> 目录下面，将 <code>Deployment</code> 和 <code>Service</code> 分别放在不同的 YAML 文件中，同样还有数据持久化的资源清单，但是这里我们就需要先将 MySQL 的部分移除掉，因为我们会通过外部数据库或者子 Chart 来渲染，不需要在这里显示的声明了，另外还需要将所有资源对象的命名空间去掉，因为我们可以通过 <code>helm install</code> 命令直接指定即可，现在我们的模板目录结构就如下所示了：
+<pre class="highlight"><code class="language-shell">$ tree templates 
+templates
+├── deployment.yaml
+├── pvc.yaml
+└── service.yaml
+
+0 directories, 4 files</code></pre></p>
+<h2 id="_3">名称<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>这个时候我们可以尝试去安装调试下这个 Chart 模板：
+<pre class="highlight"><code class="language-shell">$ helm install --generate-name --dry-run --debug .
+install.go:148: [debug] Original chart version: ""
+install.go:165: [debug] CHART PATH: /Users/ych/devs/workspace/yidianzhishi/course/k8strain/content/helm/manifests/wordpress
+
+load.go:112: Warning: Dependencies are handled in Chart.yaml since apiVersion "v2". We recommend migrating dependencies to Chart.yaml.
+Error: rendered manifests contain a resource that already exists. Unable to continue with install: existing resource conflict: kind: Middleware, namespace: default, name: redirect-https
+helm.go:76: [debug] existing resource conflict: kind: Middleware, namespace: default, name: redirect-https
+rendered manifests contain a resource that already exists. Unable to continue with install
+helm.sh/helm/v3/pkg/action.(*Install).Run
+        /home/circleci/helm.sh/helm/pkg/action/install.go:242
+main.runInstall
+        /home/circleci/helm.sh/helm/cmd/helm/install.go:209
+main.newInstallCmd.func1
+        /home/circleci/helm.sh/helm/cmd/helm/install.go:115
+github.com/spf13/cobra.(*Command).execute
+        /go/pkg/mod/github.com/spf13/cobra@v0.0.5/command.go:826
+github.com/spf13/cobra.(*Command).ExecuteC
+        /go/pkg/mod/github.com/spf13/cobra@v0.0.5/command.go:914
+github.com/spf13/cobra.(*Command).Execute
+        /go/pkg/mod/github.com/spf13/cobra@v0.0.5/command.go:864
+main.main
+        /home/circleci/helm.sh/helm/cmd/helm/helm.go:75
+runtime.main
+        /usr/local/go/src/runtime/proc.go:203
+runtime.goexit
+        /usr/local/go/src/runtime/asm_amd64.s:1357</code></pre></p>
+<p>我们看到出现了错误，其中还有这样的一条警告信息 <code>load.go:112: Warning: Dependencies are handled in Chart.yaml since apiVersion "v2". We recommend migrating dependencies to Chart.yaml.</code>，大概意思就是在 Helm3 中依赖项的配置被移动到了 <code>Chart.yaml</code> 文件中，也就是在 Helm2 版本的时候依赖才会在 <code>requirements.yaml</code> 中声明，这里我们可以将 <code>requirements.yaml</code> 文件中的内容全部拷贝到 <code>Chart.yaml</code> 文件中去，然后删除 <code>requirements.yaml</code> 文件，这个时候重新 DEBUG 下就没有这个提示信息了。</p>
+<p>下面的错误提示基本上都是类似于 <code>rendered manifests contain a resource that already exists.</code> 这样的信息，意思就是这些资源对象在现有集群中已经包含了，这很正常，因为我们的资源对象名称都是写死的，是非常有可能和现有的集群冲突的，所以接下来我们要给这些资源清单改名，如何才能避免冲突又具有很好的扩展性呢？这里我们创建一个如下所示的命名模板：
+<pre class="highlight"><code class="language-yaml">{{/*
+创建一个默认的应用名称，截取63个字符是因为 Kubernetes 的 name 属性的限制（DNS 命名规范）。
+*/}}
+{{- define "wordpress.fullname" -}}
+{{- if .Values.fullnameOverride -}}
+{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- $name := default .Chart.Name .Values.nameOverride -}}
+{{- if contains $name .Release.Name -}}
+{{- .Release.Name | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}</code></pre></p>
+<p>根据规范命名模板的名称最好以 Chart 名作为前缀，这里我们命名成 <code>wordpress.fullname</code>，首先就是判断是否定义了 <code>fullnameOverride</code> 这个 Values 值，如果定义了则截取 63 个字符并移除 <code>-</code> 这样的前后缀作为名称，如果没有定义呢？就要检查 Chart 名是否包含 Release 名称，如果包含则截取 Release 名的 63 个字符并移除 <code>-</code> 这样的前后缀作为名称，如果不包含，则将 Release 名称和 Chart 名称用 <code>-</code> 连接起来作为名称，这个命名的方式也是符合大部分 Chart 模板中的命名，以后的模板开发中都可以直接使用。在 <code>templates</code> 目录下面新建一个 <code>_helpers.tpl</code> 这样的 partials 文件，然后将上面定义的命名模板放置到里面去。后面我们所有的命名模板都将在该文件中完成。</p>
+<p>接下来将 <code>templates</code> 目录下面的所有资源对象 name 属性全都换成上面我们定义的命名模板，由于这里并没有什么空格控制之类的，我们直接使用 <code>template</code> 函数即可，同样作为惯例，也习惯将 Release 和 Chart 名称之类作为 Label 标签，所以最终，这些资源清单的 Meta 信息如下所示，如果有其他额外的信息当然可以随意添加：
+<pre class="highlight"><code class="language-yaml">metadata:
+  name: {{ template "wordpress.fullname" . }}
+  labels:
+    app: "{{ template "wordpress.fullname" . }}"
+    chart: "{{ template "wordpress.chart" . }}"
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}</code></pre></p>
+<p>然后当然也需要将 Deployment 的 matchLabels 和 template 下面的 Label 标签进行修改，以及 Service 的 <code>selector</code> 匹配的标签。</p>
+<p>同样还有 PVC 对象，以前我们直接使用的一个确定名称的 PVC 对象：
+<pre class="highlight"><code class="language-yaml">volumes:
+- name: wordpress-data
+  persistentVolumeClaim:
+    claimName: wordpress-pvc</code></pre></p>
+<p>但是现在我们这里作为模板就要考虑到各种情况了，很有可能使用我们模板的用户根本就不需要持久化，也有可能直接传递一个存在的 PVC 对象进来使用，所以这里做了如下改变：
+<pre class="highlight"><code class="language-yaml">volumes:
+- name: wordpress-data
+{{- if .Values.persistence.enabled }}
+  persistentVolumeClaim:
+    claimName: {{ .Values.persistence.existingClaim | default (include "wordpress.fullname" .) }}
+{{- else }}
+  emptyDir: {}
+{{ end }}</code></pre></p>
+<p>当我们定义了 Values 值 <code>persistence.enabled=true</code> 为 true 时候就表示要使用持久化了，所以要指定下面的 <code>claimName</code> 属性，但是还需要判断 <code>persistence.existingClaim</code> 这个 Values 值是否存在，如果存在则表示直接使用，如果不存在则使用我们模板里面渲染的 PVC 对象，如果不需要持久化，则直接使用 <code>emptyDir:{}</code> 即可。最后我们的 PVC 对象模板变成了如下所示：
+<pre class="highlight"><code class="language-yaml">{{- if and .Values.persistence.enabled (not .Values.persistence.existingClaim) }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "wordpress.fullname" . }}
+  labels:
+    app: "{{ template "wordpress.fullname" . }}"
+    chart: "{{ template "wordpress.chart" . }}"
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
+spec:
+  {{- if .Values.persistence.storageClass }}
+  storageClassName: {{ .Values.persistence.storageClass | quote }}
+  {{- end }}
+  accessModes:
+  - {{ .Values.persistence.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.size | quote }}
+{{- end -}}</code></pre></p>
+<p>其中访问模式、存储容量、StorageClass、存在的 PVC 都通过 Values 来指定，增加了灵活性。对应的 <code>values.yaml</code> 配置部分我们可以给一个默认的配置：
+<pre class="highlight"><code class="language-yaml">## 是否使用 PVC 开启数据持久化
+persistence:
+  enabled: true
+  ## 是否使用 storageClass，如果不适用则补配置
+  # storageClass: "xxx"
+  ##
+  ## 如果想使用一个存在的 PVC 对象，则直接传递给下面的 existingClaim 变量
+  # existingClaim: your-claim
+  accessMode: ReadWriteMany  # 访问模式
+  size: 2Gi  # 存储容量</code></pre></p>
+<p>现在我们去重新做一次 DEBUG，可以看到正常了，但是还远远不够，接下来我们就来定制其他部分。</p>
+<h2 id="_4">定制<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>比如副本数我们可以通过 Values 来指定，变成 <code>replicas: {{ .Values.replicaCount }}</code>。</p>
+<p>更新策略也可以，因为更新策略并不是一层不变的，这里和之前不太一样，我们需要用到一个新的函数 <code>toYaml</code>：
+<pre class="highlight"><code class="language-yaml">{{- if .Values.updateStrategy }}
+strategy: {{ toYaml .Values.updateStrategy | nindent 4 }}
+{{- end }}</code></pre></p>
+<p>意思就是我们将 <code>updateStrategy</code> 这个 Values 值转换成 YAML 格式，并保留4个空格。然后添加其他的配置，比如是否需要添加 nodeSelector、容忍、亲和性这些，这里我们都是使用 <code>toYaml</code> 函数来控制空格，如下所示：
+<pre class="highlight"><code class="language-yaml">{{- if .Values.nodeSelector }}
+    nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+    {{- end -}}
+  {{- with .Values.affinity }}
+    affinity:
+{{ toYaml . | indent 8 }}
+  {{- end }}
+  {{- with .Values.tolerations }}
+    tolerations:
+{{ toYaml . | indent 8 }}
+  {{- end }}</code></pre></p>
+<p>接下来当然就是镜像的配置了，如果是私有仓库还需要指定 <code>imagePullSecrets</code>：
+<pre class="highlight"><code class="language-yaml">{{- if .Values.image.pullSecrets }}
+imagePullSecrets:
+{{- range .Values.image.pullSecrets }}
+- name: {{ . }}
+{{- end }}
+{{- end }}
+containers:
+- name: wordpress
+  image: {{ printf "%s:%s" .Values.image.name .Values.image.tag }}
+  imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+  ports:
+  - containerPort: 80
+    name: web</code></pre></p>
+<p>对应的 Values 值如下所示：
+<pre class="highlight"><code class="language-yaml">image:
+  name: wordpress
+  tag: 5.3.2-apache
+  ## 指定 imagePullPolicy 默认为 Always
+  pullPolicy: IfNotPresent
+  ## 如果是私有仓库，需要指定 imagePullSecrets
+  # pullSecrets:
+  #   - myRegistryKeySecretName</code></pre></p>
+<p>然后就是最重要的环境变量配置部分了，因为涉及到数据库的配置，同样最核心的三个环境变量配置 <code>WORDPRESS_DB_HOST</code>、<code>WORDPRESS_DB_USER</code>、<code>WORDPRESS_DB_PASSWORD</code>，由于可能使用我们模板的用户可能使用外部数据库，也有可能使用我们依赖的 mysql 这个子 Chart，所以我们需要分别判断来进行渲染：
+<pre class="highlight"><code class="language-yaml">env:
+- name: WORDPRESS_DB_HOST
+{{- if .Values.mysql.enabled }}
+  value: {{ printf "%s:%d" (include "mysql.fullname" .) (int64 .Values.mysql.service.port) }}
+{{- else }}
+  value: {{ .Values.externalDatabase.host | quote }}
+{{- end }}
+- name: WORDPRESS_DATABASE_NAME
+{{- if .Values.mysql.enabled }}
+  value: {{ .Values.mysql.mysqlDatabase | quote }}
+{{- else }}
+  value: {{ .Values.externalDatabase.database | quote }}
+{{- end }}
+- name: WORDPRESS_DB_USER
+{{- if .Values.mysql.enabled }}
+  value: {{ .Values.mysql.mysqlUser | quote }}
+{{- else }}
+  value: {{ .Values.externalDatabase.user | quote }}
+{{- end }}
+- name: WORDPRESS_DB_PASSWORD
+  valueFrom:
+    secretKeyRef:
+    {{- if .Values.mysql.enabled }}
+      name: {{ template "mysql.fullname" . }}
+      key: mysql-password
+    {{- else }}
+      name: {{ printf "%s-%s" .Release.Name "externaldb" }}
+      key: db-password
+    {{- end }}</code></pre></p>
+<p>每一个环境变量首先都是判断 <code>mysql.enabled</code> 是否为 true，才表示使用子 Chart 来渲染，而对应的值都是子 Chart 中渲染过后的值，所以也需要我们去了解子 Chart 的渲染行为，如果使用外部的数据库就要简单很多，因为只需要读取 Values 值即可。另外一个值得注意的是如果是配置的密码，我们还需要去创建一个 Secret 资源对象来引用。所以我们在 templates 目录下面创建了一个 <code>externaldb-secrets.yaml</code> 的资源文件，里面配置的密码通过 <code>b64enc</code> 函数转换为 Base64 编码格式。
+<pre class="highlight"><code class="language-yaml">{{- if not .Values.mysql.enabled }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ printf "%s-%s" .Release.Name "externaldb"  }}
+  labels:
+    app: {{ printf "%s-%s" .Release.Name "externaldb"  }}
+    chart: "{{ template "wordpress.chart" . }}"
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
+type: Opaque
+data:
+  db-password: {{ .Values.externalDatabase.password | b64enc | quote }}
+{{- end }}</code></pre></p>
+<p>然后就是 resource 资源声明，这里我们定义一个默认的 resources 值，同样用 <code>toYaml</code> 函数来控制空格：
+<pre class="highlight"><code class="language-yaml">resources:
+{{ toYaml .Values.resources | indent 10 }}</code></pre></p>
+<p>最后是健康检查部分，虽然我们之前没有做 livenessProbe，但是我们开发 Chart 模板的时候就要尽可能考虑周全一点，这里我们加上存活性和可读性两个探针，并且根据 <code>livenessProbe.enabled</code> 和 <code>readinessProbe.enabled</code> 两个 Values 值来判断是否需要添加探针，探针对应的参数也都通过 Values 值来配置：
+<pre class="highlight"><code class="language-yaml">{{- if .Values.livenessProbe.enabled }}
+livenessProbe:
+  initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+  periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+  timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+  successThreshold: {{ .Values.livenessProbe.successThreshold }}
+  failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+  httpGet:
+    path: /wp-login.php
+    port: 80
+{{- end }}
+{{- if .Values.readinessProbe.enabled }}
+readinessProbe:
+  initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+  periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+  timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+  successThreshold: {{ .Values.readinessProbe.successThreshold }}
+  failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+  httpGet:
+    path: /wp-login.php
+    port: 80
+{{- end }}</code></pre></p>
+<p>这样我们的 Deployment 的模板就基本上完成了，我们可以通过 DEBUG 模式来模拟渲染：
+<pre class="highlight"><code class="language-shell">$ helm install --generate-name --dry-run --debug .</code></pre></p>
+<p>可以根据结果来判断是否符合我们的需求。</p>
+<p>最后我们还需要来对 Service 对象做模板化，因为前面我们是默认的 <code>NodePort</code> 类型，我们需要通过 Values 来定制：
+<pre class="highlight"><code class="language-yaml">apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "wordpress.fullname" . }}
+  labels:
+    app: "{{ template "wordpress.fullname" . }}"
+    chart: "{{ template "wordpress.chart" . }}"
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
+spec:
+  selector:
+    app: "{{ template "wordpress.fullname" . }}"
+  type: {{ .Values.service.type }}
+  {{- if (or (eq .Values.service.type "LoadBalancer") (eq .Values.service.type "NodePort")) }}
+  externalTrafficPolicy: {{ .Values.service.externalTrafficPolicy | quote }}
+  {{- end }}
+  ports:
+  - name: web
+    port: {{ .Values.service.port }}
+    targetPort: web
+    {{- if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.nodePort)))}}
+    nodePort: {{ .Values.service.nodePort }}
+    {{- end }}</code></pre></p>
+<p>这样我们就可以通过配置 Values 值来配置 Service 对象了。最后就是 <code>Ingress/IngressRoute</code> 对象了，大家可以自己尝试讲这部分补齐。</p>
+<!-- 当然最后就是 `IngressRoute` 对象了，当然如果我们习惯使用 `Ingress` 也是可以的，这里我们以一个 `IngressRoute` 对象为例来说明：
+<pre class="highlight"><code class="language-yaml">{{- if .Values.ingressroute.enabled }}
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ template "wordpress.fullname" . }}
+  labels:
+    app: "{{ template "wordpress.fullname" . }}"
+    chart: "{{ template "wordpress.chart" . }}"
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
+spec:
+  entryPoints:
+  {{- range .Values.ingressroute.entryPoints }}
+  - {{ . }}
+  {{- end }}
+  routes:
+  - match: Host(`{{ .Values.ingressroute.host }}`)
+    kind: Rule
+    services:
+    - name: "{{ template "wordpress.fullname" . }}"
+      port: web
+  {{- if .Values.ingressroute.tls }}
+  tls:
+{{ toYaml .Values.ingressroute.tls | indent 4 }}
+  {{- end }}
+{{- end }}</code></pre>
+ -->
+
+<p>最后在 <code>templates</code> 目录下面加上 <code>NOTES.txt</code> 文件来说明如何使用我们的 Chart 包就可以了：
+<pre class="highlight"><code class="language-yaml">Get the WordPress Manifests Objects:
+
+$ kubectl get all -l app={{ .Release.Name }}
+</code></pre></p>
+<p>最后我们来真正的使用我们的 Chart 包安装一次来测试下：
+<pre class="highlight"><code class="language-shell">$ helm install mychart . --set service.type=NodePort
+NAME: mychart
+LAST DEPLOYED: Sun Mar  8 17:52:04 2020
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+NOTES:
+Get the WordPress Manifests Objects:
+
+  $ kubectl get all -l app=mychart
+
+$ helm ls  
+NAME                    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART            APP VERSION
+mychart                 default         1               2020-03-08 17:52:04.826185 +0800 CST    deployed        wordpress-0.1.0  5.3.2      </code></pre></p>
+<p>安装完成后可以查看我们的资源对象：
+<pre class="highlight"><code class="language-shell">$ kubectl get all -l app=mychart-wordpress
+NAME                                     READY   STATUS    RESTARTS   AGE
+pod/mychart-wordpress-5f65786d89-2m45s   1/1     Running   0          70s
+
+NAME                        TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+service/mychart-wordpress   NodePort   10.99.239.29   &lt;none&gt;        80:30427/TCP   70s
+
+NAME                                READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/mychart-wordpress   1/1     1            1           70s
+
+NAME                                           DESIRED   CURRENT   READY   AGE
+replicaset.apps/mychart-wordpress-5f65786d89   1         1         1       70s</code></pre></p>
+<p>这个时候我们通过上面的 NodePort 就可以去访问到我们的应用了，当然还有很多配置我们都是可以直接通过 Values 去进行定制的。</p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+
+
+
+<!-- Application footer -->
+<footer class="md-footer">
+
+    <!-- Further information -->
+    <div class="md-footer-meta md-typeset">
+        <div class="md-footer-meta__inner md-grid">
+
+            <!-- Copyright and theme information -->
+            <div class="md-footer-copyright">
+                
+                <div class="md-footer-copyright__highlight">
+                    Copyright &copy; 2020 Kubernetes技术栈
+                </div>
+                
+                powered by
+                <a href="https://www.k8stech.net" title="Kubernetes技术栈">www.k8stech.net</a>
+            </div>
+
+            <!-- Social links -->
+            
+            
+            
+        </div>
+    </div>
+</footer>
+
+
+    </div>
+    
+      <script src="../../assets/javascripts/application.d9aa80ab.js"></script>
+      
+        
+        
+          
+          <script src="../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+              
+                <script src="../../assets/javascripts/lunr/tinyseg.js"></script>
+              
+              
+                <script src="../../assets/javascripts/lunr/lunr.jp.js"></script>
+              
+            
+          
+          
+        
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+        <script src="../../assets/js/hljs/highlight.pack.js"></script>
+      
+        <script src="../../assets/js/prism.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1032 @@
+
+
+
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+        <link rel="canonical" href="https://docs.prometheus.cool/monitorbasic/monitorcontrast/">
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="复制">
+      
+        <meta name="lang:clipboard.copied" content="已复制">
+      
+        <meta name="lang:search.language" content="jp">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="没有找到符合条件的结果">
+      
+        <meta name="lang:search.result.one" content="找到 1 个符合条件的结果">
+      
+        <meta name="lang:search.result.other" content="# 个符合条件的结果">
+      
+        <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
+      
+      <link rel="shortcut icon" href="../../assets/img/prometheus_logo.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.2">
+    
+    
+      
+        <title>开源监控对比 - 云原生监控神器Prometheus</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.982221ab.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.224b79ff.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ef5350">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.1f0bcf2b.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i,700|Ubuntu+Mono">
+        <style>body,input{font-family:"Ubuntu","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../assets/styles/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/styles/prism.css">
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="red" data-md-color-accent="red">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#_1" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://docs.prometheus.cool" title="云原生监控神器Prometheus" class="md-header-nav__button md-logo">
+          
+            <img src="../../assets/img/prometheus_logo.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              云原生监控神器Prometheus
+            </span>
+            <span class="md-header-nav__topic">
+              开源监控对比
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            键入以开始搜索
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/k8stech/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://docs.prometheus.cool" title="云原生监控神器Prometheus" class="md-nav__button md-logo">
+      
+        <img src="../../assets/img/prometheus_logo.png" width="48" height="48">
+      
+    </a>
+    云原生监控神器Prometheus
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/k8stech/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="介绍" class="md-nav__link">
+      介绍
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      监控基础与概述
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        监控基础与概述
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../whymonitor/" title="为什么要监控" class="md-nav__link">
+      为什么要监控
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../monitorterms/" title="监控术语" class="md-nav__link">
+      监控术语
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../metricstory/" title="指标物语" class="md-nav__link">
+      指标物语
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        开源监控对比
+      </label>
+    
+    <a href="./" title="开源监控对比" class="md-nav__link md-nav__link--active">
+      开源监控对比
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="选型" class="md-nav__link">
+    选型
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Prometheus 基础
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Prometheus 基础
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-introduction/" title="Prometheus介绍" class="md-nav__link">
+      Prometheus介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/tsdb-contrast/" title="时序数据库对比" class="md-nav__link">
+      时序数据库对比
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-datamodel/" title="数据模型" class="md-nav__link">
+      数据模型
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/node-exporter/" title="Node_Exporter" class="md-nav__link">
+      Node_Exporter
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-config/" title="Prometheus安装与配置" class="md-nav__link">
+      Prometheus安装与配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Prometheus 进阶
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Prometheus 进阶
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/auto-ops-exporter-1/" title="自动化维护Exporter（一）" class="md-nav__link">
+      自动化维护Exporter（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/auto-ops-exporter-2/" title="自动化维护Exporter（二）" class="md-nav__link">
+      自动化维护Exporter（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/docker-swarm-monitor-1/" title="Docker-Swarm集群监控（一）" class="md-nav__link">
+      Docker-Swarm集群监控（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/docker-swarm-monitor-2/" title="Docker-Swarm集群监控（二）" class="md-nav__link">
+      Docker-Swarm集群监控（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/commonly-exporter/" title="常用Exporter介绍与配置" class="md-nav__link">
+      常用Exporter介绍与配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Prometheus(警报)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Prometheus(警报)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-basic/" title="PromQL详解（一）" class="md-nav__link">
+      PromQL详解（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-operator/" title="PromQL详解（二）" class="md-nav__link">
+      PromQL详解（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-operator2/" title="PromQL详解（三）" class="md-nav__link">
+      PromQL详解（三）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-function/" title="PromQL函数" class="md-nav__link">
+      PromQL函数
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-overview/" title="AlertManager" class="md-nav__link">
+      AlertManager
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-rules-1/" title="Rules详解（一）" class="md-nav__link">
+      Rules详解（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-rules-2/" title="Rules详解（二）" class="md-nav__link">
+      Rules详解（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-receiver/" title="Receiver配置" class="md-nav__link">
+      Receiver配置
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-silences/" title="Silences配置" class="md-nav__link">
+      Silences配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Prometheus(联邦集群)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Prometheus(联邦集群)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/federation-overview/" title="Prometheus 联邦集群" class="md-nav__link">
+      Prometheus 联邦集群
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/pushgateway/" title="Pushgateway 代理" class="md-nav__link">
+      Pushgateway 代理
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/alertmanager-ha/" title="Alertmanager 高可用" class="md-nav__link">
+      Alertmanager 高可用
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Prometheus(服务发现)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Prometheus(服务发现)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-overview/" title="服务发现（文件、DNS）" class="md-nav__link">
+      服务发现（文件、DNS）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-relabeling/" title="服务发现（Relabelling）" class="md-nav__link">
+      服务发现（Relabelling）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-consul/" title="服务发现（Consul）" class="md-nav__link">
+      服务发现（Consul）
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      Prometheus(Operator)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        Prometheus(Operator)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Operator/" title="Operator概述" class="md-nav__link">
+      Operator概述
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-1/" title="手动部署（1）" class="md-nav__link">
+      手动部署（1）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-2/" title="手动部署（2）" class="md-nav__link">
+      手动部署（2）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-3/" title="手动部署（联邦）" class="md-nav__link">
+      手动部署（联邦）
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="选型" class="md-nav__link">
+    选型
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/k8stech/edit/master/docs/monitorbasic/monitorcontrast.md" title="编辑此页" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="_1"><strong>开源监控对比</strong><a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h3 id="_2">选型<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>为了让大家更好的、直观的、有建设性的认识到当前开源监控系统的发展趋势，这里使用当前比较流行的，人气比较高的，三个开源监控软件：<code>Prometheus</code>、<code>Zabbix</code>、<code>Open-Falcon</code></p>
+<p>本次的对比内容，主要从监控维度、数据存储、可视化、告警四个方向出发，另外，对于优劣势，没有完整的定义，因场景不同，监控设计也必然不同，只有适合自己的架构才是最合适的方案。</p>
+<div class="admonition info">
+<p class="admonition-title">Zabbix</p>
+<p>Zabbix 是由 Alexei Vladishev 创建，目前由 Zabbix SIA 在持续开发和支持，同时 Zabbix 是一个企业级的分布式开源监控方案，支持多种采集方式和采集客户端，
+同时支持 SNMP、IPMI、JMX、Telnet、SSH等多种协议，它将采集到的数据存放到MySQL数据库中，然后对数据指标其进行分析整理，如果符合设置的告警阈值规则，则触发相应的告警通知。</p>
+<p><img alt="" src="https://image.slidesharecdn.com/zabbix-150810131017-lva1-app6892/95/zabbix-10-638.jpg?cb=1439212266" /></p>
+<p>Zabbix 核心组件主要是 <code>Agent</code> 、<code>Server</code>，其中 <code>Agent</code> 主要负责数据采集并通过被动 or 主动的方式把采集到数据推送到 <code>Server</code>，如果对于一些网络隔离的环境可能需要推送数据到 <code>Proxy</code>，
+除此之外，为了扩展监控指标，Agent 还支持自定义脚本。Server 主要负责接收 Agent 发送的监控指标信息，并进行数据汇总存储以及设置的阈值触发告警。</p>
+<p><code>Zabbix Server</code> 将收集的监控数据存储到 Zabbix Database (MySQL)中，此处的数据存储可以根据场景自行定义，Zabbix Database 支持常用的关系型数据库: MySQL、PostgreSQL、Oracle 等，
+默认是 MySQL，并提供Web（PHP 编写）管理、数据查询、警报配置等。</p>
+<p>Zabbix 因为使用了关系型数据存储时序数据，所以在监控大规模集群实例时常常在数据存储以及查询能力略现在足。为了解决这一问题，Zabbix 从 4.2 版本后开始支持 TimescaleDB 时序数据库，不过目前成熟度与关注度并不高。</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">Open-Falcon</p>
+<p><img alt="" src="https://static001.infoq.cn/resource/image/6a/67/6a039a52267b47e508629fb8b1e00667.png" /></p>
+<p>Open-Falcon 是小米开源的企业级监控工具，用 Go 语言开发而成，包括小米、滴滴、美团等在内的互联网公司都在使用它，是一款灵活、可扩展并且高性能的监控方案，主要组件包括了：</p>
+<p>1）Falcon-agent 是用 Go 语言开发的 Daemon 程序，运行在每台 Linux 服务器上，用于采集主机上的各种指标数据，主要包括 CPU、内存、磁盘、文件系统、内核参数、Socket 连接等，目前已经支持 200 多项监控指标。并且，Agent 支持用户自定义的监控脚本。</p>
+<p>2）Hearthbeat server 简称 HBS 心跳服务，每个 Agent 都会周期性地通过 RPC 方式将自己的状态上报给 HBS，主要包括主机名、主机 IP、Agent 版本和插件版本，Agent 还会从 HBS 获取自己需要执行的采集任务和自定义插件。</p>
+<p>3）Transfer 负责接收 Agent 发送的监控数据，并对数据进行整理，在过滤后通过一致性 Hash 算法发送到 Judge 或者 Graph。</p>
+<p>4）Graph 是基于 RRD 的数据上报、归档、存储组件。Graph 在收到数据以后，会以 rrdtool 的数据归档方式来存储，同时提供 RPC 方式的监控查询接口。</p>
+<p>5）Judge 告警模块，Transfer 转发到 Judge 的数据会触发用户设定的告警规则，如果满足，则会触发邮件、微信或者回调接口。这里为了避免重复告警引入了 Redis 暂存告警，从而完成告警的合并和抑制。</p>
+<p>6）Dashboard 是面向用户的监控数据查询和告警配置界面。</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">Prometheus</p>
+<p><img alt="" src="https://logz.io/wp-content/uploads/2018/07/Prometheus.png" /></p>
+<p>Prometheus 是由 SoundCloud 开发的开源监控系统，存储默认使用的是TSDB。Prometheus 的基本原理是通过 HTTP 周期性抓取被监控组件的指标信息存储到Prometheus的存储TSDB中，
+任意组件只要提供对应的 HTTP 接口并且符合 Prometheus 定义的数据存储格式，就可以接入 Prometheus 进行监控、指标信息收集。</p>
+<p>Prometheus 服务端 负责定时在目标上抓取 Metrics 数据并保存到本地存储TSDB里面，此外，Prometheus 也支持第三方数据持久化存储配置，如：Chanos、Influxdb、ElasticSearch等。</p>
+<p>Prometheus 服务端 采用了一种 Pull 模式获取数据，可以降低客户端的复杂度，客户端只负责数据采集，不需要感知服务端情况，服务端更好的方便水平扩展。</p>
+<p>针对监控告警，只要监控数据指标符合预设的告警阈值， Prometheus 服务端 会通过 HTTP 将告警发送到 Alertmanger 组件 ，通过告警配置好的抑制、分组后触发告警信息并发送到指定的告警发送配置，支持多种告警配置：邮件、Webhook「Dingtalk、Wechat」等。</p>
+<p>Prometheus 支持 在 WEB 页面使用 PromQL 多维度数据指标的集合运算查询，通过监控指标关联多个 Label 的方式，将监控数据进行任意维度的组合以及聚合查询并展示指标返回值。</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">对比结果</p>
+<p><img alt="monitor-analysis" src="../../assets/img/monitor-analysis.png" /></p>
+<p><code>开发语言</code> 综合上面图对比，从开发语言上讲，为了应对开发难度和快速迭代的需求，许多监控系统的开发语言已经慢慢从其他语言转移到 Go，如Zabbix，已经逐渐的讲后端语言转向Go；Prometheus与Open-Falcon更不必言说，原生就是go语言开发；
+由此看见，Go 凭借简洁的语法和优雅的高并发优势，在Java占据业务开发，C占领底层开发的情况下，仍可以在当前开源中间件领域得到广泛应用，并且得到了大部分多企业的认可，开始逐渐将一些核心业务的语言转向了Go领域，这是非常好的事情；</p>
+<p><code>成熟度</code> 从成熟度来看，Zabbix 和 Nagios 都是老牌的监控系统，系统功能比较完善、稳定，同时对于市场的占有率一直属于中上流。
+虽然Prometheus与Open-Falcon出现的比较晚，但Prometheus是CNCF的第二个毕业项目，很多企业都在试用，社区也很活跃，口碑也很好，功能迭代速度也比较快；</p>
+<p><code>性能</code> 对于数据存储方面的新能，Zabbix因为使用关系型数据库的原因，导致其性能在大规模集群下的采集、存储会存在性能瓶颈，解决起来需要重新针对架构调整以及数据库优化；Open-Falcon使用了RDD数据存储，还使用了一致性 Hash算法分片数据，并且对接了OpenTSDB，相比Zabbix要好很多；
+而Prometheus 自带默认的TSDB在V3版本就可以每秒达到了千万级别的数据存储，同时可以通过对接第三方时序数据库扩展历史数据的数据持久化存储；</p>
+<p><code>部署难度</code> 从部署配置角度上看，Prometheus 只有一个核心 Server 组件，一条命令便可以启动，并且随着社区的活跃度增加，部署文档已经相当完善；相比Open-Falcon而言，因为活跃度的问题，在安装、系统配置会比Prometheus难度略高；对于Zabbix，因为其历史原因，文档极多，方案林立，在部署配置中不会遇到太大问题。</p>
+<p><code>使用难度</code> 对于Prometheus的架构理解并不难，主要是需要把各个组件逻辑关系融会贯通的理解清楚，前期需要对一些知识要有一定的垫铺，否则在排查上会遇到一些困惑；Zabbix，相对来说要好一些，毕竟是老牌的监控，文档比较成熟，并且使用者有商业支持；至于Open-Falcon，因其使用范围的局限性，并且文档与社区并不活跃，会导致使用难度成本较高。</p>
+<p><code>容器支持</code> 对于容器支持，不得不提云原生，由于 Zabbix 和 Nagios 出现得比较早，当时云原生的概念还没有诞生，想立马对云原生的支持是需要时间的。Open-Falcon 虽然提供了容器的监控，但支持力度有限，社区的不活跃导致了其迭代的能力问题。作为云原生第二个项目Prometheus，其动态发现机制，不仅可以支持 swarm 原生集群，还支持 Kubernetes 集群的监控，是目前容器监控最好解决方案。
+至于Zabbix 在传统监控系统中，尤其是在服务器相关监控方面，一直占据绝对优势，但是因为Prometheus的迭代与活跃度，传统监控的功能也在社区逐渐完善。</p>
+<p><code>活跃度</code> 从社区活跃度上看，目前 Zabbix 和 Nagios 的社区活跃度比较低，尤其是 Nagios，Open-Falcon 虽然也比较活跃，但基本都是国内的公司参与，Prometheus 作为第二个加入CNCF的项目，在这方面占据绝对优势，社区活跃度一直很高，并且受到 CNCF 的支持，后期的发展前景一目了然；</p>
+<p><code>企业使用</code> 因为云原生的概念，各大云商逐渐开放对Kubernetes的的集成服务，作为原生监控Prometheus的使用率，一直持几何倍数递增；相对Open-Falcon，除却一些历史因素，一直在使用，已经逐渐淹没在历史的潮流中；
+Zabbix，作为传统应用监控，并且有商业支持，在传统监控应用范围，一直利于不败之地，尽管Zabbix已经开始用go语言作为后端开发语言，并且把Kubernetes的集群支持提上了征程，对于功能的可靠性、稳定性等等，是否晚上，可能还需要一定时日才能得以验证；</p>
+</div>
+<p>对比以上各种监控系统，可以看出，<code>Prometheus</code> 是当之无愧的 <code>云原生监控神器</code>，没有之一。</p>
+<p>当然，有人肯定会问，<code>Prometheus</code> 能不能作为传统监控使用呢？答案是，可以，但是不建议，如果是传统应用监控，<code>zabbix</code> 会更为适合；</p>
+<p>因为这跟 <code>Prometheus</code> 最初的设计理念有关，<code>Prometheus</code> 是作为云原生而生的监控系统，在设计上的理念是为了微服务而生，同时它的 <code>k/v</code> 数据模型设计，他采集的数据是基于时序的 float64 的值，如果你的数据值有更多类型，想满足需求需要做大量的工作；</p>
+<p>不过，因为 <code>Prometheus</code> 的迅速发展以及开源社区活跃度极高的原因，开源贡献者针对Prometheus在传统应用监控的需求，开发出了很多可以满足当前传统应用监控的一些 <code>exporter</code>，方便一些对数据类型要求不高的使用者；</p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+
+
+
+<!-- Application footer -->
+<footer class="md-footer">
+
+    <!-- Further information -->
+    <div class="md-footer-meta md-typeset">
+        <div class="md-footer-meta__inner md-grid">
+
+            <!-- Copyright and theme information -->
+            <div class="md-footer-copyright">
+                
+                <div class="md-footer-copyright__highlight">
+                    Copyright &copy; 2020 Kubernetes技术栈
+                </div>
+                
+                powered by
+                <a href="https://www.k8stech.net" title="Kubernetes技术栈">www.k8stech.net</a>
+            </div>
+
+            <!-- Social links -->
+            
+            
+            
+        </div>
+    </div>
+</footer>
+
+
+    </div>
+    
+      <script src="../../assets/javascripts/application.d9aa80ab.js"></script>
+      
+        
+        
+          
+          <script src="../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+              
+                <script src="../../assets/javascripts/lunr/tinyseg.js"></script>
+              
+              
+                <script src="../../assets/javascripts/lunr/lunr.jp.js"></script>
+              
+            
+          
+          
+        
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+        <script src="../../assets/js/hljs/highlight.pack.js"></script>
+      
+        <script src="../../assets/js/prism.js"></script>
+      
+    
+  </body>
+</html>

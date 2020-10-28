@@ -1,0 +1,47 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: redirect-https
+  namespace: minio
+spec:
+  redirectScheme:
+    scheme: https
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: minio
+  namespace: minio
+spec:
+  entryPoints:
+  - web   
+  routes:
+  - kind: Rule
+    match: Host(`minio.qikqiak.com`)
+    services:
+    - kind: Service
+      name: minio
+      port: 9000
+    middlewares: 
+    - name: redirect-https
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: minio-https
+  namespace: minio
+spec:
+  entryPoints:
+  - websecure    
+  routes:
+  - kind: Rule
+    match: Host(`minio.qikqiak.com`)
+    services:
+    - kind: Service
+      name: minio
+      port: 9000
+  tls:
+    certResolver: ali
+    domains:
+    - main: "*.qikqiak.com"

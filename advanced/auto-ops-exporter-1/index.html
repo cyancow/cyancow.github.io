@@ -1,0 +1,1588 @@
+
+
+
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+        <link rel="canonical" href="https://docs.prometheus.cool/advanced/auto-ops-exporter-1/">
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="复制">
+      
+        <meta name="lang:clipboard.copied" content="已复制">
+      
+        <meta name="lang:search.language" content="jp">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="没有找到符合条件的结果">
+      
+        <meta name="lang:search.result.one" content="找到 1 个符合条件的结果">
+      
+        <meta name="lang:search.result.other" content="# 个符合条件的结果">
+      
+        <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
+      
+      <link rel="shortcut icon" href="../../assets/img/prometheus_logo.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.2">
+    
+    
+      
+        <title>自动化维护Exporter（一） - 云原生监控神器Prometheus</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.982221ab.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.224b79ff.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ef5350">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.1f0bcf2b.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i,700|Ubuntu+Mono">
+        <style>body,input{font-family:"Ubuntu","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../assets/styles/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/styles/prism.css">
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="red" data-md-color-accent="red">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#exporter" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://docs.prometheus.cool" title="云原生监控神器Prometheus" class="md-header-nav__button md-logo">
+          
+            <img src="../../assets/img/prometheus_logo.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              云原生监控神器Prometheus
+            </span>
+            <span class="md-header-nav__topic">
+              自动化维护Exporter（一）
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            键入以开始搜索
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/k8stech/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://docs.prometheus.cool" title="云原生监控神器Prometheus" class="md-nav__button md-logo">
+      
+        <img src="../../assets/img/prometheus_logo.png" width="48" height="48">
+      
+    </a>
+    云原生监控神器Prometheus
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/k8stech/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="介绍" class="md-nav__link">
+      介绍
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      监控基础与概述
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        监控基础与概述
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/whymonitor/" title="为什么要监控" class="md-nav__link">
+      为什么要监控
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/monitorterms/" title="监控术语" class="md-nav__link">
+      监控术语
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/metricstory/" title="指标物语" class="md-nav__link">
+      指标物语
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/monitorcontrast/" title="开源监控对比" class="md-nav__link">
+      开源监控对比
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Prometheus 基础
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Prometheus 基础
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-introduction/" title="Prometheus介绍" class="md-nav__link">
+      Prometheus介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/tsdb-contrast/" title="时序数据库对比" class="md-nav__link">
+      时序数据库对比
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-datamodel/" title="数据模型" class="md-nav__link">
+      数据模型
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/node-exporter/" title="Node_Exporter" class="md-nav__link">
+      Node_Exporter
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-config/" title="Prometheus安装与配置" class="md-nav__link">
+      Prometheus安装与配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+    
+    <label class="md-nav__link" for="nav-4">
+      Prometheus 进阶
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Prometheus 进阶
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        自动化维护Exporter（一）
+      </label>
+    
+    <a href="./" title="自动化维护Exporter（一）" class="md-nav__link md-nav__link--active">
+      自动化维护Exporter（一）
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#rpmcentos-deb-ubuntu" title="RPM（CentOS） &amp; Deb （Ubuntu）" class="md-nav__link">
+    RPM（CentOS） &amp; Deb （Ubuntu）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#centos-yumubuntu-apt" title="使用Centos yum仓库、Ubuntu apt仓库 维护软件版本更新" class="md-nav__link">
+    使用Centos yum仓库、Ubuntu apt仓库 维护软件版本更新
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../auto-ops-exporter-2/" title="自动化维护Exporter（二）" class="md-nav__link">
+      自动化维护Exporter（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../docker-swarm-monitor-1/" title="Docker-Swarm集群监控（一）" class="md-nav__link">
+      Docker-Swarm集群监控（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../docker-swarm-monitor-2/" title="Docker-Swarm集群监控（二）" class="md-nav__link">
+      Docker-Swarm集群监控（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../commonly-exporter/" title="常用Exporter介绍与配置" class="md-nav__link">
+      常用Exporter介绍与配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Prometheus(警报)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Prometheus(警报)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-basic/" title="PromQL详解（一）" class="md-nav__link">
+      PromQL详解（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-operator/" title="PromQL详解（二）" class="md-nav__link">
+      PromQL详解（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-operator2/" title="PromQL详解（三）" class="md-nav__link">
+      PromQL详解（三）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-function/" title="PromQL函数" class="md-nav__link">
+      PromQL函数
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-overview/" title="AlertManager" class="md-nav__link">
+      AlertManager
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-rules-1/" title="Rules详解（一）" class="md-nav__link">
+      Rules详解（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-rules-2/" title="Rules详解（二）" class="md-nav__link">
+      Rules详解（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-receiver/" title="Receiver配置" class="md-nav__link">
+      Receiver配置
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-silences/" title="Silences配置" class="md-nav__link">
+      Silences配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Prometheus(联邦集群)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Prometheus(联邦集群)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/federation-overview/" title="Prometheus 联邦集群" class="md-nav__link">
+      Prometheus 联邦集群
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/pushgateway/" title="Pushgateway 代理" class="md-nav__link">
+      Pushgateway 代理
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/alertmanager-ha/" title="Alertmanager 高可用" class="md-nav__link">
+      Alertmanager 高可用
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Prometheus(服务发现)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Prometheus(服务发现)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-overview/" title="服务发现（文件、DNS）" class="md-nav__link">
+      服务发现（文件、DNS）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-relabeling/" title="服务发现（Relabelling）" class="md-nav__link">
+      服务发现（Relabelling）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-consul/" title="服务发现（Consul）" class="md-nav__link">
+      服务发现（Consul）
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      Prometheus(Operator)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        Prometheus(Operator)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Operator/" title="Operator概述" class="md-nav__link">
+      Operator概述
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-1/" title="手动部署（1）" class="md-nav__link">
+      手动部署（1）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-2/" title="手动部署（2）" class="md-nav__link">
+      手动部署（2）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-3/" title="手动部署（联邦）" class="md-nav__link">
+      手动部署（联邦）
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#rpmcentos-deb-ubuntu" title="RPM（CentOS） &amp; Deb （Ubuntu）" class="md-nav__link">
+    RPM（CentOS） &amp; Deb （Ubuntu）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#centos-yumubuntu-apt" title="使用Centos yum仓库、Ubuntu apt仓库 维护软件版本更新" class="md-nav__link">
+    使用Centos yum仓库、Ubuntu apt仓库 维护软件版本更新
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/k8stech/edit/master/docs/advanced/auto-ops-exporter-1.md" title="编辑此页" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="exporter">自动化维护Exporter （一）<a class="headerlink" href="#exporter" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>当前Kubernetes的应用场景与技术生态尽管已经非常完善，但是还是有大部分同学是使用的云主机，这必然会对软件维护管理是个很头疼的问题，在这里只是针对维护如何实现自动化做出了思路拓展，
+方法万千，适合自己才是最好的。</p>
+</blockquote>
+<h3 id="rpmcentos-deb-ubuntu">RPM（CentOS） &amp; Deb （Ubuntu）<a class="headerlink" href="#rpmcentos-deb-ubuntu" title="Permanent link">&para;</a></h3>
+<div class="admonition info">
+<p class="admonition-title">FPM简介</p>
+<p>fpm是生成rpm包的工具。rpm包的制作，采用fpm工具完成，FPM非常易用，此命令可以把rpm包的安装、卸载做得更加优雅，在安装前可以做一些准备工作，安装后可以做一些收尾工作，在卸载前也可以做一些准备，比如检测一下相应的服务是否停止了，在卸载软件再做一些扫尾的工作，只要把这些定义成一个个脚本，fpm中指定相应的选项即可轻松实现。
+<a href="https://github.com/jordansissel/fpm">FPM的GitHub</a></p>
+</div>
+<p>FPM 安装https://api.realdeal.io</p>
+<pre class="highlight"><code class="language-bash"># centos
+yum-config-manager --enable ol7_optional_latest
+yum install ruby-devel gcc make rpm-build rubygems
+gem install --no-document fpm
+# ubuntu
+apt-get install ruby ruby-dev rubygems build-essential rpm devscripts
+gem install --no-document fpm </code></pre>
+
+<div class="admonition info">
+<p class="admonition-title">FPM常用参数</p>
+<p>FPM常用参数:</p>
+<p>-f : 强制覆盖[覆盖同名rpm包]</p>
+<p>-n : 指定的rpm包名</p>
+<p>-p : 指定的rpm包文件放置位置</p>
+<p>-v : 指定的rpm包版本</p>
+<p>-d : 指定依赖的软件   ( [-d 'name'] or [-d 'name &gt; version'] 例子: -d 'libstdc++ &gt;= 4.4.3')</p>
+<p>-a : 指定系统架构,如果是noarch则为'-a all' 或者 '-a native' [x86_64] 当软件不区分64位或32位的时候可以 noarch</p>
+<p>-s : 指定INPUT的数据类型 (["-s dir"] 省略数据类型)</p>
+<p>-m : 指定打包人员[Packager]  ([ -m 'user'])</p>
+<p>-C : 指定打包的相对路径,类似于buildroot. 譬如-C /tmp/apr/ 而打包机器的数据包路径是/tmp/apr/{opt,usr,etc} 那安装这个rpm包后,在本地的数据就是/opt/,/usr/,/etc/</p>
+<p>-t : 指定需要制作成什么包,可选项有(deb,rpm,solaris,etc)
+    支持的源类型:：
+        "dir" "rpm" "gem" "python" "empty" "tar" "deb" "cpan" "npm" "osxpkg" "pear" "pkgin" "virtualenv" "zip"
+    支持的目标类型:
+        "rpm" "deb" "solaris" "puppet" "dir" "osxpkg" "p5p" "puppet" "sh" "solaris" "tar" "zip"</p>
+<p>--description         :软件包描述</p>
+<p>--conflicts         :指定冲突软件</p>
+<p>--url                 :指定站点[惯例都是添加软件的官网 例如: --url "http://www.cnblog.com/roach57" ]</p>
+<p>--verbose             :安装过程详细打印</p>
+<p>--after-install     :包安装之后执行的脚本 也可写作 --post-install FILE</p>
+<p>--before-install     :包安装之前执行的脚本</p>
+<p>--after-remove         :包卸载之后执行的脚本</p>
+<p>--before-remove     :包卸载之前执行的脚本</p>
+<p>--after-upgrade     :包更新之后执行的脚本[仅支持 deb 和 rpm 这两种包]</p>
+<p>--before-upgrade     :包更新之前执行的脚本</p>
+<p>--iteration         :发布序号[就是rpm包里面的release]</p>
+<p>--epoch             :纪元  [不知道干嘛用的]</p>
+<p>--no-rpm-sign        :不使用rpm签名   Signature</p>
+<p>--license             :证书许可 [可选项有 'BSD(开源软件)' 'GPLv2(自由软件)' 'MIT' 'Public Domain(公共域)' 'Distributable(贡献)' 'commercial(商业)' 'Share(共享)等',一般的开发都写'BSD'或'GPL']</p>
+<p>--vendor             :供应商名称 [ --vendor 'roach57@163.com']</p>
+<p>--no-depends         :代表没有任何依赖包,和-d是对立的,不能共用</p>
+<p>--config-files         :指定配置文件,可以指定目录[递归]</p>
+<p>--directories         :指定包目录</p>
+<p>--category             :软件所属的类别[这是个什么软件]下面有个对应的表格:</p>
+<p>RPM包的组成格式:</p>
+<p>roach[软件名称]-1.0[版本号].-.el6[发布号].x86_64[硬件平台].rpm[扩展名]</p>
+<p>例子备注:</p>
+<p>roach  :软件名称</p>
+<p>1.0.  :软件版本号</p>
+<p>.el6 :发布号主要是对软件存在的bug或漏洞进行修补,在软件功能上并没有变化,el6指的是rhel6系统中发布</p>
+<p>x86_64 :指64位的PC架构,另外还有'i386' 'i686' 等32位的PC架构,noarch是指不区分硬件架构</p>
+<p>rpm    :扩展名</p>
+</div>
+<p>node-exporter 打成rpm包</p>
+<pre class="highlight"><code class="language-bash"># 创建目录
+mkdir -p /data/node-exporter/{bin,centos7}
+cd /data/node-exporter
+# 下载node-exporter 0.18.0
+wget https://github.com.cnpmjs.org/prometheus/node_exporter/releases/download/v0.18.0/node_exporter-0.18.0.linux-amd64.tar.gz
+tar xf node_exporter-0.18.0.linux-amd64.tar.gz
+mv node_exporter-0.18.0.linux-amd64/node_exporter bin/
+# systemd管理服务文件
+cat &lt;&lt;EOF&gt;&gt; centos7/node_exporter.service
+[Unit]
+Description=node_exporter
+Documentation=https://prometheus.io/
+After=network.target
+
+[Service]
+Type=simple
+User=prometheus
+ExecStart=/usr/local/bin/node_exporter
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+EOF
+# init.d 脚本 主要是针对centos5，6
+cat &lt;&lt;EOF&gt;&gt; centos6/node_exporter
+#!/bin/bash
+#
+# /etc/rc.d/init.d/node_exporter
+#
+#  Prometheus node exporter
+#
+#  description: Prometheus node exporter
+#  processname: node_exporter
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+PROGNAME=node_exporter
+PROG=/opt/prometheus/$PROGNAME
+USER=root
+LOGFILE=/var/log/prometheus.log
+LOCKFILE=/var/run/$PROGNAME.pid
+
+start() {
+    echo -n "Starting $PROGNAME: "
+    cd /usr/local/bin/node_exporter
+    daemon --user $USER --pidfile="$LOCKFILE" "$PROG &amp;&gt;$LOGFILE &amp;"
+    echo $(pidofproc $PROGNAME) &gt;$LOCKFILE
+    echo
+}
+
+stop() {
+    echo -n "Shutting down $PROGNAME: "
+    killproc $PROGNAME
+    rm -f $LOCKFILE
+    echo
+}
+
+
+case "$1" in
+    start)
+    start
+    ;;
+    stop)
+    stop
+    ;;
+    status)
+    status $PROGNAME
+    ;;
+    restart)
+    stop
+    start
+    ;;
+    reload)
+    echo "Sending SIGHUP to $PROGNAME"
+    kill -SIGHUP $(pidofproc $PROGNAME)#!/bin/bash
+    ;;
+    *)
+        echo "Usage: service prometheus {start|stop|status|reload|restart}"
+        exit 1
+    ;;
+esac
+EOF
+
+# Centos7使用systemd管理打包
+fpm -s dir -t rpm -n node-exporter --rpm-os linux -v v1.0-centos7 ./bin/node_exporter=/usr/local/bin/ ./centos7/node_exporter.service=/usr/lib/systemd/system/node-exporter.service
+
+# Centos6使用init.d管理打包
+fpm -s dir -t rpm -n node-exporter --rpm-os linux -v v1.0-centos7 ./bin/node_exporter=/usr/local/bin/ ./centos7/node_exporter.service=/etc/init.d/node_exporter</code></pre>
+
+<p>以上的方法始终过于笨拙，为了更能优雅的打包，我们这里使用开源的prometheus-rpm自动化打包Centos{6，7，8} RPM包。
+<code>注意：此处的builder已经集成在docker里，要用此工具，必须提前装好docker。</code></p>
+<pre class="highlight"><code class="language-bash"># 克隆仓库到本地
+git clone https://github.com/cyancow/prometheus-rpm.git
+cd prometheus-rpm
+# 当前常用的exporter都已经在这里了，可以全部make，也可以只单独make其中的某一个exporter，如：make node_exporter
+apache_exporter
+├── apache_exporter.default
+├── apache_exporter.service
+└── apache_exporter.spec
+bind_exporter
+└── bind_exporter.default
+blackbox_exporter
+├── blackbox_exporter.default
+├── blackbox_exporter.service
+└── blackbox_exporter.spec
+collectd_exporter
+├── collectd_exporter.default
+├── collectd_exporter.service
+└── collectd_exporter.spec
+consul_exporter
+├── consul_exporter.default
+├── consul_exporter.service
+└── consul_exporter.spec
+couchbase_exporter
+├── couchbase_exporter.default
+├── couchbase_exporter.service
+├── couchbase_exporter.spec
+└── couchbase_exporter.yml
+elasticsearch_exporter
+├── elasticsearch_exporter.default
+├── elasticsearch_exporter.service
+└── elasticsearch_exporter.spec
+exporter_exporter
+├── exporter_exporter.default
+├── exporter_exporter.service
+├── exporter_exporter.spec
+└── exporter_exporter.yml
+graphite_exporter
+├── graphite_exporter.default
+├── graphite_exporter.service
+└── graphite_exporter.spec
+haproxy_exporter
+└── haproxy_exporter.default
+iperf3_exporter
+├── iperf3_exporter.default
+├── iperf3_exporter.service
+└── iperf3_exporter.spec
+jmx_exporter
+├── jmx_exporter.default
+├── jmx_exporter.service
+└── jmx_exporter.spec
+jolokia_exporter
+└── jolokia_exporter.default
+junos_exporter
+├── junos_exporter.default
+├── junos_exporter.service
+├── junos_exporter.spec
+└── junos_exporter.yaml
+kafka_exporter
+└── kafka_exporter.default
+keepalived_exporter
+└── keepalived_exporter.default
+memcached_exporter
+├── memcached_exporter.default
+├── memcached_exporter.service
+└── memcached_exporter.spec
+mysqld_exporter
+└── mysqld_exporter.default
+nginx_exporter
+└── nginx_exporter.default
+node_exporter
+├── autogen_node_exporter.init
+├── autogen_node_exporter.spec
+├── autogen_node_exporter.unit
+├── node_exporter-1.0.0.linux-amd64.tar.gz
+└── node_exporter.default
+ping_exporter
+├── ping_exporter.default
+├── ping_exporter.service
+└── ping_exporter.spec
+postgres_exporter
+├── postgres_exporter.default
+├── postgres_exporter_queries.yaml
+├── postgres_exporter.service
+└── postgres_exporter.spec
+process_exporter
+├── process_exporter.default
+├── process_exporter.service
+├── process_exporter.spec
+└── process_exporter.yml
+rabbitmq_exporter
+├── rabbitmq_exporter.default
+├── rabbitmq_exporter.service
+└── rabbitmq_exporter.spec
+redis_exporter
+└── redis_exporter.default
+snmp_exporter
+├── snmp_exporter.default
+├── snmp_exporter.service
+└── snmp_exporter.spec
+ssl_exporter
+└── ssl_exporter.default
+statsd_exporter
+├── statsd_exporter.default
+├── statsd_exporter.service
+└── statsd_exporter.spec
+
+#针对 node_exporter 打包测试
+
+make node_exporter
+</code></pre>
+
+<p>打包控制文件 <code>templating.yaml</code></p>
+<pre class="highlight"><code class="language-yaml"># Use YAML anchors so we can prevent repeating ourselves
+anchors:
+  default_build_steps: &amp;default_build_steps
+      spec: '{% extends "spec.tpl" %}'
+      unit: '{% extends "unit.tpl" %}'
+      init: '{% extends "init.tpl" %}'
+  default_context: &amp;default_context
+    static: &amp;default_static_context
+      user: prometheus
+      group: prometheus
+      package: '%{name}-%{version}.linux-amd64'
+      tarball_has_subdirectory: True
+      release: 1
+    dynamic: &amp;default_dynamic_context
+      tarball: '{{URL}}/releases/download/v%{version}/{{package}}.tar.gz'
+      sources:
+        - '{{tarball}}'
+        - 'autogen_%{name}.unit'
+        - '%{name}.default'
+        - 'autogen_%{name}.init'
+
+# Per-package configuration
+packages:
+  node_exporter:
+    build_steps:
+      &lt;&lt;: *default_build_steps
+    context:
+      &lt;&lt;: *default_context
+      static:
+        &lt;&lt;: *default_static_context
+        version: 1.0.0
+        license: ASL 2.0
+        URL: https://github.com/prometheus/node_exporter
+        summary: Prometheus exporter for machine metrics, written in Go with pluggable metric collectors.
+        description: |
+            Prometheus exporter for hardware and OS metrics exposed by *NIX kernels,
+            written in Go with pluggable metric collectors.
+  mysqld_exporter:
+    build_steps:
+      &lt;&lt;: *default_build_steps
+    context:
+      &lt;&lt;: *default_context
+      static:
+        &lt;&lt;: *default_static_context
+        version: 0.12.1
+        license: ASL 2.0
+        URL: https://github.com/prometheus/mysqld_exporter
+        summary: Prometheus exporter for MySQL server metrics.
+        description: |
+            Prometheus exporter for MySQL server metrics. Supported MySQL versions: 5.5 and up.
+            NOTE: Not all collection methods are supported on MySQL &lt; 5.6
+  redis_exporter:
+    build_steps:
+      &lt;&lt;: *default_build_steps
+    context:
+      static:
+        &lt;&lt;: *default_static_context
+        version: 1.6.0
+        license: ASL 2.0
+        summary: Prometheus exporter for Redis server metrics.
+        description: Prometheus Exporter for Redis Metrics. Supports Redis 2.x, 3.x, 4.x, and 5.x
+        package: '%{name}-v%{version}.linux-amd64'
+        URL: https://github.com/oliver006/redis_exporter
+      dynamic:
+        &lt;&lt;: *default_dynamic_context
+  haproxy_exporter:
+    build_steps:
+      &lt;&lt;: *default_build_steps
+    context:
+      &lt;&lt;: *default_context
+      static:
+        &lt;&lt;: *default_static_context
+        version: 0.10.0
+        license: ASL 2.0
+        URL: https://github.com/prometheus/haproxy_exporter
+        summary: This is a simple server that scrapes HAProxy stats and exports them via HTTP for Prometheus consumption.
+        description: This is a simple server that scrapes HAProxy stats and exports them via HTTP for Prometheus consumption.
+  kafka_exporter:
+    build_steps:
+      &lt;&lt;: *default_build_steps
+    context:
+      &lt;&lt;: *default_context
+      static:
+        &lt;&lt;: *default_static_context
+        version: 1.2.0
+        license: ASL 2.0
+        URL: https://github.com/danielqsj/kafka_exporter
+        summary: Kafka exporter for Prometheus.
+        description: Kafka exporter for Prometheus.
+  nginx_exporter:
+    build_steps:
+      &lt;&lt;: *default_build_steps
+    context:
+      &lt;&lt;: *default_context
+      static:
+        &lt;&lt;: *default_static_context
+        version: 0.7.0
+        license: ASL 2.0
+        package: 'nginx-prometheus-exporter-%{version}-linux-amd64'
+        URL: https://github.com/nginxinc/nginx-prometheus-exporter
+        tarball_has_subdirectory: False
+        fix_name: nginx-prometheus-exporter
+        summary: NGINX Prometheus Exporter for NGINX and NGINX Plus.
+        description: NGINX Prometheus Exporter for NGINX and NGINX Plus.
+  ssl_exporter:
+    build_steps:
+      &lt;&lt;: *default_build_steps
+    context:
+      &lt;&lt;: *default_context
+      static:
+        &lt;&lt;: *default_static_context
+        version: 1.0.0
+        license: ASL 2.0
+        URL: https://github.com/ribbybibby/ssl_exporter
+        package: '%{name}_%{version}_linux_amd64'
+        tarball_has_subdirectory: False
+        summary: Prometheus exporter for SSL certificates.
+        description: Prometheus exporter for SSL certificates.
+  bind_exporter:
+    build_steps:
+      &lt;&lt;: *default_build_steps
+    context:
+      &lt;&lt;: *default_context
+      static:
+        &lt;&lt;: *default_static_context
+        version: 0.3.0
+        license: ASL 2.0
+        URL: https://github.com/prometheus-community/bind_exporter
+        summary: Prometheus exporter for Bind nameserver
+        description: Export BIND(named/dns) v9+ service metrics to Prometheus.
+  keepalived_exporter:
+    build_steps:
+      &lt;&lt;: *default_build_steps
+    context:
+      &lt;&lt;: *default_context
+      static:
+        &lt;&lt;: *default_static_context
+        version: 0.4.0
+        license: ASL 2.0
+        user: root
+        group: root
+        release: 2
+        URL: https://github.com/gen2brain/keepalived_exporter
+        package: '%{name}-%{version}-amd64'
+        summary: Prometheus exporter for Keepalived metrics
+        description: Export Keepalived service metrics to Prometheus.
+      dynamic:
+        &lt;&lt;: *default_dynamic_context
+        tarball: '{{URL}}/releases/download/%{version}/{{package}}.tar.gz'
+  jolokia_exporter:
+    build_steps:
+      &lt;&lt;: *default_build_steps
+    context:
+      &lt;&lt;: *default_context
+      static:
+        &lt;&lt;: *default_static_context
+        version: 1.3.1
+        license: MIT
+        URL: https://github.com/jaxxstorm/jolokia_exporter
+        package: '%{name}_%{version}'
+        summary: Prometheus exporter for jolokia metrics
+        description: Export jolokia metrics to Prometheus.
+        tarball_has_subdirectory: False
+      dynamic:
+        &lt;&lt;: *default_dynamic_context
+        tarball: '{{URL}}/releases/download/%{version}/{{package}}_Linux_x86_64.tar.gz'
+  pushgateway:
+    build_steps:
+      &lt;&lt;: *default_build_steps
+    context:
+      &lt;&lt;: *default_context
+      static:
+        &lt;&lt;: *default_static_context
+        version: 1.2.0
+        license: ASL 2.0
+        URL: https://github.com/prometheus/pushgateway
+        summary: Prometheus push acceptor for ephemeral and batch jobs.
+        description: |
+            The Prometheus Pushgateway exists to allow ephemeral and batch jobs to
+            expose their metrics to Prometheus. Since these kinds of jobs may not
+            exist long enough to be scraped, they can instead push their metrics to
+            a Pushgateway. The Pushgateway then exposes these metrics to Prometheus.</code></pre>
+
+<p>Deb包制作</p>
+<div class="admonition info">
+<p class="admonition-title">deb包简介</p>
+<p>deb是unix系统下的安装包，它基于tar包，因此本身会记录文件的权限以及所有者/用户组，同时，由于Unix类系统对权限、所有者、组的严格要求，
+而deb格式安装包又经常会涉及到系统比较底层的操作，所以权限的控制显得尤为重要。</p>
+<p>deb包通常配合APT软件管理系统来使用，它是Debian系统(包含debian和ubuntu)下专属的安装包格式，称为当前在linux下非常主流的一种包管理方式。</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">DEBIAN目录</p>
+<p>deb包里面的结构：DEBIAN目录 和 软件具体安装目录（模拟安装目录）（如etc, usr, opt, tmp等）。</p>
+<p>在DEBIAN目录中至少有control文件，还可能有postinst(postinstallation)、postrm(postremove)、preinst(preinstallation)、prerm(preremove)、copyright (版权）、changlog （修订记录）和conffiles等。</p>
+<p>control文件：描述软件包的名称（Package），版本（Version），描述（Description）等，是deb包必须具备的描述性文件，以便于软件的安装管理和索引。为了能将软件包进行充分的管理，可能还具有以下字段:</p>
+<p>Section：申明软件的类别，常见的有<code>utils</code>, <code>net</code>, <code>mail</code>, <code>text</code>, <code>x11</code> 等；</p>
+<p>Priority：申明软件对于系统的重要程度，如<code>required</code>, <code>standard</code>, <code>optional</code>, <code>extra</code> 等；</p>
+<p>Essential：申明是否是系统最基本的软件包（选项为yes/no），如果是的话，这就表明该软件是维持系统稳定和正常运行的软件包，不允许任何形式的卸载（除非进行强制性的卸载）</p>
+<p>Architecture：软件包结构，如基于<code>i386</code>, <code>amd64</code>,<code>m68k</code>, <code>sparc</code>, <code>alpha</code>, <code>powerpc</code> 等；</p>
+<p>Source：软件包的源代码名称；</p>
+<p>Depends：软件所依赖的其他软件包和库文件。如果是依赖多个软件包和库文件，彼此之间采用逗号隔开；</p>
+<p>Pre-Depends：软件安装前必须安装、配置依赖性的软件包和库文件，它常常用于必须的预运行脚本需求；</p>
+<p>Recommends：这个字段表明推荐的安装的其他软件包和库文件；</p>
+<p>Suggests：建议安装的其他软件包和库文件。</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">常用deb包的操作命令</p>
+<p>进行打包成.deb包</p>
+<p>dpkg -b mysoftware mysoftware.deb #第一个参数为将要打包的目录名，第二个参数为生成包的名称</p>
+<p>安装deb包：</p>
+<p><code>dpkg -i mysoftware.deb</code>      # 将mysoftware复制到/boot目录下后，执行postinst</p>
+<p>卸载deb包：</p>
+<p><code>dpkg -r mysoftware</code>  # postinst脚本在/home目录下生成一个含有"mysoftware"字符的mydeb.log文件，这里要卸载的包名为control文件Package字段所定义的 mysoftware，将/boot目录mysoftware删除后，执行posrm，postrm脚本将/home目录下的mydeb.log文件删除                             </p>
+<p>查看deb包是否安装：</p>
+<p><code>dpkg -s mysoftware.deb</code> </p>
+<p>查看deb包文件内容：</p>
+<p><code>dpkg -c mysoftware.deb</code> </p>
+<p>查看当前目录某个deb包的信息：</p>
+<p><code>dpkg --info mysoftware.deb</code></p>
+<p>解压deb包中所要安装的文件</p>
+<p><code>dpkg -x mysoftware.deb mysoftware</code>    # 第一个参数为所要解压的deb包，这里为 mysoftware.deb 第二个参数为将deb包解压到指定的目录，这里为 mysoftware</p>
+<p>解压deb包中DEBIAN目录下的文件（至少包含control文件）</p>
+<p><code>dpkg -e  mysoftware.deb   mysoftware/DEBIAN</code>    # 第一个参数为所要解压的deb包，这里为 mysoftware.deb，第二个参数为将deb包解压到指定的目录，这里为 mysoftware/DEBIAN    </p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">DEB打包方法</p>
+<ol>
+<li>使用上面make好的rpm包，使用 <code>alien xxxx.rpm</code> 来转换</li>
+<li>使用dekg -e 解压出一个已经打包好的软件包，针对其DEBIAN源文件做修改成自己想要的包，使</li>
+<li>使用dpkg-buildpackage 自行针对deb包做设计，此处的一些基础比较繁琐，在这里就不多讲了，大家如果想详细了解，可以移步此处了解 <a href="http://www.downeyboy.com/2019/05/28/mk_deb_pack_series_0/">deb</a></li>
+</ol>
+</div>
+<p>在这里就不对deb包的制作过程做过多的阐述了，此处会讲如何针对已经做的deb做修改调整，如何修改成自己需要的模式，然后如何使用alien讲rpm转换成deb包；</p>
+<ol>
+<li>针对node-exporter的二进制文件替换成1.0.0版本，并将端口改成39100后，然后重新打包。</li>
+</ol>
+<pre class="highlight"><code class="language-bash"># 下载已经做好的node-exporter-0.18.1的deb的node-exporter版本替换成1.0.0然后重新打包
+wget http://ftp.cn.debian.org/debian/pool/main/p/prometheus-node-exporter/prometheus-node-exporter_0.18.1+ds-2_amd64.deb
+# 先建好所需要的目录
+mkdir node-exporter-1.0.0/DEBIAN/
+# 先解压 prometheus-node-exporter_0.18.1+ds-2_amd64.deb 到 node-exporter-1.0.0 目录
+dpkg -x prometheus-node-exporter_0.18.1+ds-2_amd64.deb node-exporter-1.0.0
+# 查看当前解压的目录结构
+tree node-exporter-1.0.0
+├── DEBIAN
+├── etc
+│   ├── default
+│   │   └── prometheus-node-exporter
+│   ├── init.d
+│   │   └── prometheus-node-exporter
+│   └── logrotate.d
+│       └── prometheus-node-exporter
+├── lib
+│   └── systemd
+│       └── system
+│           └── prometheus-node-exporter.service
+├── usr
+│   ├── bin
+│   │   └── prometheus-node-exporter
+│   └── share
+│       ├── doc
+│       │   └── prometheus-node-exporter
+│       │       ├── changelog.Debian.gz
+│       │       ├── changelog.gz
+│       │       ├── CONTRIBUTING.md
+│       │       ├── copyright
+│       │       ├── example-16-compatibility-rules-new-to-old.yml.gz
+│       │       ├── example-16-compatibility-rules.yml.gz
+│       │       ├── example-17-compatibility-rules-new-to-old.yml
+│       │       ├── example-17-compatibility-rules.yml
+│       │       ├── examples
+│       │       │   └── example-rules.yml
+│       │       ├── MAINTAINERS.md
+│       │       ├── NEWS.Debian.gz
+│       │       ├── NOTICE
+│       │       ├── README.md.gz
+│       │       ├── TIME.md
+│       │       └── V0_16_UPGRADE_GUIDE.md
+│       └── man
+│           └── man1
+│               └── prometheus-node-exporter.1.gz
+└── var
+    ├── lib
+    │   └── prometheus
+    │       └── node-exporter
+    │           └── README.textfile
+    └── log
+        └── prometheus
+# 解压含control等文件到
+dpkg -e prometheus-node-exporter_0.18.1+ds-2_amd64.deb node-exporter-0.18.1/DEBIAN/
+# 查看当前解压的DEBIAN目录结构
+tree node-exporter-0.18.1/DEBIAN
+├── conffiles # 配置文件存放目录
+├── control # 控制文件，包括描述、依赖库等
+├── md5sums # md5校验
+├── postinst # 安装后执行脚本
+├── postrm # 卸载后执行脚本
+└── prerm </code></pre>
+
+<p>把node-exporter替换成1.0.0版本，重新编译并且安装测试</p>
+<pre class="highlight"><code class="language-bash"># 替换 
+cp node-exporter_1.0.0-2_amd64/usr/bin/node_exporter node-exporter-1.0.0/usr/bin/prometheus-node-exporter
+# 修改 node-exporter-1.0.0/lib/systemd/system/prometheus-node-exporter.service 中端口
+在ExecStart=/usr/bin/prometheus-node-exporter $ARGS 后添加 --web.listen-address=":39100" # 此处仅为做测试
+# 打包
+dpkg-deb -b node-exporter-1.0.0/ node-exporter-1.0.0-latest.deb
+安装测试
+dpkg -i node-exporter-1.0.0-latest.deb
+# 查看安装软件包
+dpkg -l|grep prome
+ii  prometheus-node-exporter               0.18.1+ds-2                                     amd64        Prometheus exporter for machine metrics
+# 查看端口
+netstat -anplt|grep 39100
+tcp6       0      0 :::39100                :::*                    LISTEN      31108/prometheus-no </code></pre>
+
+<ol>
+<li>使用alien真的rpm包转换</li>
+</ol>
+<pre class="highlight"><code class="language-bash"># 安装alien
+apt install alien
+alien --scripts node_exporter-1.0.0-1.el7.x86_64.rpm
+# 最终会得到以下的包
+node-exporter_1.0.0-2_amd64.deb
+# 安装测试，同时如果针对这里面修改的方法跟上面一样
+dpkg -i node-exporter_1.0.0-2_amd64.deb</code></pre>
+
+<h3 id="centos-yumubuntu-apt">使用Centos yum仓库、Ubuntu apt仓库 维护软件版本更新<a class="headerlink" href="#centos-yumubuntu-apt" title="Permanent link">&para;</a></h3>
+<p><a href="https://www.cnblogs.com/nidey/p/6200685.html">Centos7 YUM源制作</a></p>
+<p><a href="https://runsisi.com/2019-02-02/apt-repo">Ubuntu APT源制作</a></p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+
+
+
+<!-- Application footer -->
+<footer class="md-footer">
+
+    <!-- Further information -->
+    <div class="md-footer-meta md-typeset">
+        <div class="md-footer-meta__inner md-grid">
+
+            <!-- Copyright and theme information -->
+            <div class="md-footer-copyright">
+                
+                <div class="md-footer-copyright__highlight">
+                    Copyright &copy; 2020 Kubernetes技术栈
+                </div>
+                
+                powered by
+                <a href="https://www.k8stech.net" title="Kubernetes技术栈">www.k8stech.net</a>
+            </div>
+
+            <!-- Social links -->
+            
+            
+            
+        </div>
+    </div>
+</footer>
+
+
+    </div>
+    
+      <script src="../../assets/javascripts/application.d9aa80ab.js"></script>
+      
+        
+        
+          
+          <script src="../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+              
+                <script src="../../assets/javascripts/lunr/tinyseg.js"></script>
+              
+              
+                <script src="../../assets/javascripts/lunr/lunr.jp.js"></script>
+              
+            
+          
+          
+        
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+        <script src="../../assets/js/hljs/highlight.pack.js"></script>
+      
+        <script src="../../assets/js/prism.js"></script>
+      
+    
+  </body>
+</html>

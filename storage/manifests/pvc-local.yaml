@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-local
+  namespace: default
+spec:
+  storageClassName: local
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+# pod -> node1 -> pvc -> local pv -> node4 (冲突了)
+# pod -> node1 -> pvc xx local pv -> node4 (冲突了)
+                      # ->  local pv -> node1 

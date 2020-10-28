@@ -1,0 +1,80 @@
+# MySQL Chart 配置
+mysql:
+  enabled: true
+  # 数据库用户
+  mysqlUser: wordpress
+  # 数据库密码
+  mysqlPassword: wordpress
+  # 数据库名称
+  mysqlDatabase: wordpress
+  # 配置数据库的访问端口
+  service:
+    port: 3306
+  persistence:
+    enabled: false
+
+# 当 mysql.enabled=false 的时候使用外部数据库
+externalDatabase:
+  host: localhost:3306
+  # wordpress 数据库用户
+  user: wordpress
+  # 数据库密码
+  password: wordpress
+  # 数据库名称
+  database: wordpress
+
+
+# 配置wordpress的持久化
+persistence:
+  enabled: false
+  ## 传递一个存在的 PVC 对象
+  # existingCliam: "xxx"
+  # 设置访问模式
+  accessMode: ReadWriteMany
+  # 设置存储容量
+  size: 2Gi
+  # 设置 storageClass
+  storageClass: "xxxx"
+
+
+## 副本数
+replicaCount: 1
+
+## 更新策略
+# updateStrategy: {}
+
+## nodeSelector
+# nodeSelector: {}
+
+## affinity
+# affinity: {}
+
+## 配置镜像
+image:
+  name: wordpress
+  tag: 5.3.2-apache
+  pullPolicy: IfNotPresent
+  # 私有仓库secret
+  # pullSecrets:
+  # - mydockerhub
+
+## 资源配置
+# resources: {}
+
+## 健康检查
+# readiness: {}
+# liveness: {}
+
+## 钩子
+lifecycle: 
+  preStop:
+    exec:
+      command: ["/bin/bash", "-c", "sleep 15"]
+  
+
+# Service 配置
+service:
+  type: NodePort
+  externalTrafficPolicy: Cluster
+  port: 80
+  nodePort: 31777

@@ -1,0 +1,1839 @@
+
+
+
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+        <link rel="canonical" href="https://docs.prometheus.cool/Alertmanager/promql-function/">
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="复制">
+      
+        <meta name="lang:clipboard.copied" content="已复制">
+      
+        <meta name="lang:search.language" content="jp">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="没有找到符合条件的结果">
+      
+        <meta name="lang:search.result.one" content="找到 1 个符合条件的结果">
+      
+        <meta name="lang:search.result.other" content="# 个符合条件的结果">
+      
+        <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
+      
+      <link rel="shortcut icon" href="../../assets/img/prometheus_logo.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.2">
+    
+    
+      
+        <title>PromQL函数 - 云原生监控神器Prometheus</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.982221ab.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.224b79ff.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ef5350">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.1f0bcf2b.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i,700|Ubuntu+Mono">
+        <style>body,input{font-family:"Ubuntu","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../assets/styles/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/styles/prism.css">
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="red" data-md-color-accent="red">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#abs" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://docs.prometheus.cool" title="云原生监控神器Prometheus" class="md-header-nav__button md-logo">
+          
+            <img src="../../assets/img/prometheus_logo.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              云原生监控神器Prometheus
+            </span>
+            <span class="md-header-nav__topic">
+              PromQL函数
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            键入以开始搜索
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/k8stech/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://docs.prometheus.cool" title="云原生监控神器Prometheus" class="md-nav__button md-logo">
+      
+        <img src="../../assets/img/prometheus_logo.png" width="48" height="48">
+      
+    </a>
+    云原生监控神器Prometheus
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/k8stech/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="介绍" class="md-nav__link">
+      介绍
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      监控基础与概述
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        监控基础与概述
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/whymonitor/" title="为什么要监控" class="md-nav__link">
+      为什么要监控
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/monitorterms/" title="监控术语" class="md-nav__link">
+      监控术语
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/metricstory/" title="指标物语" class="md-nav__link">
+      指标物语
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/monitorcontrast/" title="开源监控对比" class="md-nav__link">
+      开源监控对比
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Prometheus 基础
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Prometheus 基础
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-introduction/" title="Prometheus介绍" class="md-nav__link">
+      Prometheus介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/tsdb-contrast/" title="时序数据库对比" class="md-nav__link">
+      时序数据库对比
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-datamodel/" title="数据模型" class="md-nav__link">
+      数据模型
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/node-exporter/" title="Node_Exporter" class="md-nav__link">
+      Node_Exporter
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-config/" title="Prometheus安装与配置" class="md-nav__link">
+      Prometheus安装与配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Prometheus 进阶
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Prometheus 进阶
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/auto-ops-exporter-1/" title="自动化维护Exporter（一）" class="md-nav__link">
+      自动化维护Exporter（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/auto-ops-exporter-2/" title="自动化维护Exporter（二）" class="md-nav__link">
+      自动化维护Exporter（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/docker-swarm-monitor-1/" title="Docker-Swarm集群监控（一）" class="md-nav__link">
+      Docker-Swarm集群监控（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/docker-swarm-monitor-2/" title="Docker-Swarm集群监控（二）" class="md-nav__link">
+      Docker-Swarm集群监控（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/commonly-exporter/" title="常用Exporter介绍与配置" class="md-nav__link">
+      常用Exporter介绍与配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    
+    <label class="md-nav__link" for="nav-5">
+      Prometheus(警报)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Prometheus(警报)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../promql-basic/" title="PromQL详解（一）" class="md-nav__link">
+      PromQL详解（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../promql-operator/" title="PromQL详解（二）" class="md-nav__link">
+      PromQL详解（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../promql-operator2/" title="PromQL详解（三）" class="md-nav__link">
+      PromQL详解（三）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        PromQL函数
+      </label>
+    
+    <a href="./" title="PromQL函数" class="md-nav__link md-nav__link--active">
+      PromQL函数
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#abs" title="abs()" class="md-nav__link">
+    abs()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#absent" title="absent()" class="md-nav__link">
+    absent()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ceil" title="ceil()" class="md-nav__link">
+    ceil()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#changes" title="changes()" class="md-nav__link">
+    changes()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#clamp_max" title="clamp_max()" class="md-nav__link">
+    clamp_max()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#clamp_min" title="clamp_min()" class="md-nav__link">
+    clamp_min()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scalar" title="scalar()" class="md-nav__link">
+    scalar()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#day_of_month" title="day_of_month()" class="md-nav__link">
+    day_of_month()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#day_of_week" title="day_of_week()" class="md-nav__link">
+    day_of_week()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#days_in_month" title="days_in_month()" class="md-nav__link">
+    days_in_month()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#delta" title="delta()" class="md-nav__link">
+    delta()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deriv" title="deriv()" class="md-nav__link">
+    deriv()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exp" title="exp()" class="md-nav__link">
+    exp()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#floor" title="floor()" class="md-nav__link">
+    floor()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#histogram_quantile" title="histogram_quantile()" class="md-nav__link">
+    histogram_quantile()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#holt_winters" title="holt_winters()" class="md-nav__link">
+    holt_winters()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hour" title="hour()" class="md-nav__link">
+    hour()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#idelta" title="idelta()" class="md-nav__link">
+    idelta()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#increase" title="increase()" class="md-nav__link">
+    increase()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#irate" title="irate()" class="md-nav__link">
+    irate()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rate" title="rate()" class="md-nav__link">
+    rate()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#label_join" title="label_join（）" class="md-nav__link">
+    label_join（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#label_replace" title="label_replace（）" class="md-nav__link">
+    label_replace（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#predict_linear" title="predict_linear()" class="md-nav__link">
+    predict_linear()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ln" title="ln（）" class="md-nav__link">
+    ln（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#log2" title="log2（）" class="md-nav__link">
+    log2（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#log10" title="log10（）" class="md-nav__link">
+    log10（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#minute" title="minute（）" class="md-nav__link">
+    minute（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#month" title="month（）" class="md-nav__link">
+    month（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#predict_linear_1" title="predict_linear（）" class="md-nav__link">
+    predict_linear（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resets" title="resets（）" class="md-nav__link">
+    resets（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#round" title="round（）" class="md-nav__link">
+    round（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sort" title="sort（）" class="md-nav__link">
+    sort（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sort_desc" title="sort_desc（）" class="md-nav__link">
+    sort_desc（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sqrt" title="sqrt（）" class="md-nav__link">
+    sqrt（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time" title="time（）" class="md-nav__link">
+    time（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#timestamp" title="timestamp（）" class="md-nav__link">
+    timestamp（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vector" title="vector（）" class="md-nav__link">
+    vector（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#year" title="year（）" class="md-nav__link">
+    year（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_over_time" title="_over_time()" class="md-nav__link">
+    _over_time()
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../alertmanager-overview/" title="AlertManager" class="md-nav__link">
+      AlertManager
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../alertmanager-rules-1/" title="Rules详解（一）" class="md-nav__link">
+      Rules详解（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../alertmanager-rules-2/" title="Rules详解（二）" class="md-nav__link">
+      Rules详解（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../alertmanager-receiver/" title="Receiver配置" class="md-nav__link">
+      Receiver配置
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../alertmanager-silences/" title="Silences配置" class="md-nav__link">
+      Silences配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Prometheus(联邦集群)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Prometheus(联邦集群)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/federation-overview/" title="Prometheus 联邦集群" class="md-nav__link">
+      Prometheus 联邦集群
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/pushgateway/" title="Pushgateway 代理" class="md-nav__link">
+      Pushgateway 代理
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/alertmanager-ha/" title="Alertmanager 高可用" class="md-nav__link">
+      Alertmanager 高可用
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Prometheus(服务发现)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Prometheus(服务发现)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-overview/" title="服务发现（文件、DNS）" class="md-nav__link">
+      服务发现（文件、DNS）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-relabeling/" title="服务发现（Relabelling）" class="md-nav__link">
+      服务发现（Relabelling）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-consul/" title="服务发现（Consul）" class="md-nav__link">
+      服务发现（Consul）
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      Prometheus(Operator)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        Prometheus(Operator)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Operator/" title="Operator概述" class="md-nav__link">
+      Operator概述
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-1/" title="手动部署（1）" class="md-nav__link">
+      手动部署（1）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-2/" title="手动部署（2）" class="md-nav__link">
+      手动部署（2）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-3/" title="手动部署（联邦）" class="md-nav__link">
+      手动部署（联邦）
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#abs" title="abs()" class="md-nav__link">
+    abs()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#absent" title="absent()" class="md-nav__link">
+    absent()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ceil" title="ceil()" class="md-nav__link">
+    ceil()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#changes" title="changes()" class="md-nav__link">
+    changes()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#clamp_max" title="clamp_max()" class="md-nav__link">
+    clamp_max()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#clamp_min" title="clamp_min()" class="md-nav__link">
+    clamp_min()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scalar" title="scalar()" class="md-nav__link">
+    scalar()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#day_of_month" title="day_of_month()" class="md-nav__link">
+    day_of_month()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#day_of_week" title="day_of_week()" class="md-nav__link">
+    day_of_week()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#days_in_month" title="days_in_month()" class="md-nav__link">
+    days_in_month()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#delta" title="delta()" class="md-nav__link">
+    delta()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deriv" title="deriv()" class="md-nav__link">
+    deriv()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exp" title="exp()" class="md-nav__link">
+    exp()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#floor" title="floor()" class="md-nav__link">
+    floor()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#histogram_quantile" title="histogram_quantile()" class="md-nav__link">
+    histogram_quantile()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#holt_winters" title="holt_winters()" class="md-nav__link">
+    holt_winters()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hour" title="hour()" class="md-nav__link">
+    hour()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#idelta" title="idelta()" class="md-nav__link">
+    idelta()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#increase" title="increase()" class="md-nav__link">
+    increase()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#irate" title="irate()" class="md-nav__link">
+    irate()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rate" title="rate()" class="md-nav__link">
+    rate()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#label_join" title="label_join（）" class="md-nav__link">
+    label_join（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#label_replace" title="label_replace（）" class="md-nav__link">
+    label_replace（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#predict_linear" title="predict_linear()" class="md-nav__link">
+    predict_linear()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ln" title="ln（）" class="md-nav__link">
+    ln（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#log2" title="log2（）" class="md-nav__link">
+    log2（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#log10" title="log10（）" class="md-nav__link">
+    log10（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#minute" title="minute（）" class="md-nav__link">
+    minute（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#month" title="month（）" class="md-nav__link">
+    month（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#predict_linear_1" title="predict_linear（）" class="md-nav__link">
+    predict_linear（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resets" title="resets（）" class="md-nav__link">
+    resets（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#round" title="round（）" class="md-nav__link">
+    round（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sort" title="sort（）" class="md-nav__link">
+    sort（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sort_desc" title="sort_desc（）" class="md-nav__link">
+    sort_desc（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sqrt" title="sqrt（）" class="md-nav__link">
+    sqrt（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time" title="time（）" class="md-nav__link">
+    time（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#timestamp" title="timestamp（）" class="md-nav__link">
+    timestamp（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vector" title="vector（）" class="md-nav__link">
+    vector（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#year" title="year（）" class="md-nav__link">
+    year（）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_over_time" title="_over_time()" class="md-nav__link">
+    _over_time()
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/k8stech/edit/master/docs/Alertmanager/promql-function.md" title="编辑此页" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                  <h1>PromQL函数</h1>
+                
+                <blockquote>
+<p>PromQL函数详解</p>
+</blockquote>
+<p>一些函数有默认的参数，例如：year(v=vector(time()) instant-vector)。v是参数值，instant-vector是参数类型。vector(time())是默认值。
+对于Prometheus的PromQL函数这一块很重要，一定融会贯通，这样才可以很好的理解Prometheus核心，然后针对Rules警报复杂设计的时候，得心应手。
+如果可以，最好深入的研究下源码中的一些逻辑，这样会很好的让你对Prometheus有更深的提高。</p>
+<h3 id="abs">abs()<a class="headerlink" href="#abs" title="Permanent link">&para;</a></h3>
+<p><code>abs(v instant-vector)</code> 返回输入向量中所有样本的绝对值。</p>
+<p>示例中查询到的value为负数。</p>
+<pre class="highlight"><code class="language-bash">process_virtual_memory_max_bytes{job=~"prometheus"}</code></pre>
+
+<p><img alt="abs-1" src="../../assets/img/abs-1.png" /></p>
+<p>在 PromQL 语句中加入abs()函数，value为正数</p>
+<pre class="highlight"><code class="language-bash">abs(process_virtual_memory_max_bytes{job=~"prometheus"})</code></pre>
+
+<p><img alt="abs-1" src="../../assets/img/abs-2.png" /></p>
+<h3 id="absent">absent()<a class="headerlink" href="#absent" title="Permanent link">&para;</a></h3>
+<p><code>absent(v instant-vector)</code>，如果输入向量中具有样本数据，则返回空向量；如果传递的瞬时向量中没有样本数据，则返回不带度量指标名称且带有标签的样本值为1的结果 当监控度量指标时，如果获取到的样本数据是空的， 使用 <code>absent</code> 方法对告警是非常有用的</p>
+<p>简单来说，判断输入的向量是否有数据，如果有返回空向量，如果没有返回1</p>
+<p>示例中输入的PromQL语句带有数据，所以返回空向量</p>
+<pre class="highlight"><code class="language-bash">absent(process_virtual_memory_max_bytes{job=~"prometheus"})</code></pre>
+
+<p><img alt="abs-1" src="../../assets/img/absent-1.png" /></p>
+<p>如果输入错误的PromeQL语句，比如查询一个不存在的job的时候，返回值为1</p>
+<pre class="highlight"><code class="language-bash">absent(process_virtual_memory_max_bytes{job=~"prometheus_1"})</code></pre>
+
+<p><img alt="abs-1" src="../../assets/img/absent-2.png" /></p>
+<h3 id="ceil">ceil()<a class="headerlink" href="#ceil" title="Permanent link">&para;</a></h3>
+<p>ceil(v instant-vector) 向上舍入为最接近的整数。 示例中的values为0.18，那跟他最接近的整数是多少？答案是 <code>1</code>。</p>
+<p>假如输入 <code>node_load5</code> 返回的值是浮点数。</p>
+<pre class="highlight"><code class="language-bash">node_load5</code></pre>
+
+<p><img alt="abs-1" src="../../assets/img/ceil-1.png" /></p>
+<p>如果使用 <code>ceil</code> 函数计算，返回值则是 <code>1</code>。</p>
+<pre class="highlight"><code class="language-bash">ceil(node_load5)</code></pre>
+
+<p><img alt="abs-1" src="../../assets/img/ceil-1.png" /></p>
+<h3 id="changes">changes()<a class="headerlink" href="#changes" title="Permanent link">&para;</a></h3>
+<p><code>changes(v range-vector)</code> 输入一个区间向量， 返回这个区间向量内每个样本数据值变化的次数。</p>
+<p>我们可以看到示例中查询这个向量五分钟之内的变化总共次数</p>
+<pre class="highlight"><code class="language-bash">node_load5[5m]</code></pre>
+
+<p><img alt="abs-1" src="../../assets/img/changes-1.png" /></p>
+<p>现在我们用changes()函数统计一下有多少次变化，答案和上面查询的一样的数值。</p>
+<pre class="highlight"><code class="language-bash">changes(node_load5[5m])</code></pre>
+
+<p><img alt="abs-1" src="../../assets/img/changes-2.png" /></p>
+<h3 id="clamp_max">clamp_max()<a class="headerlink" href="#clamp_max" title="Permanent link">&para;</a></h3>
+<p><code>clamp_max(v instant-vector, max scalar)</code> 输入一个瞬时向量和最大值，样本数据值若大于max，则改为max，否则不变。</p>
+<p>下面的查询该瞬时向量的值为16</p>
+<pre class="highlight"><code class="language-bash">sum(node_arp_entries)</code></pre>
+
+<p>现在我们通过clamp_max()函数，将max值设置为20（瞬时向量值&lt;20），所以我们应该看到显示的value为瞬时向量值</p>
+<pre class="highlight"><code class="language-bash">clamp_max(sum(node_arp_entries),20)</code></pre>
+
+<p><img alt="abs-1" src="../../assets/img/clamp_max-1.png" /></p>
+<p>我们将max值改成10（10&lt;瞬时向量值），所以我们应该看到显示的value为max值</p>
+<pre class="highlight"><code class="language-bash">clamp_max(sum(node_arp_entries),10)</code></pre>
+
+<p><img alt="abs-1" src="../../assets/img/clamp_max-2.png" /></p>
+<h3 id="clamp_min">clamp_min()<a class="headerlink" href="#clamp_min" title="Permanent link">&para;</a></h3>
+<p>clamp_min(v instant-vector)输入一个瞬时向量和最大值，样本数据值小于min，则改为min。否则不变。</p>
+<p>这个函数与上面的clamp_max()相反</p>
+<p>max值大于瞬时值，显示max值</p>
+<pre class="highlight"><code class="language-bash">clamp_min(sum(node_arp_entries),20)</code></pre>
+
+<p><img alt="champ_min-1" src="../../assets/img/champ_min-1.png" /></p>
+<p>max值小于瞬时值，显示瞬时值</p>
+<p>clamp_min(sum(node_arp_entries),10)</p>
+<p><img alt="champ_min-1" src="../../assets/img/champ_min-2.png" /></p>
+<h3 id="scalar">scalar()<a class="headerlink" href="#scalar" title="Permanent link">&para;</a></h3>
+<p>scalar(v instant-vector) 输入只有一个元素的瞬时向量，返回（key:value）=（”scalar”: 样本数值）。如果输入向量有多个元素，scalar则返回NaN。</p>
+<p>而count()函数，输入一个瞬时向量，返回（key:value）=（向量：样本个数），其中结果中的向量允许通过by条件分组。</p>
+<p>示例中因为精确到一个元素，所以显示 scalar: 30</p>
+<pre class="highlight"><code class="language-bash">scalar(node_arp_entries{device="ens18",instance="localhost:19100",job="prometheus"})</code></pre>
+
+<p><img alt="scalar-1" src="../../assets/img/scalar-1.png" /></p>
+<p>因为元素有多个，所以显示 <code>scalar: NaN</code></p>
+<pre class="highlight"><code class="language-bash">scalar(node_arp_entries)</code></pre>
+
+<p><img alt="scalar-1" src="../../assets/img/scalar-2.png" /></p>
+<h3 id="day_of_month">day_of_month()<a class="headerlink" href="#day_of_month" title="Permanent link">&para;</a></h3>
+<p>day_of_month(v=vector(time()) instant-vector)返回给定UTC时间所在月的第几天。返回值范围：1~31。</p>
+<p>示例所示time()为自1970年1月1日UTC以来的秒数。数值为23说明今天是本月第23天，实际返回的就是当前的日期，比如今天是20号，那么返回的数值就是20号。</p>
+<pre class="highlight"><code class="language-bash">day_of_month(vector(time()))</code></pre>
+
+<h3 id="day_of_week">day_of_week()<a class="headerlink" href="#day_of_week" title="Permanent link">&para;</a></h3>
+<p>day_of_week(v=vector(time()) instant-vector)返回给定UTC时间所在周的第几天。返回值范围：0~6. 0表示星期天。 跟上面一样的意思，今天是周一的话，返回的值则是1。</p>
+<pre class="highlight"><code class="language-bash">day_of_week(vector(time()))</code></pre>
+
+<h3 id="days_in_month">days_in_month()<a class="headerlink" href="#days_in_month" title="Permanent link">&para;</a></h3>
+<p>days_in_month(v=vector(time()) instant-vector)返回当月一共有多少天。返回值范围：<code>28~31</code>.</p>
+<p>同理，7月一共31天，所以返回值是31。</p>
+<pre class="highlight"><code class="language-bash">days_in_month(vector(time()))</code></pre>
+
+<h3 id="delta">delta()<a class="headerlink" href="#delta" title="Permanent link">&para;</a></h3>
+<p>delta(v range-vector)的参数是一个区间向量，返回一个瞬时向量。它计算一个区间向量 v 的第一个元素和最后一个元素之间的差值。由于这个值被外推到指定的整个时间范围，
+所以即使样本值都是整数，你仍然可能会得到一个非整数值。例如，下面的例子返回过去两小时的 CPU 温度差：</p>
+<p><code>delta(cpu_temp_celsius{host="zeus"}[2h])</code> 这个函数一般只用在 Gauge 类型的时间序列上。</p>
+<p>示例中是统计一个节点上 <code>cpu[0]</code> 的1小时内的使用情况：</p>
+<pre class="highlight"><code class="language-bash">node_cpu_seconds_total{cpu='0',mode="idle"}[1h]</code></pre>
+
+<p>使用上图两个数的差值跟下面的大体一样，因为是瞬时返回的向量值，这个值会有对应的差异，不过正常来说，差异不会太大。</p>
+<pre class="highlight"><code class="language-bash">delta(node_cpu_seconds_total{cpu='0',mode="idle"}[1h])</code></pre>
+
+<h3 id="deriv">deriv()<a class="headerlink" href="#deriv" title="Permanent link">&para;</a></h3>
+<p>deriv(v range-vector)计算一个区间向量v中各个时间序列二阶导数，使用简单线性回归 deriv二阶导数返回值类型只能是gauges。</p>
+<p>其实这个函数主要是预测区间变化率，比如使用此函数可以计算出</p>
+<p>(简单来说，一阶导数是自变量的变化率，二阶导数就是一阶导数的变化率，看其变化的快慢，也就是一阶导数变化率的变化率。)</p>
+<pre class="highlight"><code class="language-bash">deriv(node_cpu_seconds_total{cpu='0',mode='idle'}[5m])</code></pre>
+
+<h3 id="exp">exp()<a class="headerlink" href="#exp" title="Permanent link">&para;</a></h3>
+<p>exp(v instant-vector)输入一个瞬时向量, 返回各个样本值的e指数值，即为e的N次方。特殊情况如下所示：</p>
+<p><code>Exp（+ Inf）= + Inf</code> <code>+Inf</code> 是最高bucket的上限值，所以xxx_bucket是所有采样点的数量，是Prometheus自动增加的一个bucket。 </p>
+<pre class="highlight"><code class="language-bash">exp(node_cpu_seconds_total{cpu='0',mode="idle"})</code></pre>
+
+<p><code>Exp（NaN）= NaN</code>  此时返回的值不代表聚合运算工作不正常，prometheus查询语句中分母值为0时，语句返回值会为NaN。因此，你不能把对比率加起来，这个比率其实就是类似于成人与儿童之比率是1比6。</p>
+<p>你需要把分子和分母分别加起来，然后相除。</p>
+<p>解决方案是设置一个对比率值去对比，因为分母值为0，我们已经不需要了，可以在运算中去除即可。</p>
+<pre class="highlight"><code class="language-bash">histogram_quantile(0.9, rate(prometheus_http_request_duration_seconds_bucket[10m])&gt;0)</code></pre>
+
+<p>例如以下语句</p>
+<pre class="highlight"><code class="language-bash">sum by (job, handler)(rate(prometheus_http_request_duration_seconds_sum[5m])&gt;0)
+  /
+   sum by (job, handler)(rate(prometheus_http_request_duration_seconds_count[5m])&gt;0)</code></pre>
+
+<h3 id="floor">floor()<a class="headerlink" href="#floor" title="Permanent link">&para;</a></h3>
+<p>floor(v instant-vector)函数与 ceil() 函数相反，将 v 中所有元素的样本值向下四舍五入到最接近的整数。 很简单的一个函数，向下取最接近的整数。</p>
+<pre class="highlight"><code class="language-bash">floor(node_cpu_seconds_total{cpu='0',mode='user'})</code></pre>
+
+<h3 id="histogram_quantile">histogram_quantile()<a class="headerlink" href="#histogram_quantile" title="Permanent link">&para;</a></h3>
+<p>histogram_quantile(φ float, b instant-vector) 从 bucket 类型的向量 b 中计算 φ (0 ≤ φ ≤ 1) 分位数（百分位数的一般形式）的样本的最大值。（有关 φ 分位数的详细说明以及直方图指标类型的使用，<a href="https://prometheus.io/docs/practices/histograms/">请参阅直方图和摘要</a>。
+向量 b 中的样本是每个 bucket 的采样点数量。每个样本的 labels 中必须要有 le 这个 label 来表示每个 bucket 的上边界，没有 le 标签的样本会被忽略。直方图指标类型自动提供带有 _bucket 后缀和相应标签的时间序列。 可以使用 rate() 函数来指定分位数计算的时间窗口。 
+例如，一个直方图指标名称为 prometheus_http_request_duration_seconds_bucket，要计算过去 10 分钟内 第 90 个百分位数，请使用以下表达式：</p>
+<pre class="highlight"><code class="language-bash">histogram_quantile(0.9, rate(prometheus_http_request_duration_seconds_bucket{handler="/api/v1/query"}[10m]))</code></pre>
+
+<p>这表示最近 10 分钟之内 90% 的样本的最大值为 35.714285714285715。 这个计算结果是每组标签组合成一个时间序列。我们可能不会对所有这些维度（如 job、instance 和 method）感兴趣，并希望将其中的一些维度进行聚合，则可以使用 sum() 函数。
+例如，以下表达式根据 job 标签来对第 90 个百分位数进行聚合：</p>
+<pre class="highlight"><code class="language-bash">histogram_quantile(0.9, sum(rate(prometheus_http_request_duration_seconds_bucket[10m])) by (job, le))</code></pre>
+
+<div class="admonition warning">
+<p class="admonition-title">注意</p>
+<p>histogram_quantile 这个函数是根据假定每个区间内的样本分布是线性分布来计算结果的也就是说，</p>
+<p>它的结果未必准确，最高的 bucket 必须是 le=”+Inf” (否则就返回 NaN)。</p>
+<p>如果分位数位于最高的 bucket（+Inf） 中，则返回第二个最高的 bucket 的上边界。如果该 bucket 的上边界</p>
+<p>大于 0，则假设最低的 bucket 的的下边界为 0，这种情况下在该 bucket 内使用常规的线性插值。</p>
+</div>
+<h3 id="holt_winters">holt_winters()<a class="headerlink" href="#holt_winters" title="Permanent link">&para;</a></h3>
+<p>holt_winters(v range-vector, sf scalar, tf scalar)基于区间向量v，生成事件序列数据平滑值。平滑因子sf越低, 对老数据越重要。
+趋势因子tf越高，越多的数据趋势应该被重视0&lt;sf,tf&lt;=1。 holt_winters仅用于gauges。</p>
+<h3 id="hour">hour()<a class="headerlink" href="#hour" title="Permanent link">&para;</a></h3>
+<p>hour(v=vector(time()) instant-vector) 函数返回被给定 UTC 时间的当前第几个小时，时间范围：0~23。</p>
+<p>示例中显示的数值，已知当前时间是image，因为显示的是UTC时间，所以需要+8小时</p>
+<pre class="highlight"><code class="language-bash">hour(vector(time()))</code></pre>
+
+<h3 id="idelta">idelta()<a class="headerlink" href="#idelta" title="Permanent link">&para;</a></h3>
+<p>idelta(v range-vector)输入一个区间向量，返回（key: value ）=（ 度量指标： 每最后两个样本值差值）。</p>
+<p>这个函数跟delta()很相似,delta()是统计第一个和最后一个差值，而idelta()是统计最后两个的差值，也就是倒数第一个和倒数第二个</p>
+<p>示例统计的是一个节点上某 <code>cpu[0] mode="idle""</code> 10分钟内的使用情况`</p>
+<pre class="highlight"><code class="language-bash">node_cpu_seconds_total{cpu='0',mode="idle"}[10m]</code></pre>
+
+<p>通过idelta()计算之后，确实跟上图最后两个的差值一样</p>
+<pre class="highlight"><code class="language-bash"></code></pre>
+
+<h3 id="increase">increase()<a class="headerlink" href="#increase" title="Permanent link">&para;</a></h3>
+<p>increase(v range-vector)输入一个区间向量，返回：（key:value） = （度量指标：last值-first值），函数获取区间向量中的第一个和最后一个样本并返回其增长量, 它会在单调性发生变化时(如由于采样目标重启引起的计数器复位)自动中断。
+由于这个值被外推到指定的整个时间范围，所以即使样本值都是整数，你仍然可能会得到一个非整数值。</p>
+<pre class="highlight"><code class="language-bash">nginx_server_requests{host="*",job="nginx-vts",code='total'}[5m]</code></pre>
+
+<p>计算结果的值有略有差距</p>
+<pre class="highlight"><code class="language-bash">increase(nginx_server_requests{host="*",job="nginx-vts",code='total'}[5m])</code></pre>
+
+<p>increase 的返回值类型只能是计数器类型，也就是counter，主要作用是增加图表和数据的可读性。使用 rate 函数记录规则的使用率，以便持续跟踪数据样本值的变化。</p>
+<h3 id="irate">irate()<a class="headerlink" href="#irate" title="Permanent link">&para;</a></h3>
+<p>irate(v range-vector) 函数用于计算区间向量的增长率，但是其反应出的是瞬时增长率。irate 函数是通过区间向量中最后两个两本数据来计算区间向量的增长速率，它会在单调性发生变化时(如由于采样目标重启引起的计数器复位)自动中断。
+这种方式可以避免在时间窗口范围内的“长尾问题”，并且体现出更好的灵敏度，通过irate函数绘制的图标能够更好的反应样本数据的瞬时变化状态。</p>
+<pre class="highlight"><code class="language-bash">nginx_server_requests{host="*",job="nginx-vts",code='total'}[5m]</code></pre>
+
+<p>irate只能用于绘制快速移动的计数器。在长期趋势分析或者告警中更推荐使用 rate 函数。因为使用 irate 函数时，速率的简短变化会重置 FOR语句，形成的图形有很多波峰，难以阅读。 </p>
+<div class="admonition warning">
+<p class="admonition-title">注意</p>
+<p>当将 irate() 函数与聚合运算符（例如 sum()）或随时间聚合的函数（任何以 _over_time 结尾的函数）一起使用时，必须先执行 irate 函数，然后再进行聚合操作，否则当采样目标重新启动时 irate() 无法检测到计数器是否被重置。</p>
+</div>
+<h3 id="rate">rate()<a class="headerlink" href="#rate" title="Permanent link">&para;</a></h3>
+<p><code>label_join(v instant-vector, dst_label string, separator string, src_label_1 string, src_label_2 string, ...)</code></p>
+<p>rate（v range-vector） 可以直接计算区间向量 v 在时间窗口内平均增长速率，它会在单调性发生变化时(如由于采样目标重启引起的计数器复位)自动中断。该函数的返回结果不带有度量指标，只有标签列表。</p>
+<p>示例：以下表达式返回区间向量中每个时间序列过去 5 分钟内 HTTP 请求数的每秒增长率。</p>
+<p>rate() 函数返回值类型只能用计数器，在长期趋势分析或者告警中推荐使用这个函数。</p>
+<p><code>当将 rate() 函数与聚合运算符（例如 sum()）或随时间聚合的函数（任何以 _over_time 结尾的函数）一起使用时，必须先执行 rate 函数，然后再进行聚合操作，否则当采样目标重新启动时 rate() 无法检测到计数器是否被重置。</code></p>
+<h3 id="label_join">label_join（）<a class="headerlink" href="#label_join" title="Permanent link">&para;</a></h3>
+<p>函数可以将时间序列 v 中多个标签 src_label 的值，通过 separator 作为连接符写入到一个新的标签 dst_label 中。可以有多个 src_label 标签。</p>
+<p>例如，以下表达式返回的时间序列多了一个 join_test 标签，标签值为 apiserver,kubernetes：</p>
+<pre class="highlight"><code class="language-bash">up{endpoint="https",instance="192.168.1.210:6443",job="apiserver",namespace="default",service="kubernetes"}
+
+label_join(up{endpoint="https",instance="192.168.1.210:6443",job="apiserver",namespace="default",service="kubernetes"}, "join_test", ",", "job", "service")</code></pre>
+
+<p>返回结果：<code>up{endpoint="https",instance="192.168.1.210:6443",job="apiserver",join_test="apiserver,kubernetes",namespace="default",service="kubernetes"}  1</code></p>
+<p>在做一个测试，我们将带有 <code>pod</code> 标签的指标在添加一个标签名为 <code>pod_name</code>,值为 <code>pod &amp; container</code> 标签，通过 <code>_</code> 连接符，将 <code>pod</code> 和 <code>container</code> 的值连接一起变成 <code>pod_name</code> 标签的值。
+<pre class="highlight"><code class="language-bash">kube_pod_container_resource_limits{container=~"grafana"}
+# lable_join
+label_join(kube_pod_container_resource_limits{container=~"grafana"},"pod_name","_","pod","container")</code></pre></p>
+<p>返回结果：<code>kube_pod_container_resource_limits{container="grafana",instance="10.240.36.115:8443",job="kube-state-metrics",namespace="monitoring",node="k8s-node1",pod="grafana-86b55cb79f-6n249",pod_name="grafana-86b55cb79f-6n249_grafana",resource="cpu",unit="core"}</code></p>
+<h3 id="label_replace">label_replace（）<a class="headerlink" href="#label_replace" title="Permanent link">&para;</a></h3>
+<p>为了能够让客户端的图标更具有可读性，可以通过 label_replace 函数为时间序列添加额外的标签。label_replace 的具体参数如下：</p>
+<p><code>label_replace(v instant-vector, dst_label string, replacement string, src_label string, regex string)</code></p>
+<p>该函数会依次对 v 中的每一条时间序列进行处理，通过 regex 匹配 src_label 的值，并将匹配部分 relacement 写入到 dst_label 标签中。如下所示：</p>
+<p><code>label_replace(up, "host", "$1", "instance",  "(.*):.*")</code></p>
+<p>函数处理后，时间序列将包含一个 host 标签，host 标签的值为 Exporter 实例的 IP 地址：</p>
+<pre class="highlight"><code class="language-bash">up{host="localhost",instance="localhost:8080",job="cadvisor"}   1
+up{host="localhost",instance="localhost:9090",job="prometheus"}   1
+up{host="localhost",instance="localhost:9100",job="node"}   1</code></pre>
+
+<p>示例中我们匹配 <code>service</code> 这个 <code>labels</code>，只要符合表达式的都会添加一个 <code>host</code> 标签,其值为 <code>6666</code></p>
+<pre class="highlight"><code class="language-bash">label_replace(up,"host","6666","service","(.*)-.*-.*")</code></pre>
+
+<p>返回结果：</p>
+<pre class="highlight"><code class="language-bash">up{endpoint="http-metrics",host="6666",instance="192.168.1.210:10252",job="kube-controller-manager",namespace="kube-system",pod="kube-controller-manager-k8s-m1",service="kube-controller-manager"}
+up{endpoint="https-self",host="6666",instance="10.240.36.115:9443",job="kube-state-metrics",namespace="monitoring",pod="kube-state-metrics-dbb85dfd5-8xtdh",service="kube-state-metrics"}</code></pre>
+
+<h3 id="predict_linear">predict_linear()<a class="headerlink" href="#predict_linear" title="Permanent link">&para;</a></h3>
+<p>predict_linear(v range-vector,t scalar) 基于区间向量，使用简单的线性回归时间序列 t 秒的值，从而可以对时间序列的变化趋势做出预测。例如，根据过去2小时的时间样本数据，预测主机的可用磁盘空间在8小时内是否会被占满。</p>
+<p>表达式：</p>
+<pre class="highlight"><code class="language-bash">predict_linear(node_filesystem_free_bytes{job="prometheus",mountpoint="/"}[2h], 8 * 3600 ) / 1024 / 1024</code></pre>
+
+<h3 id="ln">ln（）<a class="headerlink" href="#ln" title="Permanent link">&para;</a></h3>
+<p>ln(v instance-vector)计算瞬时向量v中所有样本数据的自然对数。特殊情况：</p>
+<pre class="highlight"><code class="language-bash">ln(+Inf) = +Inf
+ln(0) = -Inf
+ln(x &lt; 0) = NaN
+ln(NaN) = NaN</code></pre>
+
+<h3 id="log2">log2（）<a class="headerlink" href="#log2" title="Permanent link">&para;</a></h3>
+<p>log2(v instant-vector) 函数计算瞬时向量v中所有样本数据以2为底的对数。特殊情况同上。</p>
+<h3 id="log10">log10（）<a class="headerlink" href="#log10" title="Permanent link">&para;</a></h3>
+<p>log10(v instant-vector)函数计算瞬时向量v中所有样本数据以10为底的对数。相当于ln()。特殊情况同上。</p>
+<h3 id="minute">minute（）<a class="headerlink" href="#minute" title="Permanent link">&para;</a></h3>
+<p>minute(v=vector(time()) instant-vector)返回给定UTC时间当前小时的第多少分钟。结果范围：0~59。</p>
+<p>示例：</p>
+<p><code>minute(vector(time()))</code></p>
+<p>返回结果为当前小时的第n分钟，可以根据当前的系统时间对照下返回的标量。</p>
+<h3 id="month">month（）<a class="headerlink" href="#month" title="Permanent link">&para;</a></h3>
+<p>month(v=vector(time()) instant-vector)返回给定UTC时间当前属于第几个月，结果范围：0~12。</p>
+<p>示例：</p>
+<p><code>month(vector(time()))</code></p>
+<p>结果返回为 <code>7</code> ， 现在的时间正好是本年的第七个月。</p>
+<h3 id="predict_linear_1">predict_linear（）<a class="headerlink" href="#predict_linear_1" title="Permanent link">&para;</a></h3>
+<p>predict_linear（v range-vector，t scalar） 函数可以预测时间序列 v 在 t 秒后的值。它基于简单线性回归的方式，对时间窗口内的样本数据进行统计，从而可以对时间序列的变化趋势做出预测。该函数的返回结果不带有度量指标，只有标签列表。</p>
+<p>示例：统计文件系统是ext4的磁盘的空闲空间有多大，基于2小时的样本数据预测磁盘空间是否会在4小时内占满。</p>
+<p><code>predict_linear(node_filesystem_files_free{fstype="ext4"}[2h], 4 * 3600) &lt; 0</code></p>
+<p>我们可以看到磁盘空闲空间的value在减少，幅度很小是因为根据2小时内磁盘的写入，当前磁盘写入量很少，所以按照现在的趋势，2小时之后磁盘空间只会减少一点。</p>
+<p>实例：使用nginx-vts-exporter根据5分钟内的访问量变化，预测1分钟之后访问量有多少。</p>
+<p><code>predict_linear(nginx_server_requests{code="total",host="*",instance="192.168.1.220:9913"}[5m],10*6)</code></p>
+<p>然后去访问配置好的nginx，1分钟之后预测的访问量有小幅度增加。</p>
+<p>注意：此函数一般只用在 Gauge 类型的时间序列上。</p>
+<h3 id="resets">resets（）<a class="headerlink" href="#resets" title="Permanent link">&para;</a></h3>
+<p>resets(v range-vector) 的参数是一个区间向量。对于每个时间序列，它都返回一个计数器重置的次数。两个连续样本之间的值的减少被认为是一次计数器重置。 这个函数一般只用在计数器类型的时间序列上。</p>
+<h3 id="round">round（）<a class="headerlink" href="#round" title="Permanent link">&para;</a></h3>
+<p>round(v instant-vector, to_nearest=1 scalar) 函数与 ceil 和 floor 函数类似，返回向量中所有样本值的最接近的整数。to_nearest 参数是可选的,默认为 1,表示样本返回的是最接近 1 的整数倍的值。你也可以将该参数指定为任意值（也可以是小数），表示样本返回的是最接近它的整数倍的值。</p>
+<p>范例：</p>
+<p><code>node_cpu_seconds_total{cpu="0",instance="localhost:19100",job="prometheus",mode="idle"}</code></p>
+<p><code>round(node_cpu_seconds_total{cpu="0",instance="localhost:19100",job="prometheus",mode="idle"})</code></p>
+<p>返回结果为一个接近 <code>1</code> 的整数倍的值。</p>
+<h3 id="sort">sort（）<a class="headerlink" href="#sort" title="Permanent link">&para;</a></h3>
+<p>sort(v instant-vector) 函数对向量按元素的值进行升序排序，返回结果：key: value = 度量指标：样本值<code>[升序排列]</code>。</p>
+<p>范例：</p>
+<p><code>sort(node_cpu_seconds_total)</code></p>
+<p>返回为一个重新排列为升序的时间序列样本数据。</p>
+<h3 id="sort_desc">sort_desc（）<a class="headerlink" href="#sort_desc" title="Permanent link">&para;</a></h3>
+<p>sort_desc(v instant-vector) 函数对向量按元素的值进行降序排序，返回结果：key: value = 度量指标：样本值<code>[降序排列]</code>。</p>
+<p>范例：</p>
+<p><code>sort_desc(node_cpu_seconds_total)</code></p>
+<p>返回结果为降序的时间序列样本数据。</p>
+<h3 id="sqrt">sqrt（）<a class="headerlink" href="#sqrt" title="Permanent link">&para;</a></h3>
+<p>sqrt(v instant-vector) 函数计算向量 v 中所有元素的平方根。</p>
+<p>范例：</p>
+<p><code>sqrt(node_cpu_seconds_total)</code></p>
+<p>返回结果为所有向量中的值的平方根。</p>
+<h3 id="time">time（）<a class="headerlink" href="#time" title="Permanent link">&para;</a></h3>
+<p>time() 函数返回从 1970-01-01 到现在的秒数。注意：它不是直接返回当前时间，而是时间戳。</p>
+<h3 id="timestamp">timestamp（）<a class="headerlink" href="#timestamp" title="Permanent link">&para;</a></h3>
+<p>timestamp（v instant-vector）返回给定向量的每个样本的时间戳，作为自1970年1月1日UTC以来的秒数。</p>
+<p>范例：</p>
+<p>timestamp(node_cpu_seconds_total)</p>
+<p>返回结果为指标node_cpu_seconds_total的每个脚本的时间戳。</p>
+<h3 id="vector">vector（）<a class="headerlink" href="#vector" title="Permanent link">&para;</a></h3>
+<p>vector(s scalar)函数，返回：（key: value）= （{}, 传入参数值）。</p>
+<p>范例：</p>
+<p>vector(1)  vector(time())</p>
+<p>返回为传入的值。</p>
+<h3 id="year">year（）<a class="headerlink" href="#year" title="Permanent link">&para;</a></h3>
+<p>year（v = vector（time（））instant-vector）返回UTC中每个给定时间的年份。</p>
+<h3 id="_over_time"><aggregation>_over_time()<a class="headerlink" href="#_over_time" title="Permanent link">&para;</a></h3>
+<p>下面的函数列表允许传入一个区间向量，它们会聚合每个时间序列的范围，并返回一个瞬时向量：</p>
+<ul>
+<li>
+<p>avg_over_time(range-vector) : 区间向量内每个度量指标的平均值。</p>
+</li>
+<li>
+<p>min_over_time(range-vector) : 区间向量内每个度量指标的最小值。</p>
+</li>
+<li>
+<p>max_over_time(range-vector) : 区间向量内每个度量指标的最大值。</p>
+</li>
+<li>
+<p>sum_over_time(range-vector) : 区间向量内每个度量指标的求和。</p>
+</li>
+<li>
+<p>count_over_time(range-vector) : 区间向量内每个度量指标的样本数据个数。</p>
+</li>
+<li>
+<p>quantile_over_time(scalar, range-vector) : 区间向量内每个度量指标的样本数据值分位数，φ-quantile (0 ≤ φ ≤ 1)。</p>
+</li>
+<li>
+<p>stddev_over_time(range-vector) : 区间向量内每个度量指标的总体标准差。</p>
+</li>
+<li>
+<p>stdvar_over_time(range-vector) : 区间向量内每个度量指标的总体标准方差。</p>
+</li>
+</ul>
+<blockquote>
+<p>即使区间向量内的值分布不均匀，它们在聚合时的权重也是相同的。</p>
+</blockquote>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+
+
+
+<!-- Application footer -->
+<footer class="md-footer">
+
+    <!-- Further information -->
+    <div class="md-footer-meta md-typeset">
+        <div class="md-footer-meta__inner md-grid">
+
+            <!-- Copyright and theme information -->
+            <div class="md-footer-copyright">
+                
+                <div class="md-footer-copyright__highlight">
+                    Copyright &copy; 2020 Kubernetes技术栈
+                </div>
+                
+                powered by
+                <a href="https://www.k8stech.net" title="Kubernetes技术栈">www.k8stech.net</a>
+            </div>
+
+            <!-- Social links -->
+            
+            
+            
+        </div>
+    </div>
+</footer>
+
+
+    </div>
+    
+      <script src="../../assets/javascripts/application.d9aa80ab.js"></script>
+      
+        
+        
+          
+          <script src="../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+              
+                <script src="../../assets/javascripts/lunr/tinyseg.js"></script>
+              
+              
+                <script src="../../assets/javascripts/lunr/lunr.jp.js"></script>
+              
+            
+          
+          
+        
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+        <script src="../../assets/js/hljs/highlight.pack.js"></script>
+      
+        <script src="../../assets/js/prism.js"></script>
+      
+    
+  </body>
+</html>

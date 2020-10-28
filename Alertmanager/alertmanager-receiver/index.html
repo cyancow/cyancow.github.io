@@ -1,0 +1,1470 @@
+
+
+
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+        <link rel="canonical" href="https://docs.prometheus.cool/Alertmanager/alertmanager-receiver/">
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="复制">
+      
+        <meta name="lang:clipboard.copied" content="已复制">
+      
+        <meta name="lang:search.language" content="jp">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="没有找到符合条件的结果">
+      
+        <meta name="lang:search.result.one" content="找到 1 个符合条件的结果">
+      
+        <meta name="lang:search.result.other" content="# 个符合条件的结果">
+      
+        <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
+      
+      <link rel="shortcut icon" href="../../assets/img/prometheus_logo.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.2">
+    
+    
+      
+        <title>Receiver配置 - 云原生监控神器Prometheus</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.982221ab.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.224b79ff.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ef5350">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.1f0bcf2b.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i,700|Ubuntu+Mono">
+        <style>body,input{font-family:"Ubuntu","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../assets/styles/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/styles/prism.css">
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="red" data-md-color-accent="red">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#_1" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://docs.prometheus.cool" title="云原生监控神器Prometheus" class="md-header-nav__button md-logo">
+          
+            <img src="../../assets/img/prometheus_logo.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              云原生监控神器Prometheus
+            </span>
+            <span class="md-header-nav__topic">
+              Receiver配置
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            键入以开始搜索
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/k8stech/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://docs.prometheus.cool" title="云原生监控神器Prometheus" class="md-nav__button md-logo">
+      
+        <img src="../../assets/img/prometheus_logo.png" width="48" height="48">
+      
+    </a>
+    云原生监控神器Prometheus
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/k8stech/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="介绍" class="md-nav__link">
+      介绍
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      监控基础与概述
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        监控基础与概述
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/whymonitor/" title="为什么要监控" class="md-nav__link">
+      为什么要监控
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/monitorterms/" title="监控术语" class="md-nav__link">
+      监控术语
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/metricstory/" title="指标物语" class="md-nav__link">
+      指标物语
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/monitorcontrast/" title="开源监控对比" class="md-nav__link">
+      开源监控对比
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Prometheus 基础
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Prometheus 基础
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-introduction/" title="Prometheus介绍" class="md-nav__link">
+      Prometheus介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/tsdb-contrast/" title="时序数据库对比" class="md-nav__link">
+      时序数据库对比
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-datamodel/" title="数据模型" class="md-nav__link">
+      数据模型
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/node-exporter/" title="Node_Exporter" class="md-nav__link">
+      Node_Exporter
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-config/" title="Prometheus安装与配置" class="md-nav__link">
+      Prometheus安装与配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Prometheus 进阶
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Prometheus 进阶
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/auto-ops-exporter-1/" title="自动化维护Exporter（一）" class="md-nav__link">
+      自动化维护Exporter（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/auto-ops-exporter-2/" title="自动化维护Exporter（二）" class="md-nav__link">
+      自动化维护Exporter（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/docker-swarm-monitor-1/" title="Docker-Swarm集群监控（一）" class="md-nav__link">
+      Docker-Swarm集群监控（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/docker-swarm-monitor-2/" title="Docker-Swarm集群监控（二）" class="md-nav__link">
+      Docker-Swarm集群监控（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/commonly-exporter/" title="常用Exporter介绍与配置" class="md-nav__link">
+      常用Exporter介绍与配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    
+    <label class="md-nav__link" for="nav-5">
+      Prometheus(警报)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Prometheus(警报)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../promql-basic/" title="PromQL详解（一）" class="md-nav__link">
+      PromQL详解（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../promql-operator/" title="PromQL详解（二）" class="md-nav__link">
+      PromQL详解（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../promql-operator2/" title="PromQL详解（三）" class="md-nav__link">
+      PromQL详解（三）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../promql-function/" title="PromQL函数" class="md-nav__link">
+      PromQL函数
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../alertmanager-overview/" title="AlertManager" class="md-nav__link">
+      AlertManager
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../alertmanager-rules-1/" title="Rules详解（一）" class="md-nav__link">
+      Rules详解（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../alertmanager-rules-2/" title="Rules详解（二）" class="md-nav__link">
+      Rules详解（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Receiver配置
+      </label>
+    
+    <a href="./" title="Receiver配置" class="md-nav__link md-nav__link--active">
+      Receiver配置
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="警报通知接收器" class="md-nav__link">
+    警报通知接收器
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#email" title="Email" class="md-nav__link">
+    Email
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" title="企业微信" class="md-nav__link">
+    企业微信
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#webhook" title="钉钉机器人(Webhook)" class="md-nav__link">
+    钉钉机器人(Webhook)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" title="警报通知模板" class="md-nav__link">
+    警报通知模板
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" title="开源警报组件推荐" class="md-nav__link">
+    开源警报组件推荐
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../alertmanager-silences/" title="Silences配置" class="md-nav__link">
+      Silences配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Prometheus(联邦集群)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Prometheus(联邦集群)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/federation-overview/" title="Prometheus 联邦集群" class="md-nav__link">
+      Prometheus 联邦集群
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/pushgateway/" title="Pushgateway 代理" class="md-nav__link">
+      Pushgateway 代理
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/alertmanager-ha/" title="Alertmanager 高可用" class="md-nav__link">
+      Alertmanager 高可用
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Prometheus(服务发现)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Prometheus(服务发现)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-overview/" title="服务发现（文件、DNS）" class="md-nav__link">
+      服务发现（文件、DNS）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-relabeling/" title="服务发现（Relabelling）" class="md-nav__link">
+      服务发现（Relabelling）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-consul/" title="服务发现（Consul）" class="md-nav__link">
+      服务发现（Consul）
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      Prometheus(Operator)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        Prometheus(Operator)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Operator/" title="Operator概述" class="md-nav__link">
+      Operator概述
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-1/" title="手动部署（1）" class="md-nav__link">
+      手动部署（1）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-2/" title="手动部署（2）" class="md-nav__link">
+      手动部署（2）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-3/" title="手动部署（联邦）" class="md-nav__link">
+      手动部署（联邦）
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="警报通知接收器" class="md-nav__link">
+    警报通知接收器
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#email" title="Email" class="md-nav__link">
+    Email
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" title="企业微信" class="md-nav__link">
+    企业微信
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#webhook" title="钉钉机器人(Webhook)" class="md-nav__link">
+    钉钉机器人(Webhook)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" title="警报通知模板" class="md-nav__link">
+    警报通知模板
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" title="开源警报组件推荐" class="md-nav__link">
+    开源警报组件推荐
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/k8stech/edit/master/docs/Alertmanager/alertmanager-receiver.md" title="编辑此页" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                  <h1>Receiver配置</h1>
+                
+                <blockquote>
+<p>本章主要对如何使用开源组件和Alertmanager组件集成警报通知。Kubernetes的警报集成后续会直接在配置文件讲解，原理大同小异，此处仅对相关警报通知做集成。
+</p>
+</blockquote>
+<h3 id="_1">警报通知接收器<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<p>前面一直是在Web UI 查看警报信息，现在开始使用接收器与ALertmanager集成，发送警报信息到 <code>Email</code>、<code>企业微信</code>、<code>钉钉机器人</code>，对于警报要求比较高的同学，可以根据下面提到的开源组件 【PrometheusAlert全家桶】 配置飞书、短信、语音电话等警报。</p>
+<h4 id="email">Email<a class="headerlink" href="#email" title="Permanent link">&para;</a></h4>
+<p>前面已经讲过，ALertmanager默认支持配置Email，也是最普通的方式，在ALertmanager组件中内置了SMTP协议。直接可以把前面的Alertmanager.yml中的SMTP部分截取出来，然后进行调整与配置</p>
+<pre class="highlight"><code class="language-yaml">global:
+  resolve_timeout: 5m
+  # smtp配置
+  smtp_from: "user@163.com" # 发送邮件主题
+  smtp_smarthost: 'smtp.163.com:25' # 邮箱服务器的SMTP主机配置
+  smtp_auth_username: "user@163.com" # 登录用户名
+  smtp_auth_password: "pass" # 此处的auth password是邮箱的第三方登录授权密码，而非用户密码。
+  smtp_require_tls: false # 有些邮箱需要开启此配置，这里使用的是163邮箱，仅做测试，不需要开启此功能。
+route:
+  receiver: ops
+  group_wait: 30s # 在组内等待所配置的时间，如果同组内，30秒内出现相同报警，在一个组内出现。
+  group_interval: 5m # 如果组内内容不变化，合并为一条警报信息，5m后发送。
+  repeat_interval: 24h # 发送报警间隔，如果指定时间内没有修复，则重新发送报警。
+  group_by: [alertname]  # 报警分组
+  routes:
+      - match:
+          team: operations
+        group_by: [env,dc]
+        receiver: 'ops'
+      - receiver: ops # 路由和标签，根据match来指定发送目标，如果 rule的lable 包含 alertname， 使用 ops 来发送
+        group_wait: 10s
+        match:
+          team: operations
+# 接收器指定发送人以及发送渠道
+receivers:
+# ops分组的定义
+- name: ops
+  email_configs:
+  - to: '9935226@qq.com,xxxxx@qq.com' # 如果想发送多个人就以 ','做分割，写多个邮件人即可。
+    send_resolved: true
+    headers:
+      from: "警报中心"
+      subject: "[operations] 报警邮件"
+      to: "小煜狼皇"</code></pre>
+
+<p>配置完成后，直接重启Alertmanager组件，使配置生效，然后使用前面内存阈值触发一次警报来看下发送结果。</p>
+<p>收到的警报信息：</p>
+<p><img alt="email-info" src="https://images.k8stech.net/email-info.png" /></p>
+<p>当警报接触以后收到的恢复信息。</p>
+<p><img alt="email-info" src="https://images.k8stech.net/email-resolve.png" /></p>
+<h4 id="_2">企业微信<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h4>
+<p>首先你要具有企业微信管理员的权限，如果没有可以自己注册一个，进行测试，我这里有自行注册的企业微信</p>
+<p>第一步登录进入以后，在应用管理中新建应用。</p>
+<p><img alt="email-info" src="https://images.k8stech.net/wechat-app.png" /></p>
+<p>第二步，创建应用，信息填写如下，上传应用logo随意。</p>
+<p><img alt="email-info" src="https://images.k8stech.net/wechat-app-info.png" /></p>
+<p>创建成功以后如下图。</p>
+<p><img alt="wechat-app-info" src="https://images.k8stech.net/youdian-wehchat-info.png" /></p>
+<p>这时候需要把 <code>AgentId</code> 和 <code>Secret</code> 记录下来，对于你的这种Secret信息，最好管理好，我的用过就会删除，所以不用担心安全隐患。</p>
+<table>
+<thead>
+<tr>
+<th align="center">ID</th>
+<th align="center">key</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>AgentId</code></td>
+<td align="center"><code>1000004</code></td>
+</tr>
+<tr>
+<td align="center"><code>Secret</code></td>
+<td align="center"><code>F-fzpgsabmfiFt7_4QRQwWEl8eyx7evO12sRYe_Q5vA</code></td>
+</tr>
+</tbody>
+</table>
+<p>第三步，现在我们来用新建的企业微信应用在Alertmanager配置，可以配置全局，也可以对单独需要发送的接收器，因为警报需要分级，所以需要单独处理，在这里使用的的单独的配置，需要知道 <strong>企业ID</strong> ，以及 <strong>部门ID</strong> 。</p>
+<p><strong>企业ID</strong> 通过</p>
+<p><img alt="bs-id" src="https://images.k8stech.net/wechat-bs-id.png" /></p>
+<p><strong>部门ID</strong> 通过通讯录获取</p>
+<p><img alt="bs-id" src="https://images.k8stech.net/wechat-branch-id.png" /></p>
+<pre class="highlight"><code class="language-yaml"># 企业微信配置
+  wechat_configs:
+  - corp_id: 'wwxxxxx' # 企业ID是唯一标识
+    api_url: 'https://qyapi.weixin.qq.com/cgi-bin/' # 企业微信api接口，统一定义
+    send_resolved: true # 设置发送警报恢复信息
+    to_party: '2' # 部门id，比如我的叫警报组，因此显示的是2，如果你DB组，就可能会是3，WEB组就是4，依次类推，另外需要接收警报的相关人员必须在这个部门里。
+    agent_id: '1000004' # 新建应用的agent_id
+    api_secret: 'F-fzpgsabmfiFt7_4QRQwWEl8eyx7evO12sRYe_Q5vA' # 新建应用的Secret</code></pre>
+
+<p>这时候我们重启Alertmanager，然后使用之前的方式来触发模拟警报，看看发送是不是已经没有问题了，这时我们的企业微信中、Email都可以收到警报了，这里的警报已经被我用模块处理过了。可读性会更高。</p>
+<pre class="highlight"><code class="language-yaml">cat wechat.tmpl
+## wechat模板
+{{ define "wechat.default.message" }}
+{{ if gt (len .Alerts.Firing) 0 -}}
+Alerts Firing:
+{{ range .Alerts }}
+警报级别：{{ .Labels.status }}
+
+警报类型：{{ .Labels.alertname }}
+
+故障主机: {{ .Labels.instance }}
+
+警报主题: {{ .Annotations.summary }}
+
+警报详情: {{ .Annotations.description }}
+
+⏱ : {{ (.StartsAt.Add 28800e9).Format "2006-01-02 15:04:05" }}
+{{- end }}
+{{- end }}
+
+{{ if gt (len .Alerts.Resolved) 0 -}}
+Alerts Resolved:
+{{ range .Alerts }}
+警报级别：{{ .Labels.status }}
+
+警报类型：{{ .Labels.alertname }}
+
+故障主机: {{ .Labels.instance }}
+
+警报主题: {{ .Annotations.summary }}
+
+警报详情: {{ .Annotations.description }}
+
+⏱ : {{ (.StartsAt.Add 28800e9).Format "2006-01-02 15:04:05" }}
+⏲ : {{ (.EndsAt.Add 28800e9).Format "2006-01-02 15:04:05" }}
+{{- end }}
+{{- end }}
+{{- end }}</code></pre>
+
+<p>Firing警报：</p>
+<p><img alt="wechat-alert" src="https://images.k8stech.net/wechat-alert.jpeg" /></p>
+<p>下面是Resolve的警报：</p>
+<p><img alt="wechat-alert" src="https://images.k8stech.net/wecaht-alert-resolve.jpeg" /></p>
+<h4 id="webhook">钉钉机器人(Webhook)<a class="headerlink" href="#webhook" title="Permanent link">&para;</a></h4>
+<p>对于钉钉大家都已经很熟悉了，大部分企业都已经启用钉钉办公了，同时其推出的免费的webhook机器人也很受大家的欢迎。我们这里讲一下借助第三方开源组件如何对钉钉集成警报功能。</p>
+<p>首先需要在钉钉创建机器人，然后在白名单中添加关键字信息与ip限制等安全设置，这个只要你有群，你就可以在群里面建，非常简单，这里就不做演示了</p>
+<p>先把Prometheus-webhook-Dingtalk组件装好。</p>
+<pre class="highlight"><code class="language-bash">mkdir -p /etc/prometheus-webhook-dingtalk/template/
+cd /etc/prometheus-webhook-dingtalk/
+wget https://github.com/timonwong/prometheus-webhook-dingtalk/releases/download/v1.4.0/prometheus-webhook-dingtalk-1.4.0.linux-amd64.tar.gz
+tar xf prometheus-webhook-dingtalk-1.4.0.linux-amd64.tar.gz
+mv prometheus-webhook-dingtalk-1.4.0.linux-amd64/* /etc/prometheus-webhook-dingtalk/
+mv prometheus-webhook-dingtalk /bin/
+cat &lt;&lt;EOF&gt; /lib/systemd/system/prometheus-webhook-dingtalk.service 
+[Unit]
+Description=prometheus-webhook-dingding
+Documentation=https://prometheus.io/
+After=network.target
+
+[Service]
+Type=simple
+User=prometheus
+ExecStart=/bin/prometheus-webhook-dingtalk --web.listen-address=":8070" --web.enable-ui --config.file="/etc/prometheus-webhook-dingtalk/config.yml"
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+EOF
+## 启动服务
+systemctl enable prometheus-webhook-dingtalk.service
+systemctl start prometheus-webhook-dingtalk.service</code></pre>
+
+<p>配置文件
+<pre class="highlight"><code class="language-yaml">## Request timeout
+# timeout: 5s
+
+## Customizable templates path
+## Customizable templates path
+templates:
+        # - contrib/templates/legacy/template.tmpl
+  # 自定义模板路径
+  - /etc/prometheus-webhook-dingtalk/template/default.tmpl
+
+## 你还可以使用' default_message '覆盖默认模板
+## 下面的示例使用v0.3.0中的“legacy”模板
+# default_message:
+#   title: '{{ template "legacy.title" . }}'
+#   text: '{{ template "legacy.content" . }}'
+
+## Targets, previously was known as "profiles"
+# 定义的webhook，钉钉创建的webhook token
+targets:
+# 如果有多个分组就可以在这里定义多个接口
+  ops:
+    url: https://oapi.dingtalk.com/robot/send?access_token=a4feed2322222222222222222222222
+  web:
+    url: https://oapi.dingtalk.com/robot/send?access_token=a4feed2325c1333333333333333333333</code></pre></p>
+<p>定义模板：</p>
+<pre class="highlight"><code class="language-bash">cd /etc/prometheus-webhook-dingtalk/template
+cat default.tmpl
+{{ define "__subject" }}[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .GroupLabels.SortedPairs.Values | join " " }} {{ if gt (len .CommonLabels) (len .GroupLabels) }}({{ with .CommonLabels.Remove .GroupLabels.Names }}{{ .Values | join " " }}{{ end }}){{ end }}{{ end }}
+{{ define "__alertmanagerURL" }}{{ .ExternalURL }}/#/alerts?receiver={{ .Receiver }}{{ end }}
+
+{{ define "__text_alert_list" }}{{ range . }}
+**Labels**
+{{ range .Labels.SortedPairs }}&gt; - {{ .Name }}: {{ .Value | markdown | html }}
+{{ end }}
+**Annotations**
+{{ range .Annotations.SortedPairs }}&gt; - {{ .Name }}: {{ .Value | markdown | html }}
+{{ end }}
+**Source:** [{{ .GeneratorURL }}]({{ .GeneratorURL }})
+{{ end }}{{ end }}
+
+{{/* Firing */}}
+
+{{ define "default.__text_alert_list" }}{{ range . }}
+
+**Trigger Time:** {{ dateInZone "2006.01.02 15:04:05" (.StartsAt) "Asia/Shanghai" }}
+
+**Summary:** {{ .Annotations.summary }}
+
+**Description:** {{ .Annotations.description }}
+
+**Graph:** [📈 ]({{ .GeneratorURL }})
+
+**Details:**
+{{ range .Labels.SortedPairs }}{{ if and (ne (.Name) "severity") (ne (.Name) "summary") }}&gt; - {{ .Name }}: {{ .Value | markdown | html }}
+{{ end }}{{ end }}
+{{ end }}{{ end }}
+
+{{/* Resolved */}}
+
+{{ define "default.__text_resolved_list" }}{{ range . }}
+
+**Trigger Time:** {{ dateInZone "2006.01.02 15:04:05" (.StartsAt) "Asia/Shanghai" }}
+
+**Resolved Time:** {{ dateInZone "2006.01.02 15:04:05" (.EndsAt) "Asia/Shanghai" }}
+
+**Summary:** {{ .Annotations.summary }}
+
+**Graph:** [📈 ]({{ .GeneratorURL }})
+
+**Details:**
+{{ range .Labels.SortedPairs }}{{ if and (ne (.Name) "severity") (ne (.Name) "summary") }}&gt; - {{ .Name }}: {{ .Value | markdown | html }}
+{{ end }}{{ end }}
+{{ end }}{{ end }}
+
+{{/* Default */}}
+{{ define "default.title" }}{{ template "__subject" . }}{{ end }}
+{{ define "default.content" }}#### \[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}\] **[{{ index .GroupLabels "alertname" }}]({{ template "__alertmanagerURL" . }})**
+{{ if gt (len .Alerts.Firing) 0 -}}
+
+![Firing-img](https://is3-ssl.mzstatic.com/image/thumb/Purple20/v4/e0/23/cf/e023cf56-0623-0cdf-afce-97ae90eabfda/mzl.uplmrpgi.png/320x0w.jpg)
+
+**Alerts Firing**
+{{ template "default.__text_alert_list" .Alerts.Firing }}
+{{- end }}
+{{ if gt (len .Alerts.Resolved) 0 -}}
+
+![Resolved-img](https://is3-ssl.mzstatic.com/image/thumb/Purple18/v4/41/72/99/4172990a-f666-badf-9726-6204a320c16e/mzl.dypdixoy.png/320x0w.png)
+
+**Alerts Resolved**
+{{ template "default.__text_resolved_list" .Alerts.Resolved }}
+{{- end }}
+{{- end }}
+
+{{/* Legacy */}}
+{{ define "legacy.title" }}{{ template "__subject" . }}{{ end }}
+{{ define "legacy.content" }}#### \[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}\] **[{{ index .GroupLabels "alertname" }}]({{ template "__alertmanagerURL" . }})**
+{{ template "__text_alert_list" .Alerts.Firing }}
+{{- end }}
+
+{{/* Following names for compatibility */}}
+{{ define "ding.link.title" }}{{ template "default.title" . }}{{ end }}
+{{ define "ding.link.content" }}{{ template "default.content" . }}{{ end }}</code></pre>
+
+<p>在ALertmanager中配置警报</p>
+<pre class="highlight"><code class="language-yaml"># 接收器指定发送人以及发送渠道
+receivers:
+# ops分组的定义
+- name: ops
+  email_configs:
+  - to: '9935226@qq.com,10000@qq.com'
+    send_resolved: true
+    headers: { Subject: "[operations] 报警邮件"} # 接收邮件的标题
+  # 钉钉配置
+  webhook_configs:
+  - url: http://localhost:8070/dingtalk/ops/send # 这里是在钉钉开源组件中的接口，如果单独定义的receiver需要对应你的分组与钉钉机器人的webhook token
+    # 企业微信配置
+  wechat_configs:
+  - corp_id: 'ww5421dksajhdasjkhj'
+    api_url: 'https://qyapi.weixin.qq.com/cgi-bin/'
+    send_resolved: true
+    to_party: '2'
+    agent_id: '1000002'
+    api_secret: 'Tm1kkEE3RGqVhv5hO-khdakjsdkjsahjkdksahjkdsahkj'
+# web
+- name: web
+  email_configs:
+  - to: '9935226@qq.com'
+    send_resolved: true
+    headers: { Subject: "[web] 报警邮件"} # 接收邮件的标题
+  webhook_configs:
+  - url: http://localhost:8070/dingtalk/web/send</code></pre>
+
+<p>继续使用上面的触发模拟警报，此时会同时让三个警报都接受到警报信息，我们这里只是为了调试，往往一个警报通知就可以满足需求了，对于重要业务还是需要使用电话以及短信提醒。</p>
+<p>钉钉Firing警报：</p>
+<p><img alt="dingtail-1" src="https://images.k8stech.net/dingtalk-firing.png" /></p>
+<p>钉钉Resolve警报：</p>
+<p><img alt="dingtail-2" src="https://images.k8stech.net/dingtalk-resolve.png" /></p>
+<h3 id="_3">警报通知模板<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>Prometheus 创建警报转发给 Alertmanager，Alertmanager会根据不同的 Label 向不同的 Receiver 发送警报通知，如Email、钉钉、企业微信、飞书、短信等等。所有 Receiver都一个接收模板，然后通过模板格式化以后发送警报信息给 Receiver。
+Alertmanager 自带的模板是基于 Go 语言的 template 模板，用户可以根据自己的需求去定义自己需要的模板，上面我给出的模板已经足够大家的基础使用了。</p>
+<p>下面介绍下通常自定义模板中会需要用到的一些参数说明</p>
+<table>
+<thead>
+<tr>
+<th align="center">名称</th>
+<th align="center">数据类型</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>Receiver</code></td>
+<td align="center">string</td>
+<td align="center">接受警报通知的接收器名称</td>
+</tr>
+<tr>
+<td align="center"><code>Status</code></td>
+<td align="center">string</td>
+<td align="center">警报状态，例如：Firing或Resolved的通知</td>
+</tr>
+<tr>
+<td align="center"><code>Alert</code></td>
+<td align="center">Alert</td>
+<td align="center">警报通知的真实内容，警报中的所有列表</td>
+</tr>
+<tr>
+<td align="center"><code>GroupLables</code></td>
+<td align="center">KV</td>
+<td align="center">包含警报通知的组标签</td>
+</tr>
+<tr>
+<td align="center"><code>CommandLabels</code></td>
+<td align="center">KV</td>
+<td align="center">所有警报的公共标签，包含GroupLabels的所有标签</td>
+</tr>
+<tr>
+<td align="center"><code>CommandAnnotations</code></td>
+<td align="center">KV</td>
+<td align="center">注释，比如自定义的一些字符串</td>
+</tr>
+<tr>
+<td align="center"><code>ExternalURL</code></td>
+<td align="center">string</td>
+<td align="center">警报信息中的Alertmanager地址</td>
+</tr>
+</tbody>
+</table>
+<p>上面说的KV类型是一组使用不标示标签与注释的Key/Value字符串对，可以在Alertmanager中的默认模板中看到其定义。 <a href="https://github.com/prometheus/alertmanager/blob/master/template/default.tmpl">default.tmpl</a></p>
+<p>其中邮件中所显示的 <code>View In AlertManager</code> ，Receiver 与 ExternalURL的定义其实就是模板中的 <strong>.ExternalURL</strong> 与 <strong>.Receiver</strong> 。 </p>
+<pre class="highlight"><code class="language-yaml">{{ define "__alertmanager" }}AlertManager{{ end }}
+
+{{ define "__alertmanagerURL" }}{{ .ExternalURL }}/#/alerts?receiver={{ .Receiver | urlquery }}{{ end }}
+...</code></pre>
+
+<p>在收到的邮箱警报中可以看到 <code>View In AlertManager</code> 的链接地址是：<code>http://192.168.1.220:19093/#/alerts?receiver=ops</code> 。</p>
+<p>对于Alert的类型，警报列表的字段还包含了如下参数与定义、描述</p>
+<table>
+<thead>
+<tr>
+<th align="center">名称</th>
+<th align="center">数据类型</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>Status</code></td>
+<td align="center">string</td>
+<td align="center">定义警报状态是已经解决或处于触发状态</td>
+</tr>
+<tr>
+<td align="center"><code>Label</code></td>
+<td align="center">KV</td>
+<td align="center">包含警报中的标签</td>
+</tr>
+<tr>
+<td align="center"><code>Annotations</code></td>
+<td align="center">KV</td>
+<td align="center">警报的一组注释</td>
+</tr>
+<tr>
+<td align="center"><code>StartsAt</code></td>
+<td align="center">time.Time</td>
+<td align="center">警报触发时间</td>
+</tr>
+<tr>
+<td align="center"><code>EndsAt</code></td>
+<td align="center">time.Time</td>
+<td align="center">警报结束时间，只在警报结束的时间时设置</td>
+</tr>
+<tr>
+<td align="center"><code>GeneratorURL</code></td>
+<td align="center">string</td>
+<td align="center">警报规则的连接URL，也就是Prometheus中的Rules查询地址</td>
+</tr>
+</tbody>
+</table>
+<p>对于警报中的通知模板首先要熟悉go语言的template语法以及HTML简单的基础知识，然后把上面相关的元数据的一些信息了解清楚，就可以自己调整模板了，如果你实在懒的改，我调整好的模板可以直接拿去用，把对应的指标、标签名字改一下就可以用了。</p>
+<p>以下是我自己修改了一下的模板警报格式，大家可以看看，这个是通过官方的 <a href="https://github.com/prometheus/alertmanager/blob/master/template/default.tmpl">default.tmpl</a> 修改的。</p>
+<p><img alt="template-email" src="https://images.k8stech.net/template-email.png" /></p>
+<h3 id="_4">开源警报组件推荐<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://github.com/timonwong/prometheus-webhook-dingtalk">Prometheus-Webhook-Dingtalk</a></li>
+</ul>
+<p>一个开源的第三方警报插件，针对钉钉机器人 <code>webhook</code> 做集成，Go语言编写，现在迭代的已经很不错了，可能有一些功能还是有些限制，比如针对 <code>Markdown</code> @某个人无法实现，原因是因钉钉自身API没有支持这个功能。</p>
+<ul>
+<li><a href="https://github.com/k8stech/alertmanager-wechatrobot-webhook.git">Alertmanager-wechatrobot-webhook</a></li>
+</ul>
+<p>这个开源组件是将<code>Alertmanger</code> <code>Webhook</code> 消息转换为可以接收消息的企业微信机器人，也是go语言编写，<code>Alertmanager</code> 默认已经集成企业微信配置，如果有特殊需求，需要使用企业微信机器人的可以看看这个。</p>
+<ul>
+<li><a href="https://github.com/feiyu563">PrometheusAlert全家桶</a></li>
+</ul>
+<p>如果有对短信、电话警报等其他需求的同学，推荐这个开源警报组件，Go语言编写，Web框架是 <code>Beego</code> ，支持将收到的这些消息发送到钉钉，微信，飞书，腾讯短信，腾讯电话，阿里云短信，阿里云电话，华为短信，容联云电话等，这里就不细讲了，如果配置有问题可以随时咨询我。</p>
+<p><img alt="promalert" src="https://images.k8stech.net/PrometheusAlert.png" /></p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+
+
+
+<!-- Application footer -->
+<footer class="md-footer">
+
+    <!-- Further information -->
+    <div class="md-footer-meta md-typeset">
+        <div class="md-footer-meta__inner md-grid">
+
+            <!-- Copyright and theme information -->
+            <div class="md-footer-copyright">
+                
+                <div class="md-footer-copyright__highlight">
+                    Copyright &copy; 2020 Kubernetes技术栈
+                </div>
+                
+                powered by
+                <a href="https://www.k8stech.net" title="Kubernetes技术栈">www.k8stech.net</a>
+            </div>
+
+            <!-- Social links -->
+            
+            
+            
+        </div>
+    </div>
+</footer>
+
+
+    </div>
+    
+      <script src="../../assets/javascripts/application.d9aa80ab.js"></script>
+      
+        
+        
+          
+          <script src="../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+              
+                <script src="../../assets/javascripts/lunr/tinyseg.js"></script>
+              
+              
+                <script src="../../assets/javascripts/lunr/lunr.jp.js"></script>
+              
+            
+          
+          
+        
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+        <script src="../../assets/js/hljs/highlight.pack.js"></script>
+      
+        <script src="../../assets/js/prism.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1262 @@
+
+
+
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+        <link rel="canonical" href="https://docs.prometheus.cool/advanced/auto-ops-exporter-2/">
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="复制">
+      
+        <meta name="lang:clipboard.copied" content="已复制">
+      
+        <meta name="lang:search.language" content="jp">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="没有找到符合条件的结果">
+      
+        <meta name="lang:search.result.one" content="找到 1 个符合条件的结果">
+      
+        <meta name="lang:search.result.other" content="# 个符合条件的结果">
+      
+        <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
+      
+      <link rel="shortcut icon" href="../../assets/img/prometheus_logo.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.2">
+    
+    
+      
+        <title>自动化维护Exporter（二） - 云原生监控神器Prometheus</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.982221ab.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.224b79ff.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ef5350">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.1f0bcf2b.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i,700|Ubuntu+Mono">
+        <style>body,input{font-family:"Ubuntu","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../assets/styles/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/styles/prism.css">
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="red" data-md-color-accent="red">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#node-exporter" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://docs.prometheus.cool" title="云原生监控神器Prometheus" class="md-header-nav__button md-logo">
+          
+            <img src="../../assets/img/prometheus_logo.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              云原生监控神器Prometheus
+            </span>
+            <span class="md-header-nav__topic">
+              自动化维护Exporter（二）
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            键入以开始搜索
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/k8stech/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://docs.prometheus.cool" title="云原生监控神器Prometheus" class="md-nav__button md-logo">
+      
+        <img src="../../assets/img/prometheus_logo.png" width="48" height="48">
+      
+    </a>
+    云原生监控神器Prometheus
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/k8stech/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="介绍" class="md-nav__link">
+      介绍
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      监控基础与概述
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        监控基础与概述
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/whymonitor/" title="为什么要监控" class="md-nav__link">
+      为什么要监控
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/monitorterms/" title="监控术语" class="md-nav__link">
+      监控术语
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/metricstory/" title="指标物语" class="md-nav__link">
+      指标物语
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/monitorcontrast/" title="开源监控对比" class="md-nav__link">
+      开源监控对比
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Prometheus 基础
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Prometheus 基础
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-introduction/" title="Prometheus介绍" class="md-nav__link">
+      Prometheus介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/tsdb-contrast/" title="时序数据库对比" class="md-nav__link">
+      时序数据库对比
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-datamodel/" title="数据模型" class="md-nav__link">
+      数据模型
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/node-exporter/" title="Node_Exporter" class="md-nav__link">
+      Node_Exporter
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-config/" title="Prometheus安装与配置" class="md-nav__link">
+      Prometheus安装与配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+    
+    <label class="md-nav__link" for="nav-4">
+      Prometheus 进阶
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Prometheus 进阶
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../auto-ops-exporter-1/" title="自动化维护Exporter（一）" class="md-nav__link">
+      自动化维护Exporter（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        自动化维护Exporter（二）
+      </label>
+    
+    <a href="./" title="自动化维护Exporter（二）" class="md-nav__link md-nav__link--active">
+      自动化维护Exporter（二）
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ansible" title="Ansible概述" class="md-nav__link">
+    Ansible概述
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ansible_1" title="ansible安装" class="md-nav__link">
+    ansible安装
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ansible-prometheus-exporter" title="使用 Ansible 安装 Prometheus 以及 Exporter组件" class="md-nav__link">
+    使用 Ansible 安装 Prometheus 以及 Exporter组件
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" title="概述" class="md-nav__link">
+    概述
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" title="目录结构" class="md-nav__link">
+    目录结构
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" title="角色变量" class="md-nav__link">
+    角色变量
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#yumcopycopyhost" title="如果不想使用yum源方式，也可以使用copy模块，把文件copy到目标host，进行安装" class="md-nav__link">
+    如果不想使用yum源方式，也可以使用copy模块，把文件copy到目标host，进行安装
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" title="总结" class="md-nav__link">
+    总结
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../docker-swarm-monitor-1/" title="Docker-Swarm集群监控（一）" class="md-nav__link">
+      Docker-Swarm集群监控（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../docker-swarm-monitor-2/" title="Docker-Swarm集群监控（二）" class="md-nav__link">
+      Docker-Swarm集群监控（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../commonly-exporter/" title="常用Exporter介绍与配置" class="md-nav__link">
+      常用Exporter介绍与配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Prometheus(警报)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Prometheus(警报)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-basic/" title="PromQL详解（一）" class="md-nav__link">
+      PromQL详解（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-operator/" title="PromQL详解（二）" class="md-nav__link">
+      PromQL详解（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-operator2/" title="PromQL详解（三）" class="md-nav__link">
+      PromQL详解（三）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-function/" title="PromQL函数" class="md-nav__link">
+      PromQL函数
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-overview/" title="AlertManager" class="md-nav__link">
+      AlertManager
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-rules-1/" title="Rules详解（一）" class="md-nav__link">
+      Rules详解（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-rules-2/" title="Rules详解（二）" class="md-nav__link">
+      Rules详解（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-receiver/" title="Receiver配置" class="md-nav__link">
+      Receiver配置
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-silences/" title="Silences配置" class="md-nav__link">
+      Silences配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Prometheus(联邦集群)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Prometheus(联邦集群)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/federation-overview/" title="Prometheus 联邦集群" class="md-nav__link">
+      Prometheus 联邦集群
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/pushgateway/" title="Pushgateway 代理" class="md-nav__link">
+      Pushgateway 代理
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/alertmanager-ha/" title="Alertmanager 高可用" class="md-nav__link">
+      Alertmanager 高可用
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Prometheus(服务发现)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Prometheus(服务发现)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-overview/" title="服务发现（文件、DNS）" class="md-nav__link">
+      服务发现（文件、DNS）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-relabeling/" title="服务发现（Relabelling）" class="md-nav__link">
+      服务发现（Relabelling）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-consul/" title="服务发现（Consul）" class="md-nav__link">
+      服务发现（Consul）
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      Prometheus(Operator)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        Prometheus(Operator)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Operator/" title="Operator概述" class="md-nav__link">
+      Operator概述
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-1/" title="手动部署（1）" class="md-nav__link">
+      手动部署（1）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-2/" title="手动部署（2）" class="md-nav__link">
+      手动部署（2）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-3/" title="手动部署（联邦）" class="md-nav__link">
+      手动部署（联邦）
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ansible" title="Ansible概述" class="md-nav__link">
+    Ansible概述
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ansible_1" title="ansible安装" class="md-nav__link">
+    ansible安装
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ansible-prometheus-exporter" title="使用 Ansible 安装 Prometheus 以及 Exporter组件" class="md-nav__link">
+    使用 Ansible 安装 Prometheus 以及 Exporter组件
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" title="概述" class="md-nav__link">
+    概述
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" title="目录结构" class="md-nav__link">
+    目录结构
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" title="角色变量" class="md-nav__link">
+    角色变量
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#yumcopycopyhost" title="如果不想使用yum源方式，也可以使用copy模块，把文件copy到目标host，进行安装" class="md-nav__link">
+    如果不想使用yum源方式，也可以使用copy模块，把文件copy到目标host，进行安装
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" title="总结" class="md-nav__link">
+    总结
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/k8stech/edit/master/docs/advanced/auto-ops-exporter-2.md" title="编辑此页" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="node-exporter">自动化维护node-exporter （二）<a class="headerlink" href="#node-exporter" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>因为我们讲的Prometheus，对于自动化维护的范畴主要的目的是起到抛砖引玉的效果，在此，不在过多的深入讲解，如果有什么疑问，可以加群提问交流。</p>
+</blockquote>
+<h3 id="ansible">Ansible概述<a class="headerlink" href="#ansible" title="Permanent link">&para;</a></h3>
+<div class="admonition info">
+<p class="admonition-title">Ansible 简介</p>
+<p>Ansible 是一个开源的基于 OpenSSH 的自动化配置管理工具。可以用它来配置系统、部署软件和编排更高级的 IT 任务，比如持续部署或零停机更新。</p>
+<p>Ansible 的主要目标是简单和易用，并且它还高度关注安全性和可靠性。</p>
+<p>Ansible 适用于开发人员、系统管理员、发布工程师、IT 经理，以及介于两者之间的所有人。</p>
+<p>Ansible 适合管理几乎所有的环境，从拥有少数实例的小型环境到有数千个实例的企业环境。</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">Ansible 功能</p>
+<p>管理员可以通过 Ansible 在成百上千台计算机上同时执行指令(task)。
+对于管理员来说，经常需要执行下面的任务：</p>
+<p>维护现存的比较复杂的服务器时，手动登录的方式很容易遗漏一些操作，或者是执行一些未预期的操作。
+手动初始化新的服务器耗时耗力！
+对于这两种情况，如果完全通过 shell 脚本实现。脚本会过于复杂，极难维护。当然我们也可以使用同类的工具，比如 Puppet 、 Chef 、saltstack。这三个工具的特点是：需要学习新的知识栈(Ansible同样也是有学习成本的)。</p>
+<p>相比 Puppet、Chef、Saltstack 使用 Ansible 可以延续之前使用 shell 脚本的工作习惯和方式，因而其学习成本会低一些。下面是 Ansible 的一些优势：</p>
+<p>可以逐行的执行 shell 命令。
+不需要另外的客户端工具(linux 一般会自带 ssh 工具)。
+相同的配置只被执行一次(多次执行同一配置不会出问题)。</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">Ansible 特性</p>
+<p>轻量级，不需要安装客户端，通过ssh通信；</p>
+<p>基于模块工作，模块可以由任何语言开发；</p>
+<p>不仅支持命令行使用模块，也支持yaml格式的playbook；</p>
+<p>支持sudo</p>
+<p>幂等性，同一台服务器多次执行同一个palybook是安全的；</p>
+<p><a href="https://www.ansible.com/tower">商业化UI</a> 10台主机免费</p>
+<p><a href="https://github.com/alaxli/ansible_ui">开源UI</a> 文档</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">Ansible 工作流程</p>
+<p>使用 Ansible 无须在被管理的客户端电脑上安装代理之类的组件。它通过普通的 SSH 进行通信，以便从远程计算机检索信息、发出命令和复制文件。这是 Ansible 简化服务器管理的一种方式。任何公开 SSH 端口的服务器都可以通过 Ansible 进行配置和管理。</p>
+<p>Ansible 采用模块化的设计，所以非常容易扩展到各种特定的使用场景。模块可以用任何语言编写，并使用标准 JSON 进行通信。Ansible 的配置文件是用 YAML 格式编写的，因为它使用起来非常简单，并且与主流的标记语言很相似。除了通过命令行工具 Ansible 还可以通过配置脚本(Playbooks)与客户端交互。</p>
+</div>
+<h3 id="ansible_1">ansible安装<a class="headerlink" href="#ansible_1" title="Permanent link">&para;</a></h3>
+<pre class="highlight"><code class="language-bash"># 配置仓库
+# CentOS 6:
+yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm
+# CentOS 7:
+yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+# CentOS 8:
+yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+# 安装ansible
+yum install ansible
+
+# ubuntu
+sudo apt-get install software-properties-common
+sudo apt-add-repository ppa:ansible/ansible
+sudo apt-get update
+sudo apt-get install ansible</code></pre>
+
+<p><a href="https://ansible-tran.readthedocs.io/en/latest/">Ansible中文文档-马哥教育出品</a> </p>
+<hr />
+<h3 id="ansible-prometheus-exporter">使用 Ansible 安装 Prometheus 以及 Exporter组件<a class="headerlink" href="#ansible-prometheus-exporter" title="Permanent link">&para;</a></h3>
+<h4 id="_1">概述<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h4>
+<p>这个 Ansible 角色从 <a href="https://packagecloud.io/app/prometheus-rpm">https://packagecloud.io/app/prometheus-rpm</a> 托管的RPM包安装 <a href="http://prometheus.io/">Prometheus</a> 等组件</p>
+<p>此处的RPM，也可以是APT源，前篇已经讲到了，如果想修改成自己的源配置，只需要调整TASK中的main.yml配置即可。</p>
+<p>此角色用于处理守护程序的安装和命令行配置参数。对于简单的 exporter 来说，这已经足够了。但是对于像Prometheus这样的更复杂的组件，还是需要使用单独的角色来管理生成的配置文件。</p>
+<div class="admonition info">
+<p class="admonition-title">软件包的定制化</p>
+<p>如果有其他需求，可以参考 <a href="https://github.com/lest/prometheus-rpm">https://github.com/lest/prometheus-rpm</a> 仓库，此仓库是用于构建软件包的源文件。</p>
+</div>
+<h4 id="_2">目录结构<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h4>
+<pre class="highlight"><code class="language-bash">/data/code/ansible-role-prometheus-rpm tree
+├── defaults # 此处定义需要安装的package名字以及调用的变量参数定义
+│   └── main.yml
+├── handlers # 定义prometheus、exporter等服务的启动与重启的执行任务
+│   └── main.yml
+├── meta # 此处是定义INFO、平台、TAGS、依赖一些信息
+│   └── main.yml 
+├── tasks # 触发TASKS： 配置yum源，以及安装成功后，会直接调用handlers定义的执行启动与重启任务
+│   └── main.yml
+└── templates # 模板：此处是定义了 用于覆盖 systemd 读取的的参数选项变量名  
+    └── etc
+        └── default
+            ├── alertmanager.j2
+            ├── apache_exporter.j2
+            ├── blackbox_exporter.j2
+            ├── collectd_exporter.j2
+            ├── consul_exporter.j2
+            ├── elasticsearch_exporter.j2
+            ├── graphite_exporter.j2
+            ├── haproxy_exporter.j2
+            ├── jmx_exporter.j2
+            ├── mysqld_exporter.j2
+            ├── node_exporter.j2
+            ├── postgres_exporter.j2
+            ├── prometheus.j2
+            ├── pushgateway.j2
+            ├── redis_exporter.j2
+            ├── sachet.j2
+            └── snmp_exporter.j2</code></pre>
+
+<h4 id="_3">角色变量<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h4>
+<p>默认情况下，此角色不安装任何内容。</p>
+<p>在 <code>prometheus_rpm_components</code> 中设置需要安装的组件列表。</p>
+<p>Prometheus 的配置：</p>
+<pre class="highlight"><code class="language-yaml">prometheus_rpm_components:
+  - alertmanager
+  - blackbox_exporter
+  # - prometheus # Prometheus 1.x
+  - prometheus2 # Prometheus 2.x
+  - sachet</code></pre>
+
+<p>Exporters 的配置：</p>
+<pre class="highlight"><code class="language-yaml">prometheus_rpm_components:
+  - apache_exporter
+  - collectd_exporter
+  - consul_exporter
+  - elasticsearch_exporter
+  - graphite_exporter
+  - haproxy_exporter
+  - jmx_exporter
+  - mysqld_exporter
+  - node_exporter
+  - postgres_exporter
+  - pushgateway
+  - redis_exporter
+  - snmp_exporter</code></pre>
+
+<p>你也可以设置变量用于配置命令行选项，会直接覆盖 <code>systemd</code> 单元读取的相应 <code>/etc/default</code> 文件中的选项。</p>
+<pre class="highlight"><code class="language-yaml">prometheus_rpm_alertmanager_opts: ""
+prometheus_rpm_blackbox_exporter_opts: ""
+prometheus_rpm_prometheus_opts: '--config.file=/etc/prometheus/prometheus.yml --storage.tsdb.path=/var/lib/prometheus/data'
+prometheus_rpm_sachet_exporter_opts: "-config /etc/prometheus/sachet.yml"
+
+prometheus_rpm_apache_exporter_opts: "--config.file /etc/prometheus/blackbox.yml"
+prometheus_rpm_collectd_opts: ""
+prometheus_rpm_consul_exporter_opts: ""
+prometheus_rpm_elasticsearch_exporter_opts: ""
+prometheus_rpm_graphite_exporter_opts: ""
+prometheus_rpm_haproxy_exporter_opts: ""
+prometheus_rpm_jmx_exporter_opts: ""
+prometheus_rpm_mysqld_exporter_opts: ""
+prometheus_rpm_node_exporter_opts: ""
+prometheus_rpm_postgres_exporter_opts: ""
+prometheus_rpm_postgres_exporter_data_source_name: ""
+prometheus_rpm_postgres_exporter_data_source_uri: ""
+prometheus_rpm_postgres_exporter_data_source_user: ""
+prometheus_rpm_postgres_exporter_data_source_user_file: ""
+prometheus_rpm_postgres_exporter_data_source_pass: ""
+prometheus_rpm_postgres_exporter_data_source_pass_file: ""
+prometheus_rpm_pushgateway_opts: ""
+prometheus_rpm_redis_exporter_opts: ""
+prometheus_rpm_snmp_exporter_opts: ""</code></pre>
+
+<p>默认情况下，该角色会安装软件包，但不会将其升级到新版本。</p>
+<pre class="highlight"><code class="language-yaml">prometheus_rpm_package_state: present</code></pre>
+
+<p>将此设置为 <code>latest</code> 可在当前系统上升级软件包。可以在命令行上执行此操作，例如：</p>
+<pre class="highlight"><code class="language-bash">ansible-playbook my-servers playbooks/foo.yml --extra-vars ansible_become=latest</code></pre>
+
+<h4 id="yumcopycopyhost">如果不想使用yum源方式，也可以使用copy模块，把文件copy到目标host，进行安装<a class="headerlink" href="#yumcopycopyhost" title="Permanent link">&para;</a></h4>
+<pre class="highlight"><code class="language-yaml"># task 插入以下代码块
+- name: copy node-exporter.rpm
+  copy: src=./files/xx.rpm dest=/tmp/
+  notify: install node-exporter.rpm
+
+# hander 插入以下代码块
+- name: install node-exporter.rpm
+  yum:
+    name: /tmp/node-exporter.rpm
+    state: present
+</code></pre>
+
+<hr />
+<h3 id="_4">总结<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>这个仓库 <a href="https://github.com/cyancow/ansible-role-prometheus-rpm">ansible-role-prometheus-rpm</a> 就是使用我们在前篇提及到的 <a href="https://github.com/cyancow/prometheus-rpm">prometheus-rpm</a> 的 rpm 制作的 ansible-role 管理配置，
+我们可以直接针对这个Role配置做一些调整后就可以自己用了，针对Ubuntu的role在这里 <a href="https://github.com/cyancow/ansible-role-apt">ansible-role-apt</a> ，比如使用Jenkins+Ansible来维护软件包的发布，或者使用Gitlab CI来做持续集成、部署，在这里，对于Jenkins+Ansible与Gitlab CI是另外一个课题，可以在 <a href="https://youdianzhishi.com">优点知识</a>
+找到答案，如果你有什么不明白的地方或者疑问，可以加群交流。</p>
+<p>另外，对于自动化运维始终是一门比较大的话题，涉及的技术知识点也比较多，每个公司都会开发出自己的运维管理工具，但是最终还是万变不离其宗，
+当前的开源的一站式管理平台也有很多，比如：腾讯蓝鲸、<a href="https://opendevops.cn">CoDo</a>等等，对于自动化以及后续的AIOps，我们还有很长的路要走。</p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+
+
+
+<!-- Application footer -->
+<footer class="md-footer">
+
+    <!-- Further information -->
+    <div class="md-footer-meta md-typeset">
+        <div class="md-footer-meta__inner md-grid">
+
+            <!-- Copyright and theme information -->
+            <div class="md-footer-copyright">
+                
+                <div class="md-footer-copyright__highlight">
+                    Copyright &copy; 2020 Kubernetes技术栈
+                </div>
+                
+                powered by
+                <a href="https://www.k8stech.net" title="Kubernetes技术栈">www.k8stech.net</a>
+            </div>
+
+            <!-- Social links -->
+            
+            
+            
+        </div>
+    </div>
+</footer>
+
+
+    </div>
+    
+      <script src="../../assets/javascripts/application.d9aa80ab.js"></script>
+      
+        
+        
+          
+          <script src="../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+              
+                <script src="../../assets/javascripts/lunr/tinyseg.js"></script>
+              
+              
+                <script src="../../assets/javascripts/lunr/lunr.jp.js"></script>
+              
+            
+          
+          
+        
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+        <script src="../../assets/js/hljs/highlight.pack.js"></script>
+      
+        <script src="../../assets/js/prism.js"></script>
+      
+    
+  </body>
+</html>

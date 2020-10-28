@@ -1,0 +1,1287 @@
+
+
+
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+        <link rel="canonical" href="https://docs.prometheus.cool/controller/deployment/">
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="复制">
+      
+        <meta name="lang:clipboard.copied" content="已复制">
+      
+        <meta name="lang:search.language" content="jp">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="没有找到符合条件的结果">
+      
+        <meta name="lang:search.result.one" content="找到 1 个符合条件的结果">
+      
+        <meta name="lang:search.result.other" content="# 个符合条件的结果">
+      
+        <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
+      
+      <link rel="shortcut icon" href="../../assets/img/prometheus_logo.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.2">
+    
+    
+      
+        <title>Deployment 控制器 - 云原生监控神器Prometheus</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.982221ab.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.224b79ff.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ef5350">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.1f0bcf2b.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i,700|Ubuntu+Mono">
+        <style>body,input{font-family:"Ubuntu","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../assets/styles/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/styles/prism.css">
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="red" data-md-color-accent="red">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#deployment" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://docs.prometheus.cool" title="云原生监控神器Prometheus" class="md-header-nav__button md-logo">
+          
+            <img src="../../assets/img/prometheus_logo.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              云原生监控神器Prometheus
+            </span>
+            <span class="md-header-nav__topic">
+              Deployment 控制器
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            键入以开始搜索
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/k8stech/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://docs.prometheus.cool" title="云原生监控神器Prometheus" class="md-nav__button md-logo">
+      
+        <img src="../../assets/img/prometheus_logo.png" width="48" height="48">
+      
+    </a>
+    云原生监控神器Prometheus
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/k8stech/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="介绍" class="md-nav__link">
+      介绍
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      监控基础与概述
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        监控基础与概述
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/whymonitor/" title="为什么要监控" class="md-nav__link">
+      为什么要监控
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/monitorterms/" title="监控术语" class="md-nav__link">
+      监控术语
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/metricstory/" title="指标物语" class="md-nav__link">
+      指标物语
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/monitorcontrast/" title="开源监控对比" class="md-nav__link">
+      开源监控对比
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Prometheus 基础
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Prometheus 基础
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-introduction/" title="Prometheus介绍" class="md-nav__link">
+      Prometheus介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/tsdb-contrast/" title="时序数据库对比" class="md-nav__link">
+      时序数据库对比
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-datamodel/" title="数据模型" class="md-nav__link">
+      数据模型
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/node-exporter/" title="Node_Exporter" class="md-nav__link">
+      Node_Exporter
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/prom-config/" title="Prometheus安装与配置" class="md-nav__link">
+      Prometheus安装与配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Prometheus 进阶
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Prometheus 进阶
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/auto-ops-exporter-1/" title="自动化维护Exporter（一）" class="md-nav__link">
+      自动化维护Exporter（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/auto-ops-exporter-2/" title="自动化维护Exporter（二）" class="md-nav__link">
+      自动化维护Exporter（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/docker-swarm-monitor-1/" title="Docker-Swarm集群监控（一）" class="md-nav__link">
+      Docker-Swarm集群监控（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/docker-swarm-monitor-2/" title="Docker-Swarm集群监控（二）" class="md-nav__link">
+      Docker-Swarm集群监控（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/commonly-exporter/" title="常用Exporter介绍与配置" class="md-nav__link">
+      常用Exporter介绍与配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Prometheus(警报)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Prometheus(警报)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-basic/" title="PromQL详解（一）" class="md-nav__link">
+      PromQL详解（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-operator/" title="PromQL详解（二）" class="md-nav__link">
+      PromQL详解（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-operator2/" title="PromQL详解（三）" class="md-nav__link">
+      PromQL详解（三）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-function/" title="PromQL函数" class="md-nav__link">
+      PromQL函数
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-overview/" title="AlertManager" class="md-nav__link">
+      AlertManager
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-rules-1/" title="Rules详解（一）" class="md-nav__link">
+      Rules详解（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-rules-2/" title="Rules详解（二）" class="md-nav__link">
+      Rules详解（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-receiver/" title="Receiver配置" class="md-nav__link">
+      Receiver配置
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-silences/" title="Silences配置" class="md-nav__link">
+      Silences配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Prometheus(联邦集群)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Prometheus(联邦集群)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/federation-overview/" title="Prometheus 联邦集群" class="md-nav__link">
+      Prometheus 联邦集群
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/pushgateway/" title="Pushgateway 代理" class="md-nav__link">
+      Pushgateway 代理
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/alertmanager-ha/" title="Alertmanager 高可用" class="md-nav__link">
+      Alertmanager 高可用
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Prometheus(服务发现)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Prometheus(服务发现)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-overview/" title="服务发现（文件、DNS）" class="md-nav__link">
+      服务发现（文件、DNS）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-relabeling/" title="服务发现（Relabelling）" class="md-nav__link">
+      服务发现（Relabelling）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-consul/" title="服务发现（Consul）" class="md-nav__link">
+      服务发现（Consul）
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      Prometheus(Operator)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        Prometheus(Operator)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Operator/" title="Operator概述" class="md-nav__link">
+      Operator概述
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-1/" title="手动部署（1）" class="md-nav__link">
+      手动部署（1）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-2/" title="手动部署（2）" class="md-nav__link">
+      手动部署（2）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-3/" title="手动部署（联邦）" class="md-nav__link">
+      手动部署（联邦）
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#deployment_1" title="Deployment" class="md-nav__link">
+    Deployment
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" title="水平伸缩" class="md-nav__link">
+    水平伸缩
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" title="滚动更新" class="md-nav__link">
+    滚动更新
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/k8stech/edit/master/docs/controller/deployment.md" title="编辑此页" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="deployment">Deployment 控制器<a class="headerlink" href="#deployment" title="Permanent link">&para;</a></h1>
+<p>前面我们学习了 ReplicaSet 控制器，了解到该控制器是用来维护集群中运行的 Pod 数量的，但是往往在实际操作的时候，我们反而不会去直接使用 RS，而是会使用更上层的控制器，比如我们今天要学习的主角 Deployment，Deployment 一个非常重要的功能就是实现了 Pod 的“水平扩展/收缩”，比如我们应用更新了，我们只需要更新我们的容器镜像，然后修改 Deployment 里面的 Pod 模板镜像，那么 Deployment 就会用<strong>滚动更新（Rolling Update）</strong>的方式来升级现在的 Pod，这个能力是非常重要的，因为对于线上的服务我们需要做到不中断服务，所以滚动更新就成了必须的一个功能。而 Deployment 这个能力的实现，依赖的就是上节课我们学习的 ReplicaSet 这个资源对象，实际上我们可以通俗的理解就是<strong>每个 Deployment 就对应集群中的一次部署</strong>，这样就更好理解了。</p>
+<h2 id="deployment_1">Deployment<a class="headerlink" href="#deployment_1" title="Permanent link">&para;</a></h2>
+<p>Deployment 资源对象的格式和 ReplicaSet 几乎一致，如下资源对象就是一个常见的 Deployment 资源类型：（nginx-deploy.yaml）
+<pre class="highlight"><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment  
+metadata:
+  name:  nginx-deploy
+  namespace: default
+spec:
+  replicas: 3  # 期望的 Pod 副本数量，默认值为1
+  selector:  # Label Selector，必须匹配 Pod 模板中的标签
+    matchLabels:
+      app: nginx
+  template:  # Pod 模板
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80</code></pre></p>
+<p>我们这里只是将类型替换成了 Deployment，我们可以先来创建下这个资源对象：
+<pre class="highlight"><code class="language-shell">$ kubectl apply -f nginx-deploy.yaml
+deployment.apps/nginx-deploy created
+$ kubectl get deployment
+NAME           READY   UP-TO-DATE   AVAILABLE   AGE
+nginx-deploy   3/3     3            3           58s</code></pre></p>
+<p>创建完成后，查看 Pod 状态：
+<pre class="highlight"><code class="language-shell">$ kubectl get pods -l app=nginx
+NAME                            READY   STATUS    RESTARTS   AGE
+nginx-deploy-85ff79dd56-7r76h   1/1     Running   0          41s
+nginx-deploy-85ff79dd56-d5gjs   1/1     Running   0          41s
+nginx-deploy-85ff79dd56-txc4h   1/1     Running   0          41s</code></pre></p>
+<p>到这里我们发现和之前的 RS 对象是否没有什么两样，都是根据<code>spec.replicas</code>来维持的副本数量，我们随意查看一个 Pod 的描述信息：
+<pre class="highlight"><code class="language-shell">$ kubectl describe pod nginx-deploy-85ff79dd56-txc4h
+Name:               nginx-deploy-85ff79dd56-txc4h
+Namespace:          default
+Priority:           0
+PriorityClassName:  &lt;none&gt;
+Node:               ydzs-node1/10.151.30.22
+Start Time:         Sat, 16 Nov 2019 16:01:25 +0800
+Labels:             app=nginx
+                    pod-template-hash=85ff79dd56
+Annotations:        podpreset.admission.kubernetes.io/podpreset-time-preset: 2062768
+Status:             Running
+IP:                 10.244.1.166
+Controlled By:      ReplicaSet/nginx-deploy-85ff79dd56
+......
+Events:
+  Type    Reason     Age        From                 Message
+  ----    ------     ----       ----                 -------
+  Normal  Scheduled  &lt;unknown&gt;  default-scheduler    Successfully assigned default/nginx-deploy-85ff79dd56-txc4h to ydzs-node1
+  Normal  Pulling    2m         kubelet, ydzs-node1  Pulling image "nginx"
+  Normal  Pulled     117s       kubelet, ydzs-node1  Successfully pulled image "nginx"
+  Normal  Created    117s       kubelet, ydzs-node1  Created container nginx
+  Normal  Started    116s       kubelet, ydzs-node1  Started container nginx</code></pre></p>
+<p>我们仔细查看其中有这样一个信息<code>Controlled By:      ReplicaSet/nginx-deploy-85ff79dd56</code>，什么意思？是不是表示当前我们这个 Pod 的控制器是一个 ReplicaSet 对象啊，我们不是创建的一个 Deployment 吗？为什么 Pod 会被 RS 所控制呢？那我们再去看下这个对应的 RS 对象的详细信息如何呢：
+<pre class="highlight"><code class="language-shell">$ kubectl describe rs nginx-deploy-85ff79dd56
+Name:           nginx-deploy-85ff79dd56
+Namespace:      default
+Selector:       app=nginx,pod-template-hash=85ff79dd56
+Labels:         app=nginx
+                pod-template-hash=85ff79dd56
+Annotations:    deployment.kubernetes.io/desired-replicas: 3
+                deployment.kubernetes.io/max-replicas: 4
+                deployment.kubernetes.io/revision: 1
+Controlled By:  Deployment/nginx-deploy
+Replicas:       3 current / 3 desired
+Pods Status:    3 Running / 0 Waiting / 0 Succeeded / 0 Failed
+......
+Events:
+  Type    Reason            Age    From                   Message
+  ----    ------            ----   ----                   -------
+  Normal  SuccessfulCreate  4m52s  replicaset-controller  Created pod: nginx-deploy-85ff79dd56-7r76h
+  Normal  SuccessfulCreate  4m52s  replicaset-controller  Created pod: nginx-deploy-85ff79dd56-d5gjs
+  Normal  SuccessfulCreate  4m52s  replicaset-controller  Created pod: nginx-deploy-85ff79dd56-txc4h</code></pre></p>
+<p>其中有这样的一个信息：<code>Controlled By:  Deployment/nginx-deploy</code>，明白了吧？意思就是我们的 Pod 依赖的控制器 RS 实际上被我们的 Deployment 控制着呢，我们可以用下图来说明 Pod、ReplicaSet、Deployment 三者之间的关系：</p>
+<p><img alt="Deployment" src="../../assets/img/controller/deployment.png" /></p>
+<p>通过上图我们可以很清楚的看到，定义了3个副本的 Deployment 与 ReplicaSet 和 Pod 的关系，就是一层一层进行控制的。ReplicaSet 作用和之前一样还是来保证 Pod 的个数始终保存指定的数量，所以 Deployment 中的容器 <code>restartPolicy=Always</code> 是唯一的就是这个原因，因为容器必须始终保证自己处于 Running 状态，ReplicaSet 才可以去明确调整 Pod 的个数。而 Deployment 是通过管理 ReplicaSet 的数量和属性来实现<code>水平扩展/收缩</code>以及<code>滚动更新</code>两个功能的。</p>
+<h3 id="_1">水平伸缩<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<p><code>水平扩展/收缩</code>的功能比较简单，因为 ReplicaSet 就可以实现，所以 Deployment 控制器只需要去修改它缩控制的 ReplicaSet 的 Pod 副本数量就可以了。比如现在我们把 Pod 的副本调整到 4 个，那么 Deployment 所对应的 ReplicaSet 就会自动创建一个新的 Pod 出来，这样就水平扩展了，我们可以使用一个新的命令 <code>kubectl scale</code> 命令来完成这个操作：
+<pre class="highlight"><code class="language-shell">$ kubectl scale deployment nginx-deploy --replicas=4
+deployment.apps/nginx-deployment scaled</code></pre></p>
+<p>扩展完成后可以查看当前的 RS 对象：
+<pre class="highlight"><code class="language-shell">$ kubectl get rs
+NAME                      DESIRED   CURRENT   READY   AGE
+nginx-deploy-85ff79dd56   4         4         3       40m</code></pre></p>
+<p>可以看到期望的 Pod 数量已经变成 4 了，只是 Pod 还没准备完成，所以 READY 状态数量还是 3，同样查看 RS 的详细信息：
+<pre class="highlight"><code class="language-shell">$ kubectl describe rs nginx-deploy-85ff79dd56
+Name:           nginx-deploy-85ff79dd56
+Namespace:      default
+Selector:       app=nginx,pod-template-hash=85ff79dd56
+......
+Events:
+  Type    Reason            Age   From                   Message
+  ----    ------            ----  ----                   -------
+  Normal  SuccessfulCreate  40m   replicaset-controller  Created pod: nginx-deploy-85ff79dd56-7r76h
+  Normal  SuccessfulCreate  40m   replicaset-controller  Created pod: nginx-deploy-85ff79dd56-d5gjs
+  Normal  SuccessfulCreate  40m   replicaset-controller  Created pod: nginx-deploy-85ff79dd56-txc4h
+  Normal  SuccessfulCreate  17s   replicaset-controller  Created pod: nginx-deploy-85ff79dd56-tph9g</code></pre></p>
+<p>可以看到 ReplicaSet 控制器增加了一个新的 Pod，同样的 Deployment 资源对象的事件中也可以看到完成了扩容的操作：
+<pre class="highlight"><code class="language-shell">$ kubectl describe deploy nginx-deploy
+Name:                   nginx-deploy
+Namespace:              default
+......
+OldReplicaSets:  &lt;none&gt;
+NewReplicaSet:   nginx-deploy-85ff79dd56 (4/4 replicas created)
+Events:
+  Type    Reason             Age    From                   Message
+  ----    ------             ----   ----                   -------
+  Normal  ScalingReplicaSet  43m    deployment-controller  Scaled up replica set nginx-deploy-85ff79dd56 to 3
+  Normal  ScalingReplicaSet  3m16s  deployment-controller  Scaled up replica set nginx-deploy-85ff79dd56 to 4</code></pre></p>
+<h3 id="_2">滚动更新<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>如果只是<code>水平扩展/收缩</code>这两个功能，就完全没必要设计 Deployment 这个资源对象了，Deployment 最突出的一个功能是支持<code>滚动更新</code>，比如现在我们需要把应用容器更改为 <code>nginx:1.7.9</code> 版本，修改后的资源清单文件如下所示：
+<pre class="highlight"><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment  
+metadata:
+  name:  nginx-deploy
+  namespace: default
+spec:
+  replicas: 3  
+  selector:  
+    matchLabels:
+      app: nginx
+  minReadySeconds: 5
+  strategy:  
+    type: RollingUpdate  # 指定更新策略：RollingUpdate和Recreate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:  
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.7.9
+        ports:
+        - containerPort: 80</code></pre></p>
+<p>后前面相比较，除了更改了镜像之外，我们还指定了更新策略：
+<pre class="highlight"><code class="language-yaml">minReadySeconds: 5
+strategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxSurge: 1
+    maxUnavailable: 1</code></pre></p>
+<ul>
+<li><code>minReadySeconds</code>：表示 Kubernetes 在等待设置的时间后才进行升级，如果没有设置该值，Kubernetes 会假设该容器启动起来后就提供服务了，如果没有设置该值，在某些极端情况下可能会造成服务不正常运行，默认值就是0。</li>
+<li><code>type=RollingUpdate</code>：表示设置更新策略为滚动更新，可以设置为<code>Recreate</code>和<code>RollingUpdate</code>两个值，<code>Recreate</code>表示全部重新创建，默认值就是<code>RollingUpdate</code>。</li>
+<li><code>maxSurge</code>：表示升级过程中最多可以比原先设置多出的 Pod 数量，例如：<code>maxSurage=1，replicas=5</code>，就表示Kubernetes 会先启动一个新的 Pod，然后才删掉一个旧的 Pod，整个升级过程中最多会有<code>5+1</code>个 Pod。</li>
+<li><code>maxUnavaible</code>：表示升级过程中最多有多少个 Pod 处于无法提供服务的状态，当<code>maxSurge</code>不为0时，该值也不能为0，例如：<code>maxUnavaible=1</code>，则表示 Kubernetes 整个升级过程中最多会有1个 Pod 处于无法服务的状态。</li>
+</ul>
+<p>现在我们来直接更新上面的 Deployment 资源对象：
+<pre class="highlight"><code class="language-shell">$ kubectl apply -f nginx-deploy.yaml </code></pre></p>
+<div class="admonition info">
+<p class="admonition-title">record 参数</p>
+<p>我们可以添加了一个额外的 <code>--record</code> 参数来记录下我们的每次操作所执行的命令，以方便后面查看。</p>
+</div>
+<p>更新后，我们可以执行下面的 <code>kubectl rollout status</code> 命令来查看我们此次滚动更新的状态：
+<pre class="highlight"><code class="language-shell">$ kubectl rollout status deployment/nginx-deploy
+Waiting for deployment "nginx-deploy" rollout to finish: 2 out of 3 new replicas have been updated...</code></pre></p>
+<p>从上面的信息可以看出我们的滚动更新已经有两个 Pod 已经更新完成了，在滚动更新过程中，我们还可以执行如下的命令来暂停更新：
+<pre class="highlight"><code class="language-shell">$ kubectl rollout pause deployment/nginx-deploy
+deployment.apps/nginx-deploy paused</code></pre></p>
+<p>这个时候我们的滚动更新就暂停了，此时我们可以查看下 Deployment 的详细信息：
+<pre class="highlight"><code class="language-shell">$ kubectl describe deploy nginx-deploy
+Name:                   nginx-deploy
+Namespace:              default
+CreationTimestamp:      Sat, 16 Nov 2019 16:01:24 +0800
+Labels:                 &lt;none&gt;
+Annotations:            deployment.kubernetes.io/revision: 2
+                        kubectl.kubernetes.io/last-applied-configuration:
+                          {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"nginx-deploy","namespace":"default"},"spec":{"minReadySec...
+Selector:               app=nginx
+Replicas:               3 desired | 2 updated | 4 total | 4 available | 0 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        5
+RollingUpdateStrategy:  1 max unavailable, 1 max surge
+......
+OldReplicaSets:  nginx-deploy-85ff79dd56 (2/2 replicas created)
+NewReplicaSet:   nginx-deploy-5b7b9ccb95 (2/2 replicas created)
+Events:
+  Type    Reason             Age    From                   Message
+  ----    ------             ----   ----                   -------
+  Normal  ScalingReplicaSet  26m    deployment-controller  Scaled up replica set nginx-deploy-85ff79dd56 to 4
+  Normal  ScalingReplicaSet  3m44s  deployment-controller  Scaled down replica set nginx-deploy-85ff79dd56 to 3
+  Normal  ScalingReplicaSet  3m44s  deployment-controller  Scaled up replica set nginx-deploy-5b7b9ccb95 to 1
+  Normal  ScalingReplicaSet  3m44s  deployment-controller  Scaled down replica set nginx-deploy-85ff79dd56 to 2
+  Normal  ScalingReplicaSet  3m44s  deployment-controller  Scaled up replica set nginx-deploy-5b7b9ccb95 to 2</code></pre></p>
+<p><img alt="Deployment RollingUpdate" src="../../assets/img/controller/deployment-rollupdate.png" /></p>
+<p>我们仔细观察 Events 事件区域的变化，上面我们用 <code>kubectl scale</code> 命令将 Pod 副本调整到了 4，现在我们更新的时候是不是声明又变成 3 了，所以 Deployment 控制器首先是将之前控制的 <code>nginx-deploy-85ff79dd56</code> 这个 RS 资源对象进行缩容操作，然后滚动更新开始了，可以发现 Deployment 为一个新的 <code>nginx-deploy-5b7b9ccb95</code> RS 资源对象首先新建了一个新的 Pod，然后将之前的 RS 对象缩容到 2 了，再然后新的 RS 对象扩容到 2，后面由于我们暂停滚动升级了，所以没有后续的事件了，大家有看明白这个过程吧？这个过程就是滚动更新的过程，启动一个新的 Pod，杀掉一个旧的 Pod，然后再启动一个新的 Pod，这样滚动更新下去，直到全都变成新的 Pod，这个时候系统中应该存在 4 个 Pod，因为我们设置的策略<code>maxSurge=1</code>，所以在升级过程中是允许的，而且是两个新的 Pod，两个旧的 Pod：
+<pre class="highlight"><code class="language-shell">$ kubectl get pods -l app=nginx
+NAME                            READY   STATUS    RESTARTS   AGE
+nginx-deploy-5b7b9ccb95-k6pkh   1/1     Running   0          11m
+nginx-deploy-5b7b9ccb95-l6lmx   1/1     Running   0          11m
+nginx-deploy-85ff79dd56-7r76h   1/1     Running   0          75m
+nginx-deploy-85ff79dd56-txc4h   1/1     Running   0          75m</code></pre></p>
+<p>查看 Deployment 的状态也可以看到当前的 Pod 状态：
+<pre class="highlight"><code class="language-shell">$ kubectl get deployment  
+NAME           READY   UP-TO-DATE   AVAILABLE   AGE
+nginx-deploy   4/3     2            4           75m</code></pre></p>
+<p>这个时候我们可以使用<code>kubectl rollout resume</code>来恢复我们的滚动更新：
+<pre class="highlight"><code class="language-shell">$ kubectl rollout resume deployment/nginx-deploy
+deployment.apps/nginx-deploy resumed
+$ kubectl rollout status deployment/nginx-deploy
+Waiting for deployment "nginx-deploy" rollout to finish: 2 of 3 updated replicas are available...
+deployment "nginx-deploy" successfully rolled out</code></pre></p>
+<p>看到上面的信息证明我们的滚动更新已经成功了，同样可以查看下资源状态：
+<pre class="highlight"><code class="language-shell">$ kubectl get pod -l app=nginx
+NAME                            READY   STATUS    RESTARTS   AGE
+nginx-deploy-5b7b9ccb95-gmq7v   1/1     Running   0          115s
+nginx-deploy-5b7b9ccb95-k6pkh   1/1     Running   0          15m
+nginx-deploy-5b7b9ccb95-l6lmx   1/1     Running   0          15m
+$ kubectl get deployment                        
+NAME           READY   UP-TO-DATE   AVAILABLE   AGE
+nginx-deploy   3/3     3            3           79m</code></pre></p>
+<p>这个时候我们查看 ReplicaSet 对象，可以发现会出现两个：
+<pre class="highlight"><code class="language-shell">$ kubectl get rs -l app=nginx
+NAME                      DESIRED   CURRENT   READY   AGE
+nginx-deploy-5b7b9ccb95   3         3         3       18m
+nginx-deploy-85ff79dd56   0         0         0       81m</code></pre></p>
+<p>从上面可以看出滚动更新之前我们使用的 RS 资源对象的 Pod 副本数已经变成 0 了，而滚动更新后的 RS 资源对象变成了 3 个副本，我们可以导出之前的 RS 对象查看：
+<pre class="highlight"><code class="language-shell">$ kubectl get rs nginx-deploy-85ff79dd56 -o yaml
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  annotations:
+    deployment.kubernetes.io/desired-replicas: "3"
+    deployment.kubernetes.io/max-replicas: "4"
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: "2019-11-16T08:01:24Z"
+  generation: 5
+  labels:
+    app: nginx
+    pod-template-hash: 85ff79dd56
+  name: nginx-deploy-85ff79dd56
+  namespace: default
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: Deployment
+    name: nginx-deploy
+    uid: b0fc5614-ef58-496c-9111-740353bd90d4
+  resourceVersion: "2140545"
+  selfLink: /apis/apps/v1/namespaces/default/replicasets/nginx-deploy-85ff79dd56
+  uid: 8eca2998-3610-4f80-9c21-5482ba579892
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: nginx
+      pod-template-hash: 85ff79dd56
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: nginx
+        pod-template-hash: 85ff79dd56
+    spec:
+      containers:
+      - image: nginx
+        imagePullPolicy: Always
+        name: nginx
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  observedGeneration: 5
+  replicas: 0</code></pre></p>
+<p>我们仔细观察这个资源对象里面的描述信息除了副本数变成了<code>replicas=0</code>之外，和更新之前没有什么区别吧？大家看到这里想到了什么？有了这个 RS 的记录存在，是不是我们就可以回滚了啊？而且还可以回滚到前面的任意一个版本，这个版本是如何定义的呢？我们可以通过命令 <code>rollout history</code> 来获取：
+<pre class="highlight"><code class="language-shell">$ kubectl rollout history deployment nginx-deploy
+deployment.apps/nginx-deploy 
+REVISION  CHANGE-CAUSE
+1         &lt;none&gt;
+2         &lt;none&gt;
+</code></pre></p>
+<p>其实 <code>rollout history</code> 中记录的 <code>revision</code> 是和 <code>ReplicaSets</code> 一一对应。如果我们手动删除某个 <code>ReplicaSet</code>，对应的<code>rollout history</code>就会被删除，也就是说你无法回滚到这个<code>revison</code>了，同样我们还可以查看一个<code>revison</code>的详细信息：
+<pre class="highlight"><code class="language-shell">$ kubectl rollout history deployment nginx-deploy --revision=1 
+deployment.apps/nginx-deploy with revision #1
+Pod Template:
+  Labels:       app=nginx
+        pod-template-hash=85ff79dd56
+  Containers:
+   nginx:
+    Image:      nginx
+    Port:       80/TCP
+    Host Port:  0/TCP
+    Environment:        &lt;none&gt;
+    Mounts:     &lt;none&gt;
+  Volumes:      &lt;none&gt;</code></pre></p>
+<p>假如现在要直接回退到当前版本的前一个版本，我们可以直接使用如下命令进行操作：
+<pre class="highlight"><code class="language-shell">$ kubectl rollout undo deployment nginx-deploy</code></pre></p>
+<p>当然也可以回退到指定的<code>revision</code>版本：
+<pre class="highlight"><code class="language-shell">$ kubectl rollout undo deployment nginx-deploy --to-revision=1
+deployment "nginx-deploy" rolled back</code></pre></p>
+<p>回滚的过程中我们同样可以查看回滚状态：
+<pre class="highlight"><code class="language-shell">$ kubectl rollout status deployment/nginx-deploy
+Waiting for deployment "nginx-deploy" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "nginx-deploy" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "nginx-deploy" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "nginx-deploy" rollout to finish: 2 of 3 updated replicas are available...
+Waiting for deployment "nginx-deploy" rollout to finish: 2 of 3 updated replicas are available...
+deployment "nginx-deploy" successfully rolled out</code></pre></p>
+<p>这个时候查看对应的 RS 资源对象可以看到 Pod 副本已经回到之前的 RS 里面去了。
+<pre class="highlight"><code class="language-shell">$ kubectl get rs -l app=nginx
+NAME                      DESIRED   CURRENT   READY   AGE
+nginx-deploy-5b7b9ccb95   0         0         0       31m
+nginx-deploy-85ff79dd56   3         3         3       95m</code></pre></p>
+<p>不过需要注意的是回滚的操作滚动的<code>revision</code>始终是递增的：
+<pre class="highlight"><code class="language-shell">$ kubectl rollout history deployment nginx-deploy
+deployment.apps/nginx-deploy 
+REVISION  CHANGE-CAUSE
+2         &lt;none&gt;
+3         &lt;none&gt;
+</code></pre></p>
+<div class="admonition info">
+<p class="admonition-title">保留旧版本</p>
+<p>在很早之前的 Kubernetes 版本中，默认情况下会为我们暴露下所有滚动升级的历史记录，也就是 ReplicaSet 对象，但一般情况下没必要保留所有的版本，毕竟会存在 etcd 中，我们可以通过配置 <code>spec.revisionHistoryLimit</code> 属性来设置保留的历史记录数量，不过新版本中该值默认为 10，如果希望多保存几个版本可以设置该字段。</p>
+</div>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+
+
+
+<!-- Application footer -->
+<footer class="md-footer">
+
+    <!-- Further information -->
+    <div class="md-footer-meta md-typeset">
+        <div class="md-footer-meta__inner md-grid">
+
+            <!-- Copyright and theme information -->
+            <div class="md-footer-copyright">
+                
+                <div class="md-footer-copyright__highlight">
+                    Copyright &copy; 2020 Kubernetes技术栈
+                </div>
+                
+                powered by
+                <a href="https://www.k8stech.net" title="Kubernetes技术栈">www.k8stech.net</a>
+            </div>
+
+            <!-- Social links -->
+            
+            
+            
+        </div>
+    </div>
+</footer>
+
+
+    </div>
+    
+      <script src="../../assets/javascripts/application.d9aa80ab.js"></script>
+      
+        
+        
+          
+          <script src="../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+              
+                <script src="../../assets/javascripts/lunr/tinyseg.js"></script>
+              
+              
+                <script src="../../assets/javascripts/lunr/lunr.jp.js"></script>
+              
+            
+          
+          
+        
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+        <script src="../../assets/js/hljs/highlight.pack.js"></script>
+      
+        <script src="../../assets/js/prism.js"></script>
+      
+    
+  </body>
+</html>

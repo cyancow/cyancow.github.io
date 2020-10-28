@@ -1,0 +1,1387 @@
+
+
+
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+        <link rel="canonical" href="https://docs.prometheus.cool/basic/prom-config/">
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="复制">
+      
+        <meta name="lang:clipboard.copied" content="已复制">
+      
+        <meta name="lang:search.language" content="jp">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="没有找到符合条件的结果">
+      
+        <meta name="lang:search.result.one" content="找到 1 个符合条件的结果">
+      
+        <meta name="lang:search.result.other" content="# 个符合条件的结果">
+      
+        <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
+      
+      <link rel="shortcut icon" href="../../assets/img/prometheus_logo.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.2">
+    
+    
+      
+        <title>Prometheus安装与配置 - 云原生监控神器Prometheus</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.982221ab.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.224b79ff.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ef5350">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.1f0bcf2b.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i,700|Ubuntu+Mono">
+        <style>body,input{font-family:"Ubuntu","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../assets/styles/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/styles/prism.css">
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="red" data-md-color-accent="red">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#prometheus" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://docs.prometheus.cool" title="云原生监控神器Prometheus" class="md-header-nav__button md-logo">
+          
+            <img src="../../assets/img/prometheus_logo.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              云原生监控神器Prometheus
+            </span>
+            <span class="md-header-nav__topic">
+              Prometheus安装与配置
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            键入以开始搜索
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/k8stech/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://docs.prometheus.cool" title="云原生监控神器Prometheus" class="md-nav__button md-logo">
+      
+        <img src="../../assets/img/prometheus_logo.png" width="48" height="48">
+      
+    </a>
+    云原生监控神器Prometheus
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/k8stech/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="介绍" class="md-nav__link">
+      介绍
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      监控基础与概述
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        监控基础与概述
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/whymonitor/" title="为什么要监控" class="md-nav__link">
+      为什么要监控
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/monitorterms/" title="监控术语" class="md-nav__link">
+      监控术语
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/metricstory/" title="指标物语" class="md-nav__link">
+      指标物语
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../monitorbasic/monitorcontrast/" title="开源监控对比" class="md-nav__link">
+      开源监控对比
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      Prometheus 基础
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Prometheus 基础
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../prom-introduction/" title="Prometheus介绍" class="md-nav__link">
+      Prometheus介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tsdb-contrast/" title="时序数据库对比" class="md-nav__link">
+      时序数据库对比
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../prom-datamodel/" title="数据模型" class="md-nav__link">
+      数据模型
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../node-exporter/" title="Node_Exporter" class="md-nav__link">
+      Node_Exporter
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Prometheus安装与配置
+      </label>
+    
+    <a href="./" title="Prometheus安装与配置" class="md-nav__link md-nav__link--active">
+      Prometheus安装与配置
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="二进制安装" class="md-nav__link">
+    二进制安装
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker" title="Docker安装" class="md-nav__link">
+    Docker安装
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-compose" title="Docker-compose管理" class="md-nav__link">
+    Docker-compose管理
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prometheus_1" title="Prometheus参数说明" class="md-nav__link">
+    Prometheus参数说明
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="配置文件说明" class="md-nav__link">
+    配置文件说明
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" title="验证" class="md-nav__link">
+    验证
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prometheus_2" title="Prometheus服务重载" class="md-nav__link">
+    Prometheus服务重载
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Prometheus 进阶
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Prometheus 进阶
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/auto-ops-exporter-1/" title="自动化维护Exporter（一）" class="md-nav__link">
+      自动化维护Exporter（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/auto-ops-exporter-2/" title="自动化维护Exporter（二）" class="md-nav__link">
+      自动化维护Exporter（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/docker-swarm-monitor-1/" title="Docker-Swarm集群监控（一）" class="md-nav__link">
+      Docker-Swarm集群监控（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/docker-swarm-monitor-2/" title="Docker-Swarm集群监控（二）" class="md-nav__link">
+      Docker-Swarm集群监控（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced/commonly-exporter/" title="常用Exporter介绍与配置" class="md-nav__link">
+      常用Exporter介绍与配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Prometheus(警报)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Prometheus(警报)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-basic/" title="PromQL详解（一）" class="md-nav__link">
+      PromQL详解（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-operator/" title="PromQL详解（二）" class="md-nav__link">
+      PromQL详解（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-operator2/" title="PromQL详解（三）" class="md-nav__link">
+      PromQL详解（三）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/promql-function/" title="PromQL函数" class="md-nav__link">
+      PromQL函数
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-overview/" title="AlertManager" class="md-nav__link">
+      AlertManager
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-rules-1/" title="Rules详解（一）" class="md-nav__link">
+      Rules详解（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-rules-2/" title="Rules详解（二）" class="md-nav__link">
+      Rules详解（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-receiver/" title="Receiver配置" class="md-nav__link">
+      Receiver配置
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Alertmanager/alertmanager-silences/" title="Silences配置" class="md-nav__link">
+      Silences配置
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Prometheus(联邦集群)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Prometheus(联邦集群)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/federation-overview/" title="Prometheus 联邦集群" class="md-nav__link">
+      Prometheus 联邦集群
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/pushgateway/" title="Pushgateway 代理" class="md-nav__link">
+      Pushgateway 代理
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../federation/alertmanager-ha/" title="Alertmanager 高可用" class="md-nav__link">
+      Alertmanager 高可用
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Prometheus(服务发现)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Prometheus(服务发现)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-overview/" title="服务发现（文件、DNS）" class="md-nav__link">
+      服务发现（文件、DNS）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-relabeling/" title="服务发现（Relabelling）" class="md-nav__link">
+      服务发现（Relabelling）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../discover-service/discovery-consul/" title="服务发现（Consul）" class="md-nav__link">
+      服务发现（Consul）
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      Prometheus(Operator)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        Prometheus(Operator)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Operator/" title="Operator概述" class="md-nav__link">
+      Operator概述
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-1/" title="手动部署（1）" class="md-nav__link">
+      手动部署（1）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-2/" title="手动部署（2）" class="md-nav__link">
+      手动部署（2）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/Prometheus-Statefulsets-3/" title="手动部署（联邦）" class="md-nav__link">
+      手动部署（联邦）
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="二进制安装" class="md-nav__link">
+    二进制安装
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker" title="Docker安装" class="md-nav__link">
+    Docker安装
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-compose" title="Docker-compose管理" class="md-nav__link">
+    Docker-compose管理
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prometheus_1" title="Prometheus参数说明" class="md-nav__link">
+    Prometheus参数说明
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="配置文件说明" class="md-nav__link">
+    配置文件说明
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" title="验证" class="md-nav__link">
+    验证
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prometheus_2" title="Prometheus服务重载" class="md-nav__link">
+    Prometheus服务重载
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/k8stech/edit/master/docs/basic/prom-config.md" title="编辑此页" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="prometheus">Prometheus安装与配置<a class="headerlink" href="#prometheus" title="Permanent link">&para;</a></h1>
+<p><img alt="prom" src="https://miro.medium.com/max/1400/1*BNV8zJ1Y51dQPSig_l5rBg.png" /></p>
+<h2 id="_1">二进制安装<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/prometheus/prometheus">Prometheus</a> 版本迭代很快，当前的最新版本是 <code>2.19.0</code>，我们这里使用的 Prometheus 版本是 <code>2.19.0</code>。</p>
+<pre class="highlight"><code class="language-bash"># 创建Prometheus工作目录
+useradd -s /usr/sbin/nologin prometheus
+mkdir -p /data/prometheus/{bin,conf,data,log,rules}
+chown -R prometheus.prometheus /data/prometheus
+cd /data/prometheus/
+
+# 下载二进制包文件
+wget https://github.com.cnpmjs.org/prometheus/prometheus/releases/download/v2.19.0/prometheus-2.19.0.linux-amd64.tar.gz
+tar xvf prometheus-2.19.0.linux-amd64.tar.gz
+
+# 简单的启动测试
+./prometheus --config-file='config.yaml'
+
+# systemd配置文件
+cat &gt; /lib/systemd/system/prometheus.service &lt;&lt;EOF
+[Unit]
+Description=Prometheus
+Documentation=https://prometheus.io/
+After=network.target
+
+[Service]
+Type=simple
+User=prometheus
+ExecStart=/data/prometheus/bin/prometheus \
+--config.file=/data/prometheus/conf/prometheus.yml \
+--web.enable-lifecycle \
+--storage.tsdb.path=/data/prometheus/data \
+--web.external-url=http://prom.prometheus.cool \
+--storage.tsdb.retention=90d
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+EOF</code></pre>
+
+<h2 id="docker">Docker安装<a class="headerlink" href="#docker" title="Permanent link">&para;</a></h2>
+<pre class="highlight"><code class="language-bash"># 创建目录
+wget -O /data/prometheus/config/prometheus.yml \
+https://raw.githubusercontent.com/prometheus/prometheus/master/documentation/examples/prometheus.yml
+chown -R prometheus.prometheus /data/prometheus/
+
+# 权限问题：
+$ docker exec -it prometheus sh
+/prometheus $ id
+uid=65534(nobody) gid=65534(nogroup)
+# 启动
+docker run -d --restart=always \
+    --name=prometheus \
+    -p 9090:9090 \
+    -v /data/prometheus/config/:/etc/prometheus/ \
+    -v /data/prometheus/data:/prometheus \
+    -v /etc/localtime:/etc/localtime:ro \
+    prom/prometheus \
+    --config.file=/etc/prometheus/prometheus.yml \
+    --storage.tsdb.path=/prometheus \
+    --web.console.libraries=/etc/prometheus/console_libraries \
+    --web.console.templates=/etc/prometheus/consoles \
+    --storage.tsdb.retention.time=200h \
+    --web.enable-lifecycle
+</code></pre>
+
+<h2 id="docker-compose">Docker-compose管理<a class="headerlink" href="#docker-compose" title="Permanent link">&para;</a></h2>
+<pre class="highlight"><code class="language-bash">cat docker-compose.yml
+version: '3.1'
+
+services:
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./config:/prometheus
+      - ./data/prometheus:/data
+    command:
+      - '--config.file=/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/data'
+    ports:
+      - 9090:9090
+    depends_on:
+      - alertmanager
+    restart: always
+    networks:
+      - promnet
+
+  alertmanager:
+    image: prom/alertmanager
+    volumes:
+      - ./config:/prometheus
+      - ./data/alertmanager:/data
+    command:
+      - '--config.file=/prometheus/alertmanager.yml'
+      - '--storage.path=/data'
+    ports:
+      - 9093:9093
+    networks:
+      - promnet
+
+  node:
+    image: prom/node-exporter
+    ports:
+      - 9100:9100
+    restart: always
+    networks:
+      - promnet
+
+  cadvisor:
+    image: google/cadvisor
+    ports:
+      - 9880:8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    networks:
+      - promnet
+
+  collectd:
+    image: prom/collectd-exporter
+    ports:
+      - 9103:9103
+    restart: always
+    networks:
+      - promnet
+
+  alerta:
+    image: alerta/alerta-web
+    ports:
+      - 9080:8080
+    depends_on:
+      - db
+    environment:
+      - DEBUG=1  # remove this line to turn DEBUG off
+      - DATABASE_URL=mongodb://db:27017/monitoring
+      # - AUTH_REQUIRED=True
+      - ADMIN_USERS=admin@alerta.io
+      - PLUGINS=remote_ip,reject,heartbeat,blackout,prometheus
+      - ALERTMANAGER_API_URL=http://alertmanager:9093
+    restart: always
+    networks:
+      - promnet
+      - dbnet
+
+  db:
+    image: mongo
+    volumes:
+      - ./data/mongodb:/data/db
+    restart: always
+    networks:
+      - dbnet
+
+networks:
+  promnet:
+    driver: bridge
+  dbnet:
+    driver: bridge</code></pre>
+
+<h2 id="prometheus_1">Prometheus参数说明<a class="headerlink" href="#prometheus_1" title="Permanent link">&para;</a></h2>
+<p><code>--version</code>                  </p>
+<p>显示当前应用程序版本号.</p>
+<p><code>--config.file="prometheus.yml"</code> </p>
+<p>指定Prometheus配置文件路径</p>
+<p><code>--web.listen-address="0.0.0.0:9090"</code> </p>
+<p>监听API、UI、telemetry地址</p>
+<p><code>--web.read-timeout=5m</code>      </p>
+<p>读取超时与最大连接数的关闭时间</p>
+<p><code>--web.max-connections=512</code>  </p>
+<p>当前连接的最大连接数</p>
+<p><code>--web.external-url=&lt;URL&gt;</code>   </p>
+<p>配置Prometheus外部访问的URL</p>
+<p><code>--web.route-prefix=&lt;path&gt;</code>  </p>
+<p>WEB节点的内部路由前缀.默认路径是 --web.external-url.</p>
+<p><code>--web.user-assets=&lt;path&gt;</code>  </p>
+<p>静态资源目录的路径，位于/user</p>
+<p><code>--web.enable-lifecycle</code>     </p>
+<p>启用重载配置文件</p>
+<p><code>--web.enable-admin-api</code>     </p>
+<p>为ADMIN启用API访问</p>
+<p><code>--web.console.templates="consoles"</code>  </p>
+<p>console模板目录的路径，位于/consoles</p>
+<p><code>--web.console.libraries="console_libraries"</code> </p>
+<p>console 库存储路径</p>
+<p><code>--web.page-title="Prometheus Time Series Collection and Processing Server"</code> </p>
+<p>Prometheus的文档示例标题</p>
+<p><code>--web.cors.origin=".*"</code></p>
+<p>用于CORS来源的正则表达式. Example: 'https?://(domain1|domain2).com'</p>
+<p><code>--storage.tsdb.path="data/"</code> </p>
+<p>TSDB指标数据存储路径</p>
+<p><code>--storage.tsdb.retention=STORAGE.TSDB.RETENTION</code></p>
+<p>数据保留时间.此项参数已经被弃用, 使用 <code>storage.tsdb.retention.time</code>.</p>
+<p><code>--storage.tsdb.retention.time=STORAGE.TSDB.RETENTION.TIME</code></p>
+<p>数据保存多长时间。开启此设置，它将覆盖“ storage.tsdb.retention”。如果 <code>storage.tsdb.retention</code> 或 <code>storage.tsdb.retention.size</code> 都未开启，则数据保留时间默认为15天。</p>
+<p><code>--storage.tsdb.retention.size=STORAGE.TSDB.RETENTION.SIZE</code></p>
+<p>块存储的最大字节数，支持的单位<code>KB，MB，GB，TB，PB</code>；此参数仅为测试。</p>
+<p><code>--storage.tsdb.no-lockfile</code></p>
+<p>不在数据目录创建锁文件</p>
+<p><code>--storage.tsdb.allow-overlapping-blocks</code></p>
+<p>允许重叠的Blocks，从而启用垂直压缩和垂直查询合并。</p>
+<p><code>--storage.tsdb.wal-compression</code></p>
+<p>压缩 tsdb WAL.</p>
+<p><code>--storage.remote.flush-deadline=&lt;duration&gt;</code></p>
+<p>关闭或配置重载时的等待时间</p>
+<p><code>--storage.remote.read-sample-limit=5e7</code></p>
+<p>在单个查询中通过远程读取接口返回的最大样本总数. 0表示没有限制.对于流式响应类型，将忽略此限制.</p>
+<p><code>--storage.remote.read-concurrent-limit=10</code></p>
+<p>并发远程读取调用的最大数. 0表示没有限制.</p>
+<p><code>--storage.remote.read-max-bytes-in-frame=1048576</code></p>
+<p>编组之前用于流式传输远程读取响应类型的单个帧中的最大字节数。请注意，客户端也可能会限制帧大小。默认为protobuf建议的1MB</p>
+<p><code>--rules.alert.for-outage-tolerance=1h</code></p>
+<p>容忍Prometheus中断恢复警报 <code>for</code> 状态的最长时间。</p>
+<p><code>--rules.alert.for-grace-period=10m</code></p>
+<p>警报和恢复的 <code>for</code> 状态之间的最短持续时间。仅对于配置的 <code>for</code> 时间大于限期的警报，此状态才会有效。</p>
+<p><code>--rules.alert.resend-delay=1m</code></p>
+<p>警报重新发送到Alertmanager之前等待的最小时间.</p>
+<p><code>--alertmanager.notification-queue-capacity=10000</code></p>
+<p>等待的Alertmanager通知的队列数.</p>
+<p><code>--alertmanager.timeout=10s</code></p>
+<p>向Alertmanager发送警报的超时时间.</p>
+<p><code>--query.lookback-delta=5m</code></p>
+<p>表达式求值期间检索指标的最大回溯持续时间</p>
+<p><code>--query.timeout=2m</code></p>
+<p>查询中止前需要花费的最长时间</p>
+<p><code>--query.max-concurrency=20</code></p>
+<p>并发执行的最大查询数</p>
+<p><code>--query.max-samples=50000000</code></p>
+<p>单个查询可以加载到内存中的最大样本数。注意：如果查询尝试将更多的样本加载到内存中，则查询将失败，因此这也限制了查询可以返回的样本数。</p>
+<p><code>--log.level=info</code></p>
+<p>记录日志级别，可选参数: [debug, info, warn, error]</p>
+<p><code>--log.format=logfmt</code></p>
+<p>日志消息的输出格式. 可选参数: [logfmt, json]</p>
+<h2 id="_2">配置文件说明<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<pre class="highlight"><code class="language-yaml"># https://prometheus.io/docs/prometheus/latest/configuration/configuration/
+# 全局配置
+global:
+  scrape_interval: 30s # 秒抓取一次数据，默认值为1分钟
+  scrape_timeout: 30s # 抓取超时时间
+  evaluation_interval: 60s # 每15分钟检测一次可用性，默认值为1分钟
+  #scrape_timeout: 60s # 全局设置超时时间，这个注掉了。
+  external_labels: # 联邦的label标识，可以附加在警报中，这样用于标识警报来源于那个Prometheus或Alertmanager
+    dc: prom-master
+# Alertmanager配置，需要在targets添加ip和端口，也可以使用主机名和域名
+alerting:
+  alertmanagers:
+    - static_configs:
+        # 此处可以配置成集群模式，也可以使用单一节点，后续会在Alertmanager章节详细讲解如何做Alertmanager集群高可用
+        - targets: ['127.0.0.1:9097']
+        #- targets: ['127.0.0.1:9098']
+        #- targets: ['127.0.0.1:9099']
+
+# 根据全局文件 'evaluation_interval' 的时间，根据 rule 配置文件进行检查，可配置多个。
+# 可以没有配置文件，但是目录必须存在。
+rule_files:
+  - "/data/prometheus/rule_ssl/*.yml"
+  - "/data/prometheus/rule_prod/*.yml"
+# 抓取配置配置
+scrape_configs:
+  - job_name: 'http_200_monitor'
+    metrics_path: /probe
+    params:
+      module: [http_2xx]  # 探测 HTTP POST 200 响应配置模块，返回值必须是200
+    scrape_interval: 30s # 抓取时间
+    file_sd_configs:
+      - files:
+        # 此处为blackbox 探测域名配置文件
+        - /data/prometheus/domain_config/get.yml
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9115  # blackbox exporter的IP、端口.
+  - job_name: 'http_post_200_monitor'
+    metrics_path: /probe
+    params:
+      module: [http_post_2xx_query]  # 探测 HTTP POST 200  响应配置模块.
+    scrape_interval: 30s
+    file_sd_configs:
+      - files:
+        - /data/prometheus/prod_config/domain_config/post.yml
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9115
+# consul 抓取规则
+  - job_name: 'prod'
+    metrics_path: /metrics
+    honor_labels: false
+    consul_sd_configs:
+    - server: '172.x.x.x:8500'
+      token: '2222-3333-5555-7777-99999'
+      services: []
+    relabel_configs:
+      - source_labels: ['__address__']
+        regex: (.*):(.*)8300
+        action: drop
+      - source_labels: ['__meta_consul_service']
+        regex:         '(.*)'
+        target_label:  'service'
+        replacement:   '$1'
+      - source_labels: ['__meta_consul_service_address']
+        regex:         '(.*)'
+        target_label:  'instance'
+        replacement:   '$1'
+      - source_labels: ['__meta_consul_service_port']
+        regex:         '(.*)'
+        target_label:  'instance'
+        replacement:   '$2'
+      - source_labels: ['__meta_consul_tags']
+        regex:        ".*,(.*),.*"
+        replacement:   '${1}'
+        target_label:  'app'</code></pre>
+
+<h2 id="_3">验证<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>打开Prometheus web页面，在Console中使用 Metrics <code>promhttp_metric_handler_requests_total</code> 进行演示，这个 Metrics 是 prometheus 自身的 http 请求数。</p>
+<p><img alt="prom1" src="../../assets/img/prom-graph-1.jpg" /></p>
+<p>切换到Graph，可以看到Metrics的曲线图。</p>
+<p><img alt="prom2" src="../../assets/img/prom-graph-2.jpg" /></p>
+<h2 id="prometheus_2">Prometheus服务重载<a class="headerlink" href="#prometheus_2" title="Permanent link">&para;</a></h2>
+<p>Prometheus 对于更新配置文件，需要服务重启，如果在生产环境，随便重启服务是不可取的，因此需要热加载功能。</p>
+<p>2.0 以后，热加载功能默认是关闭的，如需开启，需要在启动 Prometheus的时候，添加 <code>--web.enable-lifecycle</code> 参数。</p>
+<pre class="highlight"><code class="language-bash">curl -X POST http://192.168.1.210:9090/-/reload</code></pre>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+
+
+
+<!-- Application footer -->
+<footer class="md-footer">
+
+    <!-- Further information -->
+    <div class="md-footer-meta md-typeset">
+        <div class="md-footer-meta__inner md-grid">
+
+            <!-- Copyright and theme information -->
+            <div class="md-footer-copyright">
+                
+                <div class="md-footer-copyright__highlight">
+                    Copyright &copy; 2020 Kubernetes技术栈
+                </div>
+                
+                powered by
+                <a href="https://www.k8stech.net" title="Kubernetes技术栈">www.k8stech.net</a>
+            </div>
+
+            <!-- Social links -->
+            
+            
+            
+        </div>
+    </div>
+</footer>
+
+
+    </div>
+    
+      <script src="../../assets/javascripts/application.d9aa80ab.js"></script>
+      
+        
+        
+          
+          <script src="../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+              
+                <script src="../../assets/javascripts/lunr/tinyseg.js"></script>
+              
+              
+                <script src="../../assets/javascripts/lunr/lunr.jp.js"></script>
+              
+            
+          
+          
+        
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+        <script src="../../assets/js/hljs/highlight.pack.js"></script>
+      
+        <script src="../../assets/js/prism.js"></script>
+      
+    
+  </body>
+</html>

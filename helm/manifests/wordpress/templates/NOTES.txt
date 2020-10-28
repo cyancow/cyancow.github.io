@@ -1,0 +1,3 @@
+Get Wordrpess Manifests Objects:
+
+$ kubectl get all -l app={{ include "wordpress.fullname" . }} -n {{ .Release.Namespace }}
