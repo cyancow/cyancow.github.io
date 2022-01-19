@@ -2,567 +2,567 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://docs.prometheus.cool/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/Alertmanager/alertmanager-overview/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/Alertmanager/alertmanager-receiver/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/Alertmanager/alertmanager-rules-1/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/Alertmanager/alertmanager-rules-2/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/Alertmanager/alertmanager-silences/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/Alertmanager/prom-data-optimize/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/Alertmanager/promql-basic/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/Alertmanager/promql-function/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/Alertmanager/promql-operator/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/Alertmanager/promql-operator2/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/Kubernetes/Prometheus-Adapter/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/Kubernetes/Prometheus-Deploy-Operator/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/Kubernetes/Prometheus-HPA/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/Kubernetes/Prometheus-Operator/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/Kubernetes/Prometheus-Statefulsets-1/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/Kubernetes/Prometheus-Statefulsets-2/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/Kubernetes/Prometheus-Statefulsets-3/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/Kubernetes/annotation/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/advanced/auto-ops-exporter-1/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/advanced/auto-ops-exporter-2/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/advanced/cloud-host-monior/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/advanced/commonly-exporter/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/advanced/docker-swarm-monitor-1/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/advanced/docker-swarm-monitor-2/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/advanced/ansible-role-prometheus-rpm/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/basic/node-exporter/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/basic/prom-config/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/basic/prom-datamodel/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/basic/prom-introduction/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/basic/tsdb-contrast/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/code/apiserver/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/code/kubelet/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/code/client-go/deltafifo/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/code/client-go/factory/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/code/client-go/indexer/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/code/client-go/informer/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/code/client-go/workqueue/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/config/configmap/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/config/secret/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/config/serviceaccount/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/controller/api-object/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/controller/daemonset/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/controller/deployment/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/controller/hpa/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/controller/job/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/controller/replicaset/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/controller/statefulset/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/devops/gitlab/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/devops/harbor/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/devops/jenkins/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/discover-service/discovery-consul/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/discover-service/discovery-overview/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/discover-service/discovery-relabeling/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/docker/basic/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/docker/dockerfile-practice/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/docker/dockerfile/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/docker/install/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/docker/overview/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/examples/wordpress/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/federation/alertmanager-ha/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/federation/federation-overview/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/federation/pushgateway/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/helm/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/helm/charts/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/helm/demo/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/helm/hooks/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/helm/templates/access_files/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/helm/templates/debug/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/helm/templates/flow/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/helm/templates/function/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/helm/templates/named_templates/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/helm/templates/notes_files/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/helm/templates/objects/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/helm/templates/subcharts_and_globals/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/helm/templates/values/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/helm/templates/variables/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/istio/install/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/logging/architec/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/logging/efk/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/logging/kafka/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/logging/manifests/kafka/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/logging/manifests/kafka/charts/zookeeper/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/monitor/alertmanager/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/monitor/grafana/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/monitor/prometheus/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/monitor/promql/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/monitor/thanos/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/monitorbasic/metricstory/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/monitorbasic/monitorcontrast/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/monitorbasic/monitorterms/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/monitorbasic/multidimensional/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/monitorbasic/three-dimensional/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/monitorbasic/whymonitor/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/network/flannel/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/network/networkpolicy/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/network/service/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/network/ingress/nginx/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/network/ingress/traefik/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/operator/crd/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/operator/operator/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/scheduler/overview/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/scheduler/usage/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/security/rbac/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/security/security-context/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/skill/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/skill/etcd/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/storage/ceph/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/storage/csi/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/storage/local/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/tenant/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/tenant/psp/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.prometheus.cool/tenant/quota/</loc>
-         <lastmod>2022-01-12</lastmod>
+         <lastmod>2022-01-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
